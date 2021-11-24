@@ -3,24 +3,15 @@
 ### Load & Prepare
 ##########
 
-require(tidyverse)
-require(data.table)
-require(Seurat)
-require(ggplot2)
-require(mapscvi)
-
-### Set parameters
-global_seed = 123467# seed
-map_name = "hypothalamus_neurons_reference"
-map_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_objects/"
-
 results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_2/"
 system(paste0("mkdir -p ",results_path))
 
-### Load map
-map_seurat_path = paste0(map_path,map_name,".rds")
-neuron_map_seurat = readRDS(map_seurat_path)
-#neuron_map_seurat@meta.data = cbind(neuron_map_seurat@meta.data ,neuron_map_seurat@misc$other_metdata)
+# load everything required
+source("scripts/paper_figures_new/load_data.R")
+
+# using the function in visualization_functions.R
+# TODO: move to somewhere else ?
+source("/beegfs/scratch/bruening_scratch/lsteuernagel/projects/scHarmonize/harmonization/visualization_functions.R")
 
 ## plotting
 rasterize_point_size = 2.2
@@ -32,10 +23,6 @@ rasterize_pixels = 2048
 
 
 # http://yulab-smu.top/treedata-book/chapter2.html
-
-# using the function in fisualization_functions.R
-
-source("/beegfs/scratch/bruening_scratch/lsteuernagel/projects/scHarmonize/harmonization/visualization_functions.R")
 
 # make data for first heatmap with percentages per dataset
 heatmap_data = neuron_map_seurat@meta.data %>% dplyr::select(Cell_ID,Dataset,K169_pruned) %>% dplyr::group_by(K169_pruned,Dataset) %>% #dplyr::filter(predicted_Campbell!="NA") 

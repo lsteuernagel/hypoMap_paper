@@ -3,24 +3,13 @@
 ### Load & Prepare
 ##########
 
-require(tidyverse)
-require(data.table)
-require(Seurat)
-require(ggplot2)
-
-### Set parameters
-global_seed = 123467# seed
-map_name = "hypothalamus_neurons_reference"
-map_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_objects/"
 
 results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_5/"
 system(paste0("mkdir -p ",results_path))
 
-### Load map
-map_seurat_path = paste0(map_path,map_name,".rds")
-neuron_map_seurat = readRDS(map_seurat_path)
-#neuron_map_seurat@meta.data = cbind(neuron_map_seurat@meta.data ,neuron_map_seurat@misc$other_metdata)
-
+# load everything required
+source("scripts/paper_figures_new/load_data.R")
+require(mapscvi)
 ## load mapped object
 query_snseq_neurons = readRDS(paste0("/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/nucseq_neurons_map.rds"))
 

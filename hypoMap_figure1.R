@@ -3,35 +3,15 @@
 ### Load & Prepare
 ##########
 
-require(tidyverse)
-require(data.table)
-require(Seurat)
-require(ggplot2)
-
-source("utils.R")
-
-### Set parameters
-global_seed = 123467# seed
-map_name = "hypothalamus_neurons_reference"
-map_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_objects/"
-
-
 results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_1/"
 system(paste0("mkdir -p ",results_path))
 
-### Load map
-map_seurat_path = paste0(map_path,map_name,".rds")
-neuron_map_seurat = readRDS(map_seurat_path)
-#neuron_map_seurat@meta.data = cbind(neuron_map_seurat@meta.data ,neuron_map_seurat@misc$other_metdata)
+# load everything required
+source("scripts/paper_figures_new/load_data.R")
 
-
-# TODO: update this !??!?
-## load full map
-project_name = "hypothalamus_full_map"
-project_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/scHarmonize/hypothalamusMapFull_v4/harmonization_results/"
-seurat_file_name = paste0(project_path,project_name,".h5Seurat")
-message(Sys.time(),": Load seurat object.." )
-full_map_seurat = SeuratDisk::LoadH5Seurat(seurat_file_name)
+# source
+# TODO: needed ?
+source("utils.R")
 
 ### load comparison data
 neurons_metrics = data.table::fread("/beegfs/scratch/bruening_scratch/lsteuernagel/data/scHarmonize/hypothalamusMapNeurons_v4/documentation/hypothalamusMapNeurons_v4_comparison_457fc60c3c4f1911bcbc6c5d46127037.txt",data.table = F)

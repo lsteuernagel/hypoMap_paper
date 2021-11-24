@@ -3,18 +3,13 @@
 ### Load & Prepare
 ##########
 
-require(tidyverse)
-require(data.table)
-require(Seurat)
-require(ggplot2)
-require(mapscvi)
-
 #set path
 results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_3/"
 system(paste0("mkdir -p ",results_path))
 
 # load everything required
 source("scripts/paper_figures_new/load_data.R")
+require(mapscvi)
 
 # subsample ids for plotting
 subsample_ids = data.table::fread(paste0(data_path,"_subsampled_Cell_IDs_neuronMap.txt"),data.table = F,header = F)[,1]
