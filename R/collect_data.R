@@ -1,12 +1,21 @@
 
 ##########
-### Load files for supplementary Figures and Figure 1 and save in common location
+### Define paths
 ##########
 
-data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_input/"
+small_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/projects/hypoMap_paper/data_inputs/"
+large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
 # define some relevant files for loading of data
 key="hypothalamusMapNeurons_v4"
 scHarmonize_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/scHarmonize/"
+
+##########
+### romaov object
+##########
+
+## see the romanov_scvi RMD in /scHarmonize/scripts/mapscvi or the mapscvi vignette
+#query_romanov_neurons = readRDS("/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypothalamus/romanov/mapped_data/query_romanov_neurons.rds")
+system(command = paste0("cp ","/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypothalamus/romanov/mapped_data/query_romanov_neurons.rds ",large_data_path))
 
 ##########
 ### sn seq markers results
@@ -15,7 +24,7 @@ scHarmonize_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/scHarmoni
 # load marker genes sn seq
 output_file_name = paste0("/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/","sn_seq_mapped_neurons_K169_markers_2_sampleID.txt")
 sn_seq_markers_K169 = data.table::fread(output_file_name,data.table = F)
-data.table::fwrite(sn_seq_markers_K169,paste0(data_path,"sn_seq_mapped_neurons_K169_markers_2_sampleID.txt"),sep="\t")
+data.table::fwrite(sn_seq_markers_K169,paste0(small_data_path,"sn_seq_mapped_neurons_K169_markers_2_sampleID.txt"),sep="\t")
 
 ##########
 ### ISH results
@@ -23,7 +32,7 @@ data.table::fwrite(sn_seq_markers_K169,paste0(data_path,"sn_seq_mapped_neurons_K
 
 #### load ish results
 ish_quantification = data.table::fread("/beegfs/scratch/bruening_scratch/lsteuernagel/data/scHarmonize/hypothalamusMapNeurons_v4/harmonization_results/hypothalamus_neurons_reference/paper_results/ish_quantification_glp1r_updated.csv",data.table=FALSE)
-data.table::fwrite(ish_quantification,paste0(data_path,"ish_quantification_glp1r_updated.csv"),sep="\t")
+data.table::fwrite(ish_quantification,paste0(small_data_path,"ish_quantification_glp1r_updated.csv"),sep="\t")
 
 ##########
 ### metrics from integration
@@ -31,10 +40,10 @@ data.table::fwrite(ish_quantification,paste0(data_path,"ish_quantification_glp1r
 
 # neuron metric results
 neurons_metrics = data.table::fread("/beegfs/scratch/bruening_scratch/lsteuernagel/data/scHarmonize/hypothalamusMapNeurons_v4/documentation/hypothalamusMapNeurons_v4_comparison_457fc60c3c4f1911bcbc6c5d46127037.txt",data.table = F)
-data.table::fwrite(neurons_metrics,paste0(data_path,"hypothalamusMapNeurons_v4_comparison_457fc60c3c4f1911bcbc6c5d46127037.txt"),sep="\t")
+data.table::fwrite(neurons_metrics,paste0(small_data_path,"hypothalamusMapNeurons_v4_comparison_457fc60c3c4f1911bcbc6c5d46127037.txt"),sep="\t")
 ### load comparison data full
 full_metrics = data.table::fread("/beegfs/scratch/bruening_scratch/lsteuernagel/data/scHarmonize/hypothalamusMapFull_v4/documentation/hypothalamusMapFull_v4_comparison_8af8a1cd950067bb6859cbc1225c818d.txt",data.table = F)
-data.table::fwrite(full_metrics,paste0(data_path,"hypothalamusMapFull_v4_comparison_8af8a1cd950067bb6859cbc1225c818d.txt"),sep="\t")
+data.table::fwrite(full_metrics,paste0(small_data_path,"hypothalamusMapFull_v4_comparison_8af8a1cd950067bb6859cbc1225c818d.txt"),sep="\t")
 
 
 ##########
@@ -48,19 +57,19 @@ id_file_name = paste0(scHarmonize_path,key,"/","seurat_objects","/",key,"_subsam
 # get mapped celltypes
 print(mapped_celltypes_file)
 mapped_celltypes =readRDS(mapped_celltypes_file)
-saveRDS(mapped_celltypes,paste0(data_path,"mapped_celltypes_neuronMap.rds"))
+saveRDS(mapped_celltypes,paste0(small_data_path,"mapped_celltypes_neuronMap.rds"))
 
 ## subsample ids as start for plotting
 subsample_ids_df = data.table::fread(id_file_name,data.table = F,header = F)
-data.table::fwrite(subsample_ids_df,paste0(data_path,"_subsampled_Cell_IDs_neuronMap.txt"),sep="\t")
+data.table::fwrite(subsample_ids_df,paste0(small_data_path,"_subsampled_Cell_IDs_neuronMap.txt"),sep="\t")
 
 ##########
 ### full evaluation results
 ##########
 
 ## original metadata
-seurat_metadata_path = paste0(scHarmonize_path,key,"/","seurat_objects","/",key,"_processed_metadata.txt")
-meta_data = data.table::fread(seurat_metadata_path,data.table = FALSE)
+seurat_metasmall_data_path = paste0(scHarmonize_path,key,"/","seurat_objects","/",key,"_processed_metadata.txt")
+meta_data = data.table::fread(seurat_metasmall_data_path,data.table = FALSE)
 # just use from finals seurat object ?
 
 ## subsample ids as start for plotting
@@ -82,12 +91,14 @@ evaluation_entropy_knn_all = data.table::fread(evaluation_entropy_knn_all_file,d
 rownames(evaluation_entropy_knn_all) = meta_data$Cell_ID
 
 # save results with IDs
+#### I Save these in a different folde rbceause they are large!!
 evaluation_mixing_probNorm_all = cbind(Cell_ID=rownames(evaluation_mixing_probNorm_all),evaluation_mixing_probNorm_all)
-data.table::fwrite(evaluation_mixing_probNorm_all,paste0(data_path,"evaluation_mixing_probNorm.Batch_ID.20000.100.123467_all.txt"),sep="\t")
-evaluation_purity_knn_all = cbind(mapped_celltype=rownames(evaluation_purity_knn_all),evaluation_purity_knn_all)
-data.table::fwrite(evaluation_purity_knn_all,paste0(data_path,"evaluation_purity_knn.24.20.123467_all.txt"),sep="\t")
+data.table::fwrite(evaluation_mixing_probNorm_all,paste0(large_data_path,"evaluation_mixing_probNorm.Batch_ID.20000.100.123467_all.txt"),sep="\t")
 evaluation_entropy_knn_all = cbind(Cell_ID=rownames(evaluation_entropy_knn_all),evaluation_entropy_knn_all)
-data.table::fwrite(evaluation_entropy_knn_all,paste0(data_path,"evaluation_entropy_knn_all.Batch_ID.20.123467_all.txt"),sep="\t")
+data.table::fwrite(evaluation_entropy_knn_all,paste0(large_data_path,"evaluation_entropy_knn_all.Batch_ID.20.123467_all.txt"),sep="\t")
+# save in regular folder
+evaluation_purity_knn_all = cbind(mapped_celltype=rownames(evaluation_purity_knn_all),evaluation_purity_knn_all)
+data.table::fwrite(evaluation_purity_knn_all,paste0(small_data_path,"evaluation_purity_knn.24.20.123467_all.txt"),sep="\t")
 
 ##########
 ### bacTRAP signature file
@@ -96,7 +107,7 @@ data.table::fwrite(evaluation_entropy_knn_all,paste0(data_path,"evaluation_entro
 # signature files is generated via all_bacTRAP_signatures.R from bacTRAP_map project 
 bacTRAP_signature_file = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/scHarmonize/signatures/bacTRAP_signatures_rbo_2207.rds"
 bacTRAP_signatures = readRDS(bacTRAP_signature_file)
-saveRDS(bacTRAP_signatures,paste0(data_path,"bacTRAP_signatures_rbo.rds"))
+saveRDS(bacTRAP_signatures,paste0(small_data_path,"bacTRAP_signatures_rbo.rds"))
 
 ##########
 ### original UMAP
@@ -104,6 +115,6 @@ saveRDS(bacTRAP_signatures,paste0(data_path,"bacTRAP_signatures_rbo.rds"))
 
 snuc_hypo_master = readRDS("/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/snuc_hypo_master_211101.RDS")
 original_umap = snuc_hypo_master@reductions$umap@cell.embeddings
-data.table::fwrite(original_umap,paste0(data_path,"nucSeq_originalUMAP.txt"),sep="\t")
+data.table::fwrite(original_umap,paste0(small_data_path,"nucSeq_originalUMAP.txt"),sep="\t")
 
 

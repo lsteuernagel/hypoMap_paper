@@ -3,15 +3,15 @@
 ### Load & Prepare
 ##########
 
-results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_1/"
+results_path = "figure_outputs/figure_1/"
 system(paste0("mkdir -p ",results_path))
 
 # load everything required
-source("load_data.R")
-source("plot_functions.R")
+source("R/load_data.R")
+source("R/plot_functions.R")
 
-### load comparison data
-neurons_metrics = data.table::fread("/beegfs/scratch/bruening_scratch/lsteuernagel/data/scHarmonize/hypothalamusMapNeurons_v4/documentation/hypothalamusMapNeurons_v4_comparison_457fc60c3c4f1911bcbc6c5d46127037.txt",data.table = F)
+# load comparison data
+neurons_metrics = data.table::fread("data_inputs/hypothalamusMapNeurons_v4_comparison_457fc60c3c4f1911bcbc6c5d46127037.txt",data.table = F)
 
 ## plotting
 rasterize_point_size = 2.2
@@ -52,7 +52,6 @@ ggsave(filename = paste0(results_path,"neurons_metrics_scatter.pdf"),
 
 text_size = 20
 
-#DimPlot(full_map_seurat,group.by = "Curated_Class",reduction = paste0("umap_","scvi"),label = TRUE,label.size = 6,raster = F,pt.size = 0.2)+NoLegend()+NoAxes() # ,cols = "polychrome"
 full_celltype_plot = DimPlot(full_map_seurat,group.by = "Curated_Class",reduction = paste0("umap_","scvi"),label = TRUE,label.size = 6,raster = F,pt.size = 0.2)+NoAxes()+NoLegend()+
   theme(text = element_text(size=text_size))+ggtitle("Celltypes on hypothalamus reference map")
 full_celltype_plot = rasterize_ggplot(full_celltype_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)

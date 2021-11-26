@@ -3,12 +3,13 @@
 ### Load & Prepare
 ##########
 
-results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_2/"
+results_path = "figure_outputs/figure_2/"
 system(paste0("mkdir -p ",results_path))
 
 # load everything required
-source("load_data.R")
-source("plot_functions.R")
+source("R/load_data.R")
+source("R/plot_functions.R")
+large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
 
 ## plotting
 rasterize_point_size = 2.2
@@ -67,10 +68,8 @@ ggsave(filename = paste0(results_path,"circular_tree_heat_label2.pdf"),
 ##########
 ### campbell anno
 ##########
-neuron_map_seurat@meta.data$new_name_col = neuron_map_seurat@meta.data$K31_named
-neuron_map_seurat@meta.data$new_name_col = gsub("Slc32a1\\.|Slc17a6\\.","",neuron_map_seurat@meta.data$new_name_col)
 
-# prepare column
+# prepare column for campbell cluster names (with others NA)
 campbell_names= names(table(neuron_map_seurat@meta.data$Author_CellType[neuron_map_seurat@meta.data$Dataset=="Campbell"]))[table(neuron_map_seurat@meta.data$Author_CellType[neuron_map_seurat@meta.data$Dataset=="Campbell"]) > 5]
 campbell_names = campbell_names[!grepl("NA_",campbell_names)]
 
@@ -99,14 +98,11 @@ ggsave(filename = paste0(results_path,"campbell_annotations.pdf"),
 ### VIP inlay plot
 ##########
 
-neuron_map_seurat@meta.data$new_name_col_169 = neuron_map_seurat@meta.data$K169_named
-#neuron_map_seurat@meta.data$new_name_col_169 = gsub("Slc32a1\\.|Slc17a6\\.","",neuron_map_seurat@meta.data$new_name_col_169)
-
 # plot
 Idents(neuron_map_seurat) <- "K14_pruned"
 neuron_map_seurat_vip_subset = subset(neuron_map_seurat,subset = K14_pruned == "K14-4")
 neuron_map_seurat_vip_subset = subset(neuron_map_seurat_vip_subset,subset = umapscvi_1 > 1 & umapscvi_2 < -0.5)
-vip_small_plot=DimPlot(neuron_map_seurat_vip_subset,group.by = "new_name_col_169",reduction = paste0("umap_","scvi"),label = TRUE,label.size = 6,repel = TRUE,order = TRUE,na.value = "lightgrey")+
+vip_small_plot=DimPlot(neuron_map_seurat_vip_subset,group.by = "K169_named",reduction = paste0("umap_","scvi"),label = TRUE,label.size = 6,repel = TRUE,order = TRUE,na.value = "lightgrey")+
   NoLegend()+NoAxes()+scale_color_discrete(na.value="lightgrey")+ggtitle("Vip neurons reference map")
 vip_small_plot = rasterize_ggplot(vip_small_plot,pixel_raster = 1536,pointsize = 1.8)
 vip_small_plot
@@ -121,16 +117,15 @@ ggsave(filename = paste0(results_path,"vip_small_plot.pdf"),
 ### Romanov 
 ##########
 
-## see the romanov_scvi RMD in /scHarmonize/scripts/mapscvi or the mapscvi vignette
-query_romanov_neurons = readRDS("/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypothalamus/romanov/mapped_data/query_romanov_neurons.rds")
+query_romanov_neurons = readRDS(paste0(large_data_path,"query_romanov_neurons.rds"))
 
-a1=mapscvi::compare_clustering(query_romanov_neurons,clustering_1 = "Author_CellType",clustering_2 = "predicted_K169_named" ,min_cells = 0,min_pct = 0,return_data = TRUE)
-# need mapscvi function!
+compare_clustering_romanov =mapscvi::compare_clustering(query_romanov_neurons,clustering_1 = "Author_CellType",clustering_2 = "predicted_K169_named" ,min_cells = 0,min_pct = 0,return_data = TRUE)
+data.table::fwrite(compare_clustering_romanov,paste0(results_path,"compare_clustering_romanov.txt"),sep="\t")
+
 # make plot
 romanov_mapped_plot = mapscvi::plot_query_labels(query_seura_object=query_romanov_neurons,reference_seurat=neuron_map_seurat,label_col="K31_named",
                                                  label_col_query = "predicted_K31_named",overlay = TRUE,bg_col = "lightgrey",
-                                                 query_pt_size = 0.4,labelonplot = TRUE,label.size=5)+
-  ggtitle("Romanov et al. mapped on HypoMap")
+                                                 query_pt_size = 0.4,labelonplot = TRUE,label.size=5)+ggtitle("Romanov et al. mapped on HypoMap")
 
 romanov_mapped_plot = rasterize_ggplot(romanov_mapped_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 romanov_mapped_plot

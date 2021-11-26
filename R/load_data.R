@@ -4,12 +4,11 @@ require(data.table)
 require(Seurat)
 require(ggplot2)
 
-if(file.exists("utils.R")){source("utils.R")}
-
 ### Set parameters
 global_seed = 123467# seed
 map_name = "hypothalamus_neurons_reference"
 map_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_objects/"
+large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
 
 ### Load map
 map_seurat_path = paste0(map_path,map_name,".rds")
