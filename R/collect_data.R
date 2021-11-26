@@ -10,12 +10,20 @@ key="hypothalamusMapNeurons_v4"
 scHarmonize_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/scHarmonize/"
 
 ##########
-### romaov object
+### move seurat objects into one folder
 ##########
 
 ## see the romanov_scvi RMD in /scHarmonize/scripts/mapscvi or the mapscvi vignette
 #query_romanov_neurons = readRDS("/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypothalamus/romanov/mapped_data/query_romanov_neurons.rds")
 system(command = paste0("cp ","/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypothalamus/romanov/mapped_data/query_romanov_neurons.rds ",large_data_path))
+
+# nuc seq all
+system(command = paste0("cp ","/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/nucseq_all_map.rds ",large_data_path))
+
+# nuc seq neurons
+system(command = paste0("cp ","/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/nucseq_neurons_map.rds ",large_data_path))
+
+
 
 ##########
 ### sn seq markers results

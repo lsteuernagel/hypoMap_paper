@@ -3,19 +3,17 @@
 ### Load & Prepare
 ##########
 
-results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_4/"
+results_path = "figure_outputs/figure_4/"
 system(paste0("mkdir -p ",results_path))
 
 # load everything required
-source("load_data.R")
-source("plot_functions.R")
+source("R/load_data.R")
+source("R/plot_functions.R")
 library(mapscvi) # please install the mapscvi package that was used to project the nucseq data and provides additional visualization functions for the projected data
+large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
 
-# path with output files
-data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_input/"
-
-## load mapped object
-query_snseq_neurons = readRDS(paste0("/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/nucseq_neurons_map.rds"))
+## load nucseq mapped object
+query_snseq_neurons = readRDS(paste0(large_data_path,"nucseq_neurons_map.rds"))
 
 # colors
 reference_color = "#cc2118"
@@ -63,6 +61,7 @@ ggsave(filename = paste0(results_path,"mapping_prob_snseq.pdf"),
 
 # create cluster overview using mapscvi:
 overview_clustering = mapscvi::compare_clustering(query_snseq_neurons,"predicted_K169_named","Cluster_IDs",min_cells = 10,min_pct = 0.1,return_data=TRUE)
+data.table::fwrite(overview_clustering,paste0(results_path,"overview_clustering_nucSeq.txt"),sep="\t")
 
 #### SCN plots
 # sankey
@@ -119,7 +118,6 @@ vmh_dimplot
 # save sankeys
 networkD3::saveNetwork(sankey_vmh, paste0(results_path,"sankey_vmh_neurons.html"))
 # convert it
-# need: webshot::install_phantomjs()
 webshot::webshot(paste0(results_path,"sankey_vmh_neurons.html"),file=paste0(results_path,"sankey_vmh_neurons.png"), vwidth = 1000, vheight = 900)
 webshot::webshot(paste0(results_path,"sankey_vmh_neurons.html"),file=paste0(results_path,"sankey_vmh_neurons.pdf"), vwidth = 1000, vheight = 900)
 
@@ -128,8 +126,6 @@ ggsave(filename = paste0(results_path,"vmh_dimplot.png"),
        plot = vmh_dimplot, "png",dpi=450,width=200,height = 200,units="mm")
 ggsave(filename = paste0(results_path,"vmh_dimplot.pdf"),
        plot = vmh_dimplot, "pdf",dpi=450,width=200,height = 200,units="mm")
-
-# TODO: supplemental plot/table saying how many clusters were not mapped at all ?
 
 
 ###########################
@@ -144,8 +140,7 @@ ggsave(filename = paste0(results_path,"vmh_dimplot.pdf"),
 sc_seq_markers_K169 = neuron_map_seurat@misc$markers_comparisons_all[neuron_map_seurat@misc$markers_comparisons_all$p_val_adj<0.01,]
 
 # load marker genes sn seq
-output_file_name = paste0(data_path,"sn_seq_mapped_neurons_K169_markers_2_sampleID.txt")
-sn_seq_markers_K169 = data.table::fread(output_file_name,data.table = F)
+sn_seq_markers_K169 = data.table::fread(paste0("data_inputs/sn_seq_mapped_neurons_K169_markers_2_sampleID.txt"),data.table = F)
 sn_seq_markers_K169$specificity = (sn_seq_markers_K169$pct.1 / sn_seq_markers_K169$pct.2) * sn_seq_markers_K169$avg_logFC
 sn_seq_markers_K169$avg_log2FC = sn_seq_markers_K169$avg_logFC
 
@@ -218,6 +213,10 @@ ggplot(all_clusterstats_sn_df_summarized,aes(mean.1,pct.1))+geom_point(size=0.2)
 
 all_genes_to_keep = base::union(sc_genes_to_keep,sn_genes_to_keep)
 
+# make a table that can be saved 
+all_clusterstats_both_summarized = dplyr::full_join(all_clusterstats_sc_df_summarized,all_clusterstats_sn_df_summarized, by =c("gene"="gene"),suffix=c("_sc","_sn"))
+# data.table::fwrite(all_clusterstats_both_summarized,paste0(results_path,"max_expression_in_any_cluster_per_gene.txt"),sep = "\t")
+
 ##########
 ### Calculate per gene correlations
 ##########
@@ -237,9 +236,7 @@ all_cors_spearman=sapply(shared_genes,function(gene,mat1,mat2){
 },mat1=neuron_map_mean_expression_subset,mat2=snseq_mean_expression_subset)
 per_gene_cor = data.frame(gene = names(all_cors), pearson = all_cors,spearman = all_cors_spearman)
 
-##########
-### Define gene classes
-##########
+## add more info to gene_cors
 
 padj_cut = 0.001
 fc_min = 0.25
@@ -254,42 +251,35 @@ per_gene_cor$both_marker[per_gene_cor$sn_marker & per_gene_cor$sc_marker] = TRUE
 per_gene_cor$sn_marker[per_gene_cor$both_marker] = FALSE
 per_gene_cor$sc_marker[per_gene_cor$both_marker] = FALSE
 
-# load class annotations
-mouse_full_annotations = data.table::fread("/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/heatmap-gene-lists/mouse_full_annotations.txt",
-                                           data.table = F,fill=TRUE,sep = "\t")
-mouse_full_annotations_reduced = mouse_full_annotations %>% dplyr::select(gene = `Gene name`, ensembl_id = ACCESSION, Location, Type = `Type(s)`) %>%
-  dplyr::mutate(annotation=paste0(Location,"_",Type))
+## add max value
+all_clusterstats_both_summarized_for_join = all_clusterstats_both_summarized %>% 
+  dplyr::mutate(max_pct_any = base::pmax(pct.1_sc,pct.1_sn,na.rm = TRUE), max_mean_any =  base::pmax(pct.1_sc,mean.1_sn,na.rm = TRUE)) %>%
+  dplyr::select(gene,max_pct_any,max_mean_any)
+per_gene_cor = dplyr::left_join(per_gene_cor,all_clusterstats_both_summarized_for_join,by=c("gene"="gene"))
+# save gene cors!
+data.table::fwrite(per_gene_cor,paste0(results_path,"per_gene_correlations.txt"),sep = "\t")
 
-# make a list
-class_list = split(mouse_full_annotations_reduced$gene,f=mouse_full_annotations_reduced$Type)
-class_list = class_list[!names(class_list) %in% c("","other")]
-names(class_list)
-
-## manual annotation for neuropeptide / hormones
-# from GO:0005179:
-hormone_activity_genes = data.table::fread("/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/heatmap-gene-lists/hormone_activity_genes.txt",
-                                           data.table = F,fill=TRUE,sep = "\t")
-
-# from KEGG https://www.genome.jp/kegg-bin/show_pathway?ko04080
-kegg_neuro_active = data.table::fread("/beegfs/scratch/bruening_scratch/lsteuernagel/data/scHarmonize/signalling/curated_node_info.txt",
-                                      data.table = F,fill=TRUE,sep = "\t")
-kegg_neuro_active_reduced = kegg_neuro_active[kegg_neuro_active$nodetype=="source" & kegg_neuro_active$type == "gene",]
-# add hormoes to list
-class_list[["neuropeptide/hormone"]] = union(hormone_activity_genes$Gene.name,kegg_neuro_active_reduced$gene)
-
-# add markers to list
-class_list[["markers_both"]] = per_gene_cor$gene[per_gene_cor$both_marker]
-class_list[["markers_sc"]] = per_gene_cor$gene[per_gene_cor$sc_marker]
-class_list[["markers_sn"]] = per_gene_cor$gene[per_gene_cor$sn_marker]
 
 ##########
 ### Heatmaps per gene 'class'
 ##########
 
+## we defined gene classes based on KEGG, GO and Ingenuity that can be loaded from a json file provided in this repo
+# to make this scipt shroter I have removed the full creation procedure.
+class_list = jsonlite::read_json("data_inputs/gene_classes.json")
+
+# add markers from above to list
+class_list[["markers_both"]] = per_gene_cor$gene[per_gene_cor$both_marker]
+class_list[["markers_sc"]] = per_gene_cor$gene[per_gene_cor$sc_marker]
+class_list[["markers_sn"]] = per_gene_cor$gene[per_gene_cor$sn_marker]
+
 # make a combined receptor class
-class_list[["receptor"]] = unique(c(class_list[["ligand-dependent nuclear receptor"]],class_list[["G-protein coupled receptor"]],class_list[["transmembrane receptor"]]))
+class_list[["enzyme"]] = unique(c(class_list[["peptidase"]],class_list[["Gphosphatase"]],class_list[["kinase"]],class_list[["enzyme"]]))
+
 # reduce class lists to the ones we want to show in the final map:
-class_list_subset = class_list[names(class_list) %in% c("receptor","neuropeptide/hormone","transcription regulator","translation regulator","ion channel","growth factor","markers_both" ,"markers_sc","markers_sn")]
+class_list_subset = class_list[names(class_list) %in% c("ligand-dependent nuclear receptor", "transmembrane receptor", "G-protein coupled receptor",
+                                                        "neuropeptide/hormone","transcription regulator","translation regulator","enzyme",
+                                                        "ion channel","growth factor","markers_both" ,"markers_sc","markers_sn")]
 
 n_density = 300
 list_df = lapply(class_list_subset,function(genes,per_gene_cor,subset_genes,min_genes = 10,n_density = n_density){
@@ -313,80 +303,88 @@ density_per_class_df_long$group = "gene classes"
 density_per_class_df_long$group[density_per_class_df_long$class %in% c("markers_sc","markers_sn","markers_both")] = "celltype markers"
 density_per_class_df_long$group = factor(density_per_class_df_long$group,levels=(c("celltype markers","gene classes")))
 
+# add numbers per class
+gene_per_class = data.frame(class = names(sapply(class_list_subset,length)),n_genes = sapply(class_list_subset,length))
+density_per_class_df_long = density_per_class_df_long %>% dplyr::left_join(gene_per_class,by="class")
 ## make heatmap 
 
 require(scales)
 class_heatmap = ggplot(density_per_class_df_long[density_per_class_df_long$steps> (-0.3),], aes(x = class, y = steps , fill = density)) +
   geom_tile() +
+  geom_text(aes(x = class, y = 1.11,label=n_genes), hjust =1,size=5)+ # add cell numbers
   ggplot2::scale_fill_gradient(low="white",high="#ff1414",na.value = "grey80",
                                limits=c(0,max(density_per_class_df_long$density)), oob=squish) + 
+ # ylim(c(-0.3,1))+
   theme(text = element_text(size=25), axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
   xlab("Gene class")+ylab("Pearson correlation")+ guides(fill=guide_legend(title="Density"))+
   scale_fill_gradient(low = "white",high = reference_color)+
   geom_hline(yintercept = 0,color="grey60",linetype = "dashed")+
   coord_flip()+facet_grid(group ~ ., scales = "free",space = "free_y",drop=TRUE)  + 
   theme(panel.spacing = unit(2, "lines"),
-        strip.text.y = element_blank())
+        strip.text.y = element_blank(),
+        panel.background = element_rect(fill = "white"))
 # and show
 class_heatmap
 
 #store:
 ggsave(filename = paste0(results_path,"geneclass_cor_heatmap.png"),
-       plot = class_heatmap, "png",dpi=600,width=300,height = 200,units="mm")
+       plot = class_heatmap, "png",dpi=600,width=330,height = 200,units="mm")
 
 ggsave(filename = paste0(results_path,"geneclass_cor_heatmap.pdf"),
-       plot = class_heatmap, "pdf",dpi=600,width=300,height = 200,units="mm")
+       plot = class_heatmap, "pdf",dpi=600,width=330,height = 200,units="mm")
 
 
 ##########
-### gene characteristics
+### gene characteristics -- we excluded this for now
 ##########
+# 
+# ## which genes do we want to check ?
+# genes_of_interest = shared_genes
+# 
+# ## query biomart to obtain relevant characteristics
+# # I use nov2020.archive.ensembl.org because it is still on 38 mm genome.
+# library(biomaRt)
+# mart <- useMart(dataset="mmusculus_gene_ensembl",biomart='ensembl',host="nov2020.archive.ensembl.org") # ,host="feb2021.archive.ensembl.org"
+# #all_attr = listAttributes(mart)
+# all_attributes = c('ensembl_gene_id', 'external_gene_name',"gene_biotype","start_position","end_position","ensembl_transcript_id","external_transcript_name","transcript_start", "transcript_end","strand","chromosome_name",
+#                    "transcript_biotype","transcript_count","transcript_length","transcription_start_site","transcript_count","percentage_gene_gc_content") # ,"ncoils","tmhmm","transcript_exon_intron"
+# mouse_gene_info = getBM(attributes = all_attributes,filters='external_gene_name',values=genes_of_interest,mart = mart)
+# 
+# # ideas
+# # gene length
+# # shortest transcript
+# # longest transcript
+# # transcript count
+# # protein-coding transcript count
+# # percentage_gene_gc_content
+# # "ncoils","tmhmm"
+# 
+# # define characteristics
+# mouse_gene_info_charac = mouse_gene_info %>% dplyr::mutate(
+#   gene_length = as.numeric(end_position) - as.numeric(start_position),
+# ) %>% dplyr::group_by(ensembl_gene_id) %>% dplyr::mutate(
+#   shortest_transcript = transcript_length[transcript_length == min(transcript_length)][1],
+#   longest_transcript = transcript_length[transcript_length == max(transcript_length)][1],
+# ) %>% dplyr::select(ensembl_gene_id,external_gene_name,gene_biotype,gene_length,transcript_count,shortest_transcript,longest_transcript,percentage_gene_gc_content) %>%
+#   dplyr::distinct(ensembl_gene_id,external_gene_name,.keep_all = TRUE)
+# 
+# ## correlate numeric charac
+# mouse_gene_info_charac_with_cor = dplyr::left_join(mouse_gene_info_charac, per_gene_cor %>% dplyr::select(gene,pearson_cor = pearson),by=c("external_gene_name"="gene"))
+# 
+# # remove some outliers
+# mouse_gene_info_charac_with_cor$gene_length[mouse_gene_info_charac_with_cor$gene_length>1000000] = 1000000
+# mouse_gene_info_charac_with_cor$shortest_transcript[mouse_gene_info_charac_with_cor$shortest_transcript>15000] = 15000
+# mouse_gene_info_charac_with_cor$longest_transcript[mouse_gene_info_charac_with_cor$longest_transcript>15000] = 1500
+# # example plot
+# ggplot(mouse_gene_info_charac_with_cor,aes(pearson_cor,gene_length))+geom_point(size=0.3)
+# # correlate
+# cor(mouse_gene_info_charac_with_cor$pearson_cor,mouse_gene_info_charac_with_cor[,c("gene_length","transcript_count","shortest_transcript","longest_transcript", "percentage_gene_gc_content")],method="pearson",use = "pairwise.complete.obs")
+# ## by biotype classes:
+# table(mouse_gene_info_charac_with_cor$gene_biotype)
+# sort(tapply(mouse_gene_info_charac_with_cor$pearson_cor,INDEX = mouse_gene_info_charac_with_cor$gene_biotype,FUN = mean),decreasing = TRUE)
+# # generally to low
 
-## which genes do we want to check ?
-genes_of_interest = shared_genes
 
-## query biomart to obtain relevant characteristics
-# I use nov2020.archive.ensembl.org because it is still on 38 mm genome.
-library(biomaRt)
-mart <- useMart(dataset="mmusculus_gene_ensembl",biomart='ensembl',host="nov2020.archive.ensembl.org") # ,host="feb2021.archive.ensembl.org"
-#all_attr = listAttributes(mart)
-all_attributes = c('ensembl_gene_id', 'external_gene_name',"gene_biotype","start_position","end_position","ensembl_transcript_id","external_transcript_name","transcript_start", "transcript_end","strand","chromosome_name",
-                   "transcript_biotype","transcript_count","transcript_length","transcription_start_site","transcript_count","percentage_gene_gc_content") # ,"ncoils","tmhmm","transcript_exon_intron"
-mouse_gene_info = getBM(attributes = all_attributes,filters='external_gene_name',values=genes_of_interest,mart = mart)
-
-# ideas
-# gene length
-# shortest transcript
-# longest transcript
-# transcript count
-# protein-coding transcript count
-# percentage_gene_gc_content
-# "ncoils","tmhmm"
-
-# define characteristics
-mouse_gene_info_charac = mouse_gene_info %>% dplyr::mutate(
-  gene_length = as.numeric(end_position) - as.numeric(start_position),
-) %>% dplyr::group_by(ensembl_gene_id) %>% dplyr::mutate(
-  shortest_transcript = transcript_length[transcript_length == min(transcript_length)][1],
-  longest_transcript = transcript_length[transcript_length == max(transcript_length)][1],
-) %>% dplyr::select(ensembl_gene_id,external_gene_name,gene_biotype,gene_length,transcript_count,shortest_transcript,longest_transcript,percentage_gene_gc_content) %>%
-  dplyr::distinct(ensembl_gene_id,external_gene_name,.keep_all = TRUE)
-
-## correlate numeric charac
-mouse_gene_info_charac_with_cor = dplyr::left_join(mouse_gene_info_charac, per_gene_cor %>% dplyr::select(gene,pearson_cor = pearson),by=c("external_gene_name"="gene"))
-
-# remove some outliers
-mouse_gene_info_charac_with_cor$gene_length[mouse_gene_info_charac_with_cor$gene_length>1000000] = 1000000
-mouse_gene_info_charac_with_cor$shortest_transcript[mouse_gene_info_charac_with_cor$shortest_transcript>15000] = 15000
-mouse_gene_info_charac_with_cor$longest_transcript[mouse_gene_info_charac_with_cor$longest_transcript>15000] = 1500
-# example plot
-ggplot(mouse_gene_info_charac_with_cor,aes(pearson_cor,gene_length))+geom_point(size=0.3)
-# correlate
-cor(mouse_gene_info_charac_with_cor$pearson_cor,mouse_gene_info_charac_with_cor[,c("gene_length","transcript_count","shortest_transcript","longest_transcript", "percentage_gene_gc_content")],method="pearson",use = "pairwise.complete.obs")
-## by biotype classes:
-table(mouse_gene_info_charac_with_cor$gene_biotype)
-sort(tapply(mouse_gene_info_charac_with_cor$pearson_cor,INDEX = mouse_gene_info_charac_with_cor$gene_biotype,FUN = mean),decreasing = TRUE)
-# generally to low
 
 ##########
 ### cluster-centric comparison:
@@ -419,7 +417,6 @@ for(dset in datasets){
   message("Time used to summarise expression matrix : ",Sys.time()-st)
   datasets_mean_expression_list[[dset]] = as.matrix(do.call(cbind,mean_expr))
 }
-
 
 # init
 cor_method="pearson"
@@ -476,16 +473,13 @@ for(i in 1:length(clusters_to_check)){
 
 ## summarize:
 ndigits = 5
-per_dataset_cor_res_sq = lapply(per_dataset_cor_res,function(x,ndigits){round(x^2,digits = ndigits)},ndigits=ndigits)
+# per_dataset_cor_res_sq = lapply(per_dataset_cor_res,function(x,ndigits){round(x^2,digits = ndigits)},ndigits=ndigits)
 per_dataset_cor_df =as.data.frame(do.call(rbind, per_dataset_cor_res))  #as.data.frame(do.call(rbind, per_dataset_cor_res_sq))
-per_dataset_cor_df$mean_adj_rsq = round(mean_adj_rsq,digits = ndigits)
-per_dataset_cor_df$global_rsq = round(global_cor_res,digits = ndigits) #round(global_cor_res^2,digits = ndigits)
+#per_dataset_cor_df$mean_adj_rsq = round(mean_adj_rsq,digits = ndigits)
+per_dataset_cor_df$global_cor = round(global_cor_res,digits = ndigits) #round(global_cor_res^2,digits = ndigits)
 per_dataset_cor_df$K169_pruned = rownames(per_dataset_cor_df)
 # add paired anno
 per_dataset_cor_df$K169_named = add_paired_annotation(input_annotation = per_dataset_cor_df$K169_pruned,reference_annotations = neuron_map_seurat@meta.data[,c("K169_pruned","K169_named")])
-
-plot(per_dataset_cor_df_both[rownames(per_dataset_cor_df),"global_rsq"],per_dataset_cor_df[,"global_rsq"])
-abline(a= 0,b=1)
 
 ##########
 ### Make heatmap - currently use treeplot below!
@@ -494,9 +488,9 @@ abline(a= 0,b=1)
 ## heatmap
 # per_dataset_cor_df = per_dataset_cor_df %>% dplyr::select(-mean_adj_rsq )
 # per_dataset_cor_long = per_dataset_cor_df %>% dplyr::arrange(desc(global_cor_res)) %>% tidyr::gather("Dataset","RSQ",-K169_pruned,-K169_named) 
-# per_dataset_cor_long$Dataset = factor(per_dataset_cor_long$Dataset,levels = c("global_rsq","Kim","Campbell","Chen","wenDropSeq","Lee_Idol","Mickelsen","Rossi","Moffit","Flynn","RomanovDev","Mousebrainorg","wen10x","kimDev"))
+# per_dataset_cor_long$Dataset = factor(per_dataset_cor_long$Dataset,levels = c("global_cor","Kim","Campbell","Chen","wenDropSeq","Lee_Idol","Mickelsen","Rossi","Moffit","Flynn","RomanovDev","Mousebrainorg","wen10x","kimDev"))
 # 
-# per_dataset_cor_long$K169_named = factor(per_dataset_cor_long$K169_named , levels = per_dataset_cor_df$K169_named[order(per_dataset_cor_df$global_rsq)])
+# per_dataset_cor_long$K169_named = factor(per_dataset_cor_long$K169_named , levels = per_dataset_cor_df$K169_named[order(per_dataset_cor_df$global_cor)])
 # 
 # # make heatmap 
 # require(scales)
@@ -515,8 +509,8 @@ abline(a= 0,b=1)
 
 # make data for first heatmap with correlations
 heatmap_data = per_dataset_cor_df
-heatmap_matrix = as.matrix(heatmap_data[,"global_rsq"]) # might want to change order
-colnames(heatmap_matrix) = "Rsq"
+heatmap_matrix = as.matrix(heatmap_data[,"global_cor"]) # might want to change order
+colnames(heatmap_matrix) = "Cor"
 rownames(heatmap_matrix) = heatmap_data$K169_pruned
 heatmap_matrix2 = as.matrix(heatmap_data[,datasets]) # might want to change order
 rownames(heatmap_matrix2) = heatmap_data$K169_pruned
@@ -526,7 +520,7 @@ circular_tree_cor = plot_cluster_tree(edgelist = neuron_map_seurat@misc$mrtree_e
                                       leaf_level=6,metadata=neuron_map_seurat@meta.data,
                                       label_size = 2, show_genes = TRUE, legend_title_1 = "RSQ",
                                       matrix_offset = 0.2, matrix_width =0.15,matrix_width_2 = 0.5,heatmap_colnames = TRUE,
-                                      manual_off_second = 1.5,legend_text_size = 8,heatmap_text_size = 2,colnames_angle=0,
+                                      manual_off_second = 1.5,legend_text_size = 8,heatmap_text_size = 2,colnames_angle=0,hjust_colnames=0.5,
                                       heatmap_colors =c("#1a1a82","#ff1414")) + ggplot2::scale_fill_gradient(low="#1a1a82",high="#ff1414",na.value = "grey90",
                                                                                                              limits=c(0,1), oob=squish)
 #circular_tree_cor
@@ -534,8 +528,7 @@ require(ggtree)
 circular_tree_cor_rotated = rotate_tree(circular_tree_cor, -90)
 circular_tree_cor_rotated
 
-
-#store:
+#save:
 ggsave(filename = paste0(results_path,"circular_tree_correlation.png"),
        plot = circular_tree_cor, "png",dpi=600,width=400,height = 400,units="mm")
 
