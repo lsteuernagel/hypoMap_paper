@@ -6,7 +6,7 @@
 results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_supplementary_2/"
 system(paste0("mkdir -p ",results_path))
 # load everything required
-source("scripts/paper_figures_new/load_data.R")
+source("load_data.R")
 
 # path with output files
 data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_input/"

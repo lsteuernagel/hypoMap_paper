@@ -7,7 +7,7 @@ results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper
 system(paste0("mkdir -p ",results_path))
 
 # load everything required
-source("scripts/paper_figures_new/load_data.R")
+source("load_data.R")
 require(mapscvi)
 
 # path with output files
@@ -281,7 +281,7 @@ class_list[["markers_sn"]] = per_gene_cor$gene[per_gene_cor$sn_marker]
 # make a combined receptor class
 class_list[["receptor"]] = unique(c(class_list[["ligand-dependent nuclear receptor"]],class_list[["G-protein coupled receptor"]],class_list[["transmembrane receptor"]]))
 # reduce class lists to the ones we want to show in the final map:
-class_list_subset = class_list[names(class_list) %in% c("receptor","neuropeptide/hormone","transcription regulator","ion channel","growth factor","markers" ,"markers_sc","markers_sn")]
+class_list_subset = class_list[names(class_list) %in% c("receptor","neuropeptide/hormone","transcription regulator","translation regulator","ion channel","growth factor","markers_both" ,"markers_sc","markers_sn")]
 
 n_density = 300
 list_df = lapply(class_list_subset,function(genes,per_gene_cor,subset_genes,min_genes = 10,n_density = n_density){
@@ -302,15 +302,16 @@ density_per_class_df_long = density_per_class_df_long %>% dplyr::group_by(class)
 density_per_class_df_long$class = fct_reorder(.f = density_per_class_df_long$class, .x = density_per_class_df_long$max_pearson, .fun = mean)
 
 density_per_class_df_long$group = "gene classes"
-density_per_class_df_long$group[density_per_class_df_long$class %in% c("markers_sc","markers_sn","markers")] = "celltype markers"
-density_per_class_df_long$group = factor(density_per_class_df_long$group,levels=rev(c("celltype markers","gene classes")))
+density_per_class_df_long$group[density_per_class_df_long$class %in% c("markers_sc","markers_sn","markers_both")] = "celltype markers"
+density_per_class_df_long$group = factor(density_per_class_df_long$group,levels=(c("celltype markers","gene classes")))
 
-# make heatmap 
+## make heatmap 
+
 require(scales)
 class_heatmap = ggplot(density_per_class_df_long[density_per_class_df_long$steps> (-0.3),], aes(x = class, y = steps , fill = density)) +
   geom_tile() +
   ggplot2::scale_fill_gradient(low="white",high="#ff1414",na.value = "grey80",
-                               limits=c(0,max(hist_per_class_df[,2:ncol(hist_per_class_df)] )), oob=squish) + 
+                               limits=c(0,max(density_per_class_df_long$density)), oob=squish) + 
   theme(text = element_text(size=25), axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
   xlab("Gene class")+ylab("Pearson correlation")+ guides(fill=guide_legend(title="Density"))+
   scale_fill_gradient(low = "white",high = reference_color)+
@@ -504,7 +505,7 @@ abline(a= 0,b=1)
 ### Make Tree heatmap 
 ##########
 
-# make data for first heatmap with percentages per dataset
+# make data for first heatmap with correlations
 heatmap_data = per_dataset_cor_df
 heatmap_matrix = as.matrix(heatmap_data[,"global_rsq"]) # might want to change order
 colnames(heatmap_matrix) = "Rsq"
@@ -517,10 +518,15 @@ circular_tree_cor = plot_cluster_tree(edgelist = neuron_map_seurat@misc$mrtree_e
                                       leaf_level=6,metadata=neuron_map_seurat@meta.data,
                                       label_size = 2, show_genes = TRUE, legend_title_1 = "RSQ",
                                       matrix_offset = 0.2, matrix_width =0.15,matrix_width_2 = 0.5,heatmap_colnames = TRUE,
-                                      manual_off_second = 1.5,legend_text_size = 8,heatmap_text_size = 2,
-                                      heatmap_colors =c("#1a1a82","#ff1414")) + ggplot2::scale_fill_gradient(low="#1a1a82",high="#ff1414",na.value = "grey80",
+                                      manual_off_second = 1.5,legend_text_size = 8,heatmap_text_size = 2,colnames_angle=0,
+                                      heatmap_colors =c("#1a1a82","#ff1414")) + ggplot2::scale_fill_gradient(low="#1a1a82",high="#ff1414",na.value = "grey90",
                                                                                                              limits=c(0,1), oob=squish)
-circular_tree_heat
+#circular_tree_cor
+require(ggtree)
+circular_tree_cor_rotated = rotate_tree(circular_tree_cor, -90)
+circular_tree_cor_rotated
+
+
 #store:
 ggsave(filename = paste0(results_path,"circular_tree_correlation.png"),
        plot = circular_tree_cor, "png",dpi=600,width=400,height = 400,units="mm")

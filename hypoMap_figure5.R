@@ -8,7 +8,7 @@ results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper
 system(paste0("mkdir -p ",results_path))
 
 # load everything required
-source("scripts/paper_figures_new/load_data.R")
+source("load_data.R")
 require(mapscvi)
 ## load mapped object
 query_snseq_neurons = readRDS(paste0("/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/nucseq_neurons_map.rds"))
@@ -288,6 +288,9 @@ if(!file.exists(campbell_agrp_file)){
 }else{
   conditionGenes_campbell = data.table::fread(campbell_agrp_file,data.table = F) 
 }
+
+# campbell_diet2 = subset(campbell_diet, subset = Diet %in% c("Normal","Fasted"))
+# FeaturePlot(campbell_diet2,features = "Fos",split.by = "Diet")
 
 #### Compare with sc-seq data:
 agrp_sn_vs_sc = dplyr::full_join(conditionGenes_Agrp,conditionGenes_campbell,suffix=c("_sn","_sc"),by=c("gene"="gene"))

@@ -8,7 +8,7 @@ results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper
 system(paste0("mkdir -p ",results_path))
 
 # load everything required
-source("scripts/paper_figures_new/load_data.R")
+source("load_data.R")
 require(mapscvi)
 
 # subsample ids for plotting

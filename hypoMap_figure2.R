@@ -7,7 +7,7 @@ results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper
 system(paste0("mkdir -p ",results_path))
 
 # load everything required
-source("scripts/paper_figures_new/load_data.R")
+source("load_data.R")
 
 # using the function in visualization_functions.R
 # TODO: move to somewhere else ?
@@ -39,7 +39,7 @@ heatmap_data2$suggested_region_curated[heatmap_data2$suggested_region_curated=="
 heatmap_data2$suggested_region_curated[heatmap_data2$suggested_region_curated=="Paraventricular hypothalamic nucleus descending division"]="Paraventricular hypothalamic nucleus"
 heatmap_matrix2 = as.matrix(heatmap_data2[,"suggested_region_curated"])
 rownames(heatmap_matrix2) = heatmap_data2$K169_pruned
-colnames(heatmap_matrix2) = "suggested_region_curated"
+colnames(heatmap_matrix2) = "Region"
 
 require(RColorBrewer)
 ## expand palette size
@@ -52,19 +52,20 @@ circular_tree_heat = plot_cluster_tree(edgelist = neuron_map_seurat@misc$mrtree_
                   leaf_level=6,metadata=neuron_map_seurat@meta.data,
                   label_size = 2, show_genes = TRUE, legend_title_1 = "Pct", legend_title_2 = "Region",
                   matrix_offset = 0.1, matrix_width =0.4,matrix_width_2 = 0.1,heatmap_colnames = TRUE,
-                  manual_off_second = 2,legend_text_size = 8,heatmap_text_size = 2,
+                  manual_off_second = 2,legend_text_size = 8,heatmap_text_size = 2,colnames_angle=0,hjust_colnames=0.5,
                   heatmap_colors =c("grey90","darkred")) +
   scale_fill_brewer(palette = "Paired",na.value = "grey90")
-  # scale_fill_gradient2(low="#eda09a",mid = "white",high = "#9aa9ed")
-  #scale_fill_gradient2(low="#cc2118",mid = "white",high = "#302ac9",na.value = "#878787")
-circular_tree_heat
+#circular_tree_heat
+require(ggtree)
+circular_tree_heat_rotated = rotate_tree(circular_tree_heat, -90)
+circular_tree_heat_rotated
 
 #store:
 ggsave(filename = paste0(results_path,"circular_tree_heat_label2.png"),
-       plot = circular_tree_heat, "png",dpi=600,width=400,height = 400,units="mm")
+       plot = circular_tree_heat_rotated, "png",dpi=600,width=400,height = 400,units="mm")
 
 ggsave(filename = paste0(results_path,"circular_tree_heat_label2.pdf"),
-       plot = circular_tree_heat, "pdf",dpi=600,width=400,height = 400,units="mm")
+       plot = circular_tree_heat_rotated, "pdf",dpi=600,width=400,height = 400,units="mm")
 
 ##########
 ### campbell anno
@@ -139,6 +140,7 @@ ggsave(filename = paste0(results_path,"vip_small_plot.pdf"),
 ## see the romanov_scvi RMD in /scHarmonize/scripts/mapscvi or the mapscvi vignette
 query_romanov_neurons = readRDS("/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypothalamus/romanov/mapped_data/query_romanov_neurons.rds")
 
+a1=mapscvi::compare_clustering(query_romanov_neurons,clustering_1 = "Author_CellType",clustering_2 = "predicted_K169_named" ,min_cells = 0,min_pct = 0,return_data = TRUE)
 # need mapscvi function!
 # make plot
 romanov_mapped_plot = mapscvi::plot_query_labels(query_seura_object=query_romanov_neurons,reference_seurat=neuron_map_seurat,label_col="K31_named",
