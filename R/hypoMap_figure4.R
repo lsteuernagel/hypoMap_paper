@@ -518,7 +518,7 @@ rownames(heatmap_matrix2) = heatmap_data$K169_pruned
 circular_tree_cor = plot_cluster_tree(edgelist = neuron_map_seurat@misc$mrtree_edgelist,
                                       heatmap_matrix=heatmap_matrix,heatmap_matrix2 = heatmap_matrix2,
                                       leaf_level=6,metadata=neuron_map_seurat@meta.data,
-                                      label_size = 2, show_genes = TRUE, legend_title_1 = "RSQ",
+                                      label_size = 2, show_genes = TRUE, legend_title_1 = "Cor",legend_title_2 = "Cor",
                                       matrix_offset = 0.2, matrix_width =0.15,matrix_width_2 = 0.5,heatmap_colnames = TRUE,
                                       manual_off_second = 1.5,legend_text_size = 8,heatmap_text_size = 2,colnames_angle=0,hjust_colnames=0.5,
                                       heatmap_colors =c("#1a1a82","#ff1414")) + ggplot2::scale_fill_gradient(low="#1a1a82",high="#ff1414",na.value = "grey90",

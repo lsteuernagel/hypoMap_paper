@@ -4,14 +4,18 @@
 ##########
 
 
-results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_5/"
+results_path ="figure_outputs/figure_5/"
 system(paste0("mkdir -p ",results_path))
 
 # load everything required
-source("load_data.R")
-require(mapscvi)
-## load mapped object
-query_snseq_neurons = readRDS(paste0("/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/nucseq_neurons_map.rds"))
+source("R/load_data.R")
+source("R/plot_functions.R")
+source("R/utility_functions.R")
+library(mapscvi) # please install the mapscvi package that was used to project the nucseq data and provides additional visualization functions for the projected data
+large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
+
+## load nucseq mapped object
+query_snseq_neurons = readRDS(paste0(large_data_path,"nucseq_neurons_map.rds"))
 
 query_sn_color = "#302ac9"
 fasting_color = "#28a7c9"
@@ -19,6 +23,7 @@ adlib_color = "#772ac9"
 bg_col = "lightgrey"
 colorvec = RColorBrewer::brewer.pal(9, "Blues")
 colorvec[1] =  "#dedede"
+cols_for_feature_plot = c("#dedede","#0b3ebd") # "#0b3ebd"
 
 rasterize_point_size = 2.2
 rasterize_pixels = 2048
@@ -30,9 +35,9 @@ rasterize_pixels = 2048
 #  feature plot
 Idents(query_snseq_neurons) <- "predicted_K31_named"
 fos_plot = Seurat::FeaturePlot(query_snseq_neurons,"Fos",split.by = "Diet",label = TRUE,label.size = 3.5,repel = TRUE,pt.size = 0.4,
-                               keep.scale="feature",order = TRUE,combine = FALSE)
-fos_plot_adlib = fos_plot[[1]]+NoAxes()+theme(panel.border = element_blank())+ scale_color_gradientn(colours = colorvec) +ggplot2::ggtitle("adlib")#+scale_color_gradient(low = "lightgrey",high = "#8c390a")
-fos_plot_fasting = fos_plot[[2]]+NoAxes()+theme(panel.border = element_blank())+ scale_color_gradientn(colours = colorvec) +ggplot2::ggtitle("fasted")#+scale_color_gradient(low = "lightgrey",high = "#8c390a")
+                               keep.scale="feature",order = TRUE,combine = FALSE,cols = cols_for_feature_plot)
+fos_plot_adlib = fos_plot[[1]]+NoAxes()+theme(panel.border = element_blank()) +ggplot2::ggtitle("adlib") #+ scale_color_gradientn(colours = colorvec) #+scale_color_gradient(low = "lightgrey",high = "#8c390a")
+fos_plot_fasting = fos_plot[[2]]+NoAxes()+theme(panel.border = element_blank()) +ggplot2::ggtitle("fasted")#+ scale_color_gradientn(colours = colorvec) #+scale_color_gradient(low = "lightgrey",high = "#8c390a")
 
 fos_plot_adlib = rasterize_ggplot(fos_plot_adlib,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 fos_plot_adlib
@@ -54,18 +59,17 @@ ggsave(filename = paste0(results_path,"fos_plot_fasting.pdf"),
 ##########
 
 # load geneshot based list
-immediate_early_genes = data.table::fread("/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/immediate_early_genes.txt",data.table = F)
+immediate_early_genes = data.table::fread(paste0("data_inputs/immediate_early_genes_wuetal.txt"),data.table = F)$gene
 
 # get the gene occurence in the dataset ( at least 100 cells to be somewhat relevant )
-ieg_expression = FetchData(query_snseq_neurons,vars = immediate_early_genes$mouse_symbol)
+ieg_expression = FetchData(query_snseq_neurons,vars = immediate_early_genes)
 ieg_expression[ieg_expression>0] = 1
 ieg_occurence = data.frame(occ = colSums(ieg_expression), mouse_symbol = names(colSums(ieg_expression)))
-immediate_early_genes = dplyr::left_join(immediate_early_genes,ieg_occurence,by = "mouse_symbol")
 # filter to a miniumu occurence (I use 200 for now)
-ieg_set = immediate_early_genes$mouse_symbol[immediate_early_genes$occ > 300]
+ieg_set = ieg_occurence$mouse_symbol[ieg_occurence$occ > 300 & ieg_occurence$occ < 10000]
 # filter to relevant IEG and add 1700016P03Rik
 #ieg_set = c(immediate_early_genes_filtered$mouse_symbol,"1700016P03Rik")# NO!!!!
-# remove some gene manually e.g. JUND (reverese effect?), Crebzf (extremely high count of cells) , SH3GL3 (arc interaction !? but high counts)
+# remove some gene manually e.g. JUND (reverese effect?),
 ieg_set = ieg_set[! ieg_set %in% c("Jund","Crebzf","Sh3gl3")]
 
 ## how to define this set best ? Only use Agrp changing genes ? only use gloabl genes ?
@@ -80,7 +84,7 @@ ieg_in_agrp_fcs$gene = rownames(ieg_in_agrp_fcs)
 # which genes are significant:
 activation_genes = ieg_in_agrp_fcs$gene[ieg_in_agrp_fcs$p_val_adj<0.05]
 # manually add two other well known genes:
-activation_genes = c(activation_genes,"Nr4a3","Egr1")
+activation_genes = c(activation_genes,"Nr4a3","Egr1","1700016P03Rik")
 activation_genes
 
 # example plot
@@ -91,8 +95,10 @@ activation_genes
 ### Immediate early genes in Agrp neurons - Violin plot
 ##########
 
+activation_genes_plot_subset = activation_genes[activation_genes %in% c("Fos","Gem","Btg2","Noct","Nr4a1","Junb", "1700016P03Rik")]
+
 Idents(query_snseq_neurons) <- "predicted_K98_pruned"
-p <- Seurat::VlnPlot(query_snseq_neurons,features = activation_genes,split.by = "Diet",idents = c("K98-4"),cols=c(adlib_color,fasting_color),
+p <- Seurat::VlnPlot(query_snseq_neurons,features = activation_genes_plot_subset,split.by = "Diet",idents = c("K98-4"),cols=c(adlib_color,fasting_color),
                      ncol =4,same.y.lims = TRUE,combine = FALSE) 
 legend <- cowplot::get_legend( p[[1]])
 for(i in 1:length(p)) {
@@ -101,6 +107,7 @@ for(i in 1:length(p)) {
 }
 p[[8]] = cowplot::plot_grid(legend)
 activation_genes_agrp_vlnPlot = cowplot::plot_grid(plotlist = p,ncol = 4)
+activation_genes_agrp_vlnPlot
 
 # save
 ggsave(filename = paste0(results_path,"activation_genes_agrp_vlnPlot.png"),
@@ -112,23 +119,23 @@ ggsave(filename = paste0(results_path,"activation_genes_agrp_vlnPlot.pdf"),
 ### Immediate early genes quantification across celtypes
 ##########
 
-# how to best quantify the response
-# fisher summed pvalues ? 
-# take mean across cell and make only one test (more elegant regarding pvalues, but what about baseline differences ?)
-
+# how to best quantify the response: I use fisher summed pvalues fow now
 
 # calculate marker statistics but require 10% occurence in either group
 min_pct = 0.1
-source("/beegfs/scratch/bruening_scratch/lsteuernagel/projects/2020-11-jule-single-cell-rnaseq/functions/findDEG.R")
+
 activation_per_cluster = FindAll_DEGs(query_snseq_neurons,group_var = "Diet",idents_name = "predicted_K169_named",max.cells.per.ident = 5000,
                                       features = activation_genes,logfc.threshold=0,pval_filter=Inf,min.pct = min_pct)
 # make a manual fdr adjustement
 activation_per_cluster$p_val_adjusted = p.adjust(activation_per_cluster$p_val,method = "hochberg") # manual fdr
 head(activation_per_cluster)
 
+# save table
+data.table::fwrite(activation_per_cluster,file = paste0(results_path,"activation_genes_per_cluster.txt"),sep="\t")
+
 ## summarise:
 # define a column for pvalue aggregation
-activation_per_cluster$pvalue_for_calc = activation_per_cluster$p_val
+activation_per_cluster$pvalue_for_calc = activation_per_cluster$p_val_adjusted
 pval_ieg_max = 0.05
 fc_ieg_min = 0.1
 # summarise per cluster
@@ -146,13 +153,16 @@ n_cells_per_cluster = query_snseq_neurons@meta.data %>% dplyr::group_by(predicte
 activation_per_cluster_stat = dplyr::left_join(activation_per_cluster_stat,n_cells_per_cluster,by=c("Identity"="predicted_K169_named"))
 activation_per_cluster_stat
 
+
+# make barplot for Figure
 activation_per_cluster_stat$Identity = factor(activation_per_cluster_stat$Identity,levels = rev(activation_per_cluster_stat$Identity))
 activation_celltype_barplot = ggplot(activation_per_cluster_stat,aes(x=Identity,y=fisher_sig_pval_down,fill= -1*mean_fc_down))+geom_bar(stat="identity")+
   geom_text(aes(x = Identity, y = max(fisher_sig_pval_down)*1.1,label=n_cells_cluster), hjust =1,size=6)+ # add cell numbers
   scale_fill_gradient(low="grey80",high=fasting_color,limits=c(0,max(abs(activation_per_cluster_stat$mean_fc_down))))+
   ylim(c(0,max(activation_per_cluster_stat$fisher_sig_pval_down)*1.1)) + # extend the y axis a bit so that the n cell labels doN#t overlap with the highest plot!
-  coord_flip()+ theme(text = element_text(size=20),axis.title.x = element_text(size = 20))+ylab("Summed adjusted p-value")+xlab(NULL)+ 
-  labs(fill='Mean log2-Foldchange')
+  coord_flip()+ylab("Summed adjusted p-value")+xlab(NULL)+ 
+  labs(fill='Mean log2-Foldchange')+
+  theme_bw()+ theme(text = element_text(size=20),axis.title.x = element_text(size = 20))
 activation_celltype_barplot
 
 # save
@@ -161,16 +171,12 @@ ggsave(filename = paste0(results_path,"activation_celltype_barplot.png"),
 ggsave(filename = paste0(results_path,"activation_celltype_barplot.pdf"),
        plot = activation_celltype_barplot, "pdf",dpi=450,width=250,height = 200,units="mm")
 
-# TODO: OR just use table !?
-#write.table(activation_per_cluster_stat,file="",quote = FALSE,row.names = FALSE)
-
-
 ##########
 ### Transcriptional changes in Agrp
 ##########
 
 # get all DEG of Agrp
-conditionGenes_Agrp_file = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/agrp_fasting_all.txt"
+conditionGenes_Agrp_file = paste0(results_path,"agrp_fasting_all.txt")
 if(!file.exists(conditionGenes_Agrp_file)){
   Idents(query_snseq_neurons) <- "predicted_K98_pruned"
   conditionGenes_Agrp = Seurat::FindMarkers(query_snseq_neurons, ident.1 = "adlib",ident.2 = "fast" , group.by = "Diet", subset.ident = "K98-4",min.pct = 0,logfc.threshold = 0)
@@ -184,7 +190,7 @@ if(!file.exists(conditionGenes_Agrp_file)){
 
 #filter
 conditionGenes_Agrp_filtered = conditionGenes_Agrp[conditionGenes_Agrp$p_val_adj < 0.05,] # filter pval
-conditionGenes_Agrp_filtered %>% dplyr::arrange((pct_diff),(avg_log2FC))
+#conditionGenes_Agrp_filtered %>% dplyr::arrange((pct_diff),(avg_log2FC))
 
 ### make volcano plot
 volcano_df = conditionGenes_Agrp
@@ -205,7 +211,10 @@ volcano_df$label[volcano_df$gene %in% c(down_regulated_genes,up_regulated_genes)
 agrp_fasting_volcano = ggplot(volcano_df,aes(-1*avg_log2FC,-log10(p_val_adj),label=label,color=color))+geom_point(size=0.3)+
   ggrepel::geom_text_repel(max.overlaps=100,size=6)+
   scale_color_manual(values = c("up-regulated in fasting"=fasting_color,"down-regulated in fasting"=adlib_color,"not regulated"="grey"))+
-  theme(text = element_text(size=30))+labs(color='Condition')
+  xlab("log2 foldchange")+ylab("-log10(adjusted pvalue)")+ggtitle("Changes in Agrp neurons")+
+  xlim(c(-1*(max(volcano_df$avg_log2FC)+0.1),max(volcano_df$avg_log2FC)+0.1))+
+  theme_bw()+
+  theme(text = element_text(size=text_size))+labs(color='Condition')
 agrp_fasting_volcano
 
 #save
@@ -230,7 +239,7 @@ agrp_upregulated_genes_names = conditionGenes_Agrp_filtered$gene[conditionGenes_
 
 # need to map to entrez
 library(biomaRt)
-mart <- useMart(dataset="mmusculus_gene_ensembl",biomart='ensembl',host="feb2021.archive.ensembl.org")
+mart <- useMart(dataset="mmusculus_gene_ensembl",biomart='ensembl',host="nov2020.archive.ensembl.org") # use 2020 release because better compatbile with most datasets  #or: feb2021.archive.ensembl.org
 up_regulated_genes_ids = getBM(attributes = c('ensembl_gene_id', 'external_gene_name','entrezgene_id'),
                                filters = "external_gene_name",values =agrp_upregulated_genes_names,mart = mart)
 # entrez_ids = up_regulated_genes
@@ -259,6 +268,9 @@ agrp_fasting_go_enrichment_simplified = clusterProfiler::simplify(agrp_fasting_g
 #get result
 agrp_fasting_go_enrichment_simplified_res=agrp_fasting_go_enrichment_simplified@result
 
+# save table
+data.table::fwrite(agrp_fasting_go_enrichment_simplified_res,file = paste0(results_path,"agrp_fasting_go_enrichment_simplified.txt"),sep="\t")
+
 # make dotplot
 go_bp_agrp_enrich_dotplot = enrichplot::dotplot(agrp_fasting_go_enrichment_simplified, showCategory=20) + 
   ggtitle("Dotplot for ORA")+theme(axis.text.y = element_text(size=20))+
@@ -276,8 +288,7 @@ ggsave(filename = paste0(results_path,"go_bp_agrp_enrich_dotplot.pdf"),
 ##########
 
 ### Comparison with Campbell Agrp changes:
-
-campbell_agrp_file = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/agrp_fasting_all_campbell.txt"
+campbell_agrp_file = paste0(results_path,"agrp_fasting_all_campbell.txt")
 if(!file.exists(campbell_agrp_file)){
   campbell_diet = subset(neuron_map_seurat,subset = Dataset=="Campbell")
   Idents(campbell_diet) <- "K98_pruned"
@@ -288,9 +299,6 @@ if(!file.exists(campbell_agrp_file)){
 }else{
   conditionGenes_campbell = data.table::fread(campbell_agrp_file,data.table = F) 
 }
-
-# campbell_diet2 = subset(campbell_diet, subset = Diet %in% c("Normal","Fasted"))
-# FeaturePlot(campbell_diet2,features = "Fos",split.by = "Diet")
 
 #### Compare with sc-seq data:
 agrp_sn_vs_sc = dplyr::full_join(conditionGenes_Agrp,conditionGenes_campbell,suffix=c("_sn","_sc"),by=c("gene"="gene"))
@@ -324,7 +332,8 @@ agrp_Campvell_vs_sn_plot = ggplot(agrp_sn_vs_sc_plot,aes(x=avg_log2FC_sc,y=avg_l
   geom_point(alpha=0.6,aes(color=regulated))+geom_smooth(method="lm",color="grey60")+
   scale_color_manual(values = c("up in fasting - both" = fasting_color,"not in both" = "grey80","down in fasting - both" =adlib_color,
                                 "up in fasting - one" = "#a3bbc2", "down in fasting - one" = "#ae9bc2"))+
-  xlab("log2FC sc-seq")+ylab("log2FC sn-seq")+theme(text=element_text(size=20))
+  xlab("log2FC sc-seq")+ylab("log2FC sn-seq")+
+  theme_bw()+theme(text=element_text(size=text_size))
 agrp_Campvell_vs_sn_plot
 
 # save
@@ -339,16 +348,16 @@ ggsave(filename = paste0(results_path,"agrp_Campvell_vs_sn_plot.pdf"),
 ##########
 
 # Zbtb16, Fam107b, Vgf, Sv2c, 1700016P03Rik
-genes_to_use =c("Zbtb16", "Fam107b", "Vgf", "Sv2c", "1700016P03Rik")
+genes_to_use =c("Zbtb16", "Fam107b", "Vgf", "Sv2c")
 
 ## Option 1: just a nice feature plot of a gene of choice
-Idents(query_snseq_neurons) <- "predicted_K31_named"
-example_gene_plot = Seurat::FeaturePlot(query_snseq_neurons,"1700016P03Rik",split.by = "Diet",label = TRUE,label.size = 3.5,repel = TRUE,pt.size = 0.4,
-                                        keep.scale="feature",order = TRUE,combine = FALSE)
-example_gene_plot[[1]] = example_gene_plot[[1]]+NoAxes()+theme(panel.border = element_blank())+ggplot2::ggtitle("adlib")#+scale_color_gradient(low = "lightgrey",high = "#8c390a")
-example_gene_plot[[2]] = example_gene_plot[[2]]+NoAxes()+theme(panel.border = element_blank())+ggplot2::ggtitle("fasted")#+scale_color_gradient(low = "lightgrey",high = "#8c390a")
-example_gene_plot = cowplot::plot_grid(plotlist = example_gene_plot)
-example_gene_plot
+# Idents(query_snseq_neurons) <- "predicted_K31_named"
+# example_gene_plot = Seurat::FeaturePlot(query_snseq_neurons,"1700016P03Rik",split.by = "Diet",label = TRUE,label.size = 3.5,repel = TRUE,pt.size = 0.4,
+#                                         keep.scale="feature",order = TRUE,combine = FALSE)
+# example_gene_plot[[1]] = example_gene_plot[[1]]+NoAxes()+theme(panel.border = element_blank())+ggplot2::ggtitle("adlib")#+scale_color_gradient(low = "lightgrey",high = "#8c390a")
+# example_gene_plot[[2]] = example_gene_plot[[2]]+NoAxes()+theme(panel.border = element_blank())+ggplot2::ggtitle("fasted")#+scale_color_gradient(low = "lightgrey",high = "#8c390a")
+# example_gene_plot = cowplot::plot_grid(plotlist = example_gene_plot)
+# example_gene_plot
 
 ## Option 2: some violin plot
 # use all other cells and top 5 from enrichement plus pomc plus cck
@@ -362,8 +371,8 @@ query_snseq_neurons@meta.data$custom_annotation = factor(query_snseq_neurons@met
 Idents(query_snseq_neurons) <- "custom_annotation"
 interesting_genes_violin_plot = Seurat::VlnPlot(query_snseq_neurons,features = genes_to_use,split.by = "Diet",cols=c(adlib_color,fasting_color),
                                                 same.y.lims = TRUE,combine = TRUE,stack = TRUE,adjust = 0.75,flip=TRUE,pt.size = 1) 
-
-#Seurat::DotPlot(query_snseq_neurons,features = genes_to_use,split.by = "Diet",cols=c(adlib_color,fasting_color))
+interesting_genes_violin_plot = interesting_genes_violin_plot+xlab("")
+interesting_genes_violin_plot
 
 # save
 ggsave(filename = paste0(results_path,"interesting_genes_violin_plot.png"),
@@ -381,7 +390,7 @@ ggsave(filename = paste0(results_path,"interesting_genes_violin_plot.pdf"),
 
 # get all DEG of Hk2
 # 	K169-123
-conditionGenes_Hk2_file = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/hk2_fasting_all.txt"
+conditionGenes_Hk2_file = paste0(results_path,"hk2_fasting_all.txt")
 if(!file.exists(conditionGenes_Hk2_file)){
   Idents(query_snseq_neurons) <- "predicted_K169_named"
   conditionGenes_Hk2 = Seurat::FindMarkers(query_snseq_neurons, ident.1 = "adlib",ident.2 = "fast" , group.by = "Diet", subset.ident = "Hk2.HY14.HY10.HY2",min.pct = 0,logfc.threshold = 0)
@@ -395,7 +404,7 @@ if(!file.exists(conditionGenes_Hk2_file)){
 conditionGenes_Hk2_filtered = conditionGenes_Hk2[conditionGenes_Hk2$p_val_adj < 0.05,] # filter pval
 
 # get all DEG of Lef1/Sox14
-conditionGenes_Sox14_file = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/Sox14_fasting_all.txt"
+conditionGenes_Sox14_file = paste0(results_path,"Sox14_fasting_all.txt")
 if(!file.exists(conditionGenes_Sox14_file)){
   Idents(query_snseq_neurons) <- "predicted_K169_named"
   conditionGenes_Sox14 = Seurat::FindMarkers(query_snseq_neurons, ident.1 = "adlib",ident.2 = "fast" , group.by = "Diet", subset.ident = "Sox14.Lef1.Hmx2.HY1",min.pct = 0,logfc.threshold = 0)
@@ -413,9 +422,7 @@ conditionGenes_Sox14_filtered = conditionGenes_Sox14[conditionGenes_Sox14$p_val_
 ##########
 
 ## global changes
-# load global changes
-# get all DEG of Hk2
-conditionGenes_global_file = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/global_fasting_all.txt"
+conditionGenes_global_file = paste0(results_path,"global_fasting_all.txt")
 if(!file.exists(conditionGenes_global_file)){
   conditionGenes_global = Seurat::FindMarkers(query_snseq_neurons, ident.1 = "adlib",ident.2 = "fast" , group.by = "Diet",min.pct = 0,logfc.threshold = 0.1,max.cells.per.ident = 10000)
   conditionGenes_global$gene = rownames(conditionGenes_global) # add gene name 
