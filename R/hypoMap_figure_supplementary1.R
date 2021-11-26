@@ -3,14 +3,12 @@
 ##########
 
 #set path
-results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_supplementary_1/"
+results_path = "figure_outputs/figure_supplementary_1/"
 system(paste0("mkdir -p ",results_path))
 
 # load everything required
-source("load_data.R")
-
-# path with output files
-data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_input/"
+source("R/load_data.R")
+large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
 
 ## plotting
 rasterize_point_size = 1.1
@@ -21,7 +19,7 @@ rasterize_pixels = 1024
 ##########
 
 # get mapped celltypes
-mapped_celltypes = readRDS(paste0(data_path,"mapped_celltypes_neuronMap.rds"))
+mapped_celltypes = readRDS(paste0("data_inputs/mapped_celltypes_neuronMap.rds"))
 
 # plot
 p=list()

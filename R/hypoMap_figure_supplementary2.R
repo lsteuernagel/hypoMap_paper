@@ -3,23 +3,23 @@
 ##########
 
 #set path
-results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_supplementary_2/"
+results_path = "figure_outputs/figure_supplementary_2/"
 system(paste0("mkdir -p ",results_path))
 # load everything required
-source("load_data.R")
+source("R/load_data.R")
+large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
 
-# path with output files
-data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_input/"
-
+# plotting
 rasterize_point_size = 2.2
 rasterize_pixels = 2048
+text_size = 20
 
 ##########
 ### Supplemental Figure 2: metric scatter for full map + Dataset UMAPS
 ##########
 
 ### load comparison data full
-full_metrics = data.table::fread(paste0(data_path,"hypothalamusMapFull_v4_comparison_8af8a1cd950067bb6859cbc1225c818d.txt"),data.table = F)
+full_metrics = data.table::fread(paste0("data_inputs/hypothalamusMapFull_v4_comparison_8af8a1cd950067bb6859cbc1225c818d.txt"),data.table = F)
 
 #text_size = 80
 x_pixels = 3000
@@ -34,7 +34,6 @@ full_metrics$features_ngenes = stringr::str_extract(full_metrics$reduction,patte
 full_metrics  =  full_metrics %>% dplyr::filter(ndim %in% c(30,50,60,80,90,NA))
 
 #plot
-text_size = 30
 full_metrics_plot = ggplot2::ggplot(full_metrics,aes(x=mixing_score,y=purity_score,color=method))+geom_point(size=1.5)+
   theme(text = element_text(size=text_size),panel.background = element_rect(fill = "white"),axis.line=element_line(color="grey40",size = 1))+
   guides(color=guide_legend(ncol=1,override.aes = list(size=5)))+
@@ -71,11 +70,11 @@ full_BatchID_plot = DimPlot(full_map_seurat,group.by = "Batch_ID",reduction = pa
 full_BatchID_plot = rasterize_ggplot(full_BatchID_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 full_BatchID_plot
 
-# save
-ggsave(filename = paste0(results_path,"full_map_BatchID.png"),
-       plot = full_BatchID_plot, "png",dpi=600,width=350,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"full_map_BatchID.pdf"),
-       plot = full_BatchID_plot, "pdf",dpi=600,width=350,height = 300,units="mm")
+# # save
+# ggsave(filename = paste0(results_path,"full_map_BatchID.png"),
+#        plot = full_BatchID_plot, "png",dpi=600,width=350,height = 300,units="mm")
+# ggsave(filename = paste0(results_path,"full_map_BatchID.pdf"),
+#        plot = full_BatchID_plot, "pdf",dpi=600,width=350,height = 300,units="mm")
 
 # neuronmap:
 # by Dataset
@@ -96,8 +95,8 @@ neurons_batch_plot = DimPlot(neuron_map_seurat,group.by = "Batch_ID",reduction =
 neurons_batch_plot = rasterize_ggplot(neurons_batch_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 neurons_batch_plot
 
-# save
-ggsave(filename = paste0(results_path,map_name,"_batchid.png"),
-       plot = neurons_batch_plot, "png",dpi=600,width=350,height = 300,units="mm")
-ggsave(filename = paste0(results_path,map_name,"_batchid.pdf"),
-       plot = neurons_batch_plot, "pdf",dpi=600,width=350,height = 300,units="mm")
+# # save
+# ggsave(filename = paste0(results_path,map_name,"_batchid.png"),
+#        plot = neurons_batch_plot, "png",dpi=600,width=350,height = 300,units="mm")
+# ggsave(filename = paste0(results_path,map_name,"_batchid.pdf"),
+#        plot = neurons_batch_plot, "pdf",dpi=600,width=350,height = 300,units="mm")

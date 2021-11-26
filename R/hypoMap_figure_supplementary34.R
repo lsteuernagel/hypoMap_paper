@@ -2,17 +2,17 @@
 ### Load & Prepare
 ##########
 
+#set path
+results_path = "figure_outputs/figure_supplementary_3_4/"
+system(paste0("mkdir -p ",results_path))
 # load everything required
-source("load_data.R")
-
-# path with output files
-data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_input/"
+source("R/load_data.R")
+large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
 
 # neuron metric results
-neurons_metrics = data.table::fread(paste0(data_path,"hypothalamusMapNeurons_v4_comparison_457fc60c3c4f1911bcbc6c5d46127037.txt"),data.table = F)
+neurons_metrics = data.table::fread(paste0("data_inputs/hypothalamusMapNeurons_v4_comparison_457fc60c3c4f1911bcbc6c5d46127037.txt"),data.table = F)
 
-# subsample ids for plotting
-subsample_ids = data.table::fread(paste0(data_path,"_subsampled_Cell_IDs_neuronMap.txt"),data.table = F,header = F)[,1]
+text_size =20
 
 ##########
 ### Helper functions
@@ -45,17 +45,12 @@ per_celltype_summary_selected = function(input_values, celltype_ids, names_to_ch
 ### Supplemental Figure 3: 
 ##########
 
-#set path
-results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_supplementary_3/"
-system(paste0("mkdir -p ",results_path))
-
-
 ##### load evaluation results
-evaluation_mixing_probNorm_all = data.table::fread(paste0(data_path,"evaluation_mixing_probNorm.Batch_ID.20000.100.123467_all.txt"),data.table = F)
+evaluation_mixing_probNorm_all = data.table::fread(paste0(large_data_path,"evaluation_mixing_probNorm.Batch_ID.20000.100.123467_all.txt"),data.table = F)
 rownames(evaluation_mixing_probNorm_all) = evaluation_mixing_probNorm_all$Cell_ID
-evaluation_purity_knn_all = data.table::fread(paste0(data_path,"evaluation_purity_knn.24.20.123467_all.txt"),data.table = F)
+evaluation_purity_knn_all = data.table::fread(paste0("data_inputs/evaluation_purity_knn.24.20.123467_all.txt"),data.table = F)
 rownames(evaluation_purity_knn_all) = evaluation_purity_knn_all$mapped_celltype
-evaluation_entropy_knn_all = data.table::fread(paste0(data_path,"evaluation_entropy_knn_all.Batch_ID.20.123467_all.txt"),data.table = F)
+evaluation_entropy_knn_all = data.table::fread(paste0(large_data_path,"evaluation_entropy_knn_all.Batch_ID.20.123467_all.txt"),data.table = F)
 rownames(evaluation_entropy_knn_all) = evaluation_entropy_knn_all$Cell_ID
 
 ##### Define which integration results should be compared
@@ -76,7 +71,6 @@ names_to_check = c(names_to_check,"scvi_cov"="scVI_1_300_0.025_3_256_gene_zinb_c
 names_to_check = c(names_to_check,"harmony_lowdim"="harmony_8_Batch_ID_2_0.1_130_PCA..RNA..30..RNA.log.vst.split_Batch_ID.features.750_9625657cf22d373e46bdde89031e6f00")
 
 ##### Comparison line plots
-text_size =20
 
 # rf mxing
 mixing_prob_perCelltype = per_celltype_summary_selected(evaluation_mixing_probNorm_all, mapped_celltypes, names_to_check)
@@ -114,33 +108,27 @@ ggsave(filename = paste0(results_path,"mixing_entropy_perCelltype_methods.png"),
 ggsave(filename = paste0(results_path,"mixing_entropy_perCelltype_methods.pdf"),
        plot = mixing_entropy_perCelltype_lineplot, "pdf",dpi=400,width=300,height =200,units="mm")
 
-
-##########
-### Supplemental Figure 4: UMAPs of best methods
-##########
-
-####### TODO: Add the moment the reductions for plot 4b are not moved into the common folder for paper results!
-
-#set path
-results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_supplementary_4/"
-system(paste0("mkdir -p ",results_path))
-
-### save plots made in above section that move into this figure:
 ggsave(filename = paste0(results_path,"purity_perCelltype_methods.png"),
        plot = purity_perCelltype_lineplot, "png",dpi=400,width=300,height = 200,units="mm")
 ggsave(filename = paste0(results_path,"purity_perCelltype_methods.pdf"),
        plot = purity_perCelltype_lineplot, "pdf",dpi=400,width=300,height =200,units="mm")
 
+
+##########
+### Supplemental Figure 4: UMAPs of best methods
+##########
+
 ## make plots
 rasterize_point_size = 1.5
 rasterize_pixels = 1536
 
+## CAREFUL THIS RUNS SOME TIME TO CALC ALL UMAPS!
+
 # add reductions:
-key="hypothalamusMapNeurons_v4"
-scHarmonize_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/scHarmonize/"
+integration_res_path = paste0(large_data_path,"best_reductions_per_method/")
 for( i in 1:length(names_to_check)){
-  integration_res_path = paste0(scHarmonize_path,key,"/","integration_results","/")
-  neuron_map_seurat = add_reduction_seurat(neuron_map_seurat,integration_name=names_to_check[i],new_name=names(names_to_check)[i],integration_res_path,max_dim=150,calc_umap=TRUE,overwrite =F,overwrite2=F)
+  neuron_map_seurat = add_reduction_seurat(neuron_map_seurat,integration_name=names_to_check[i],new_name=names(names_to_check)[i],
+                                           integration_res_path,max_dim=200,calc_umap=TRUE,k_param_umap=30,overwrite =F,overwrite2=F)
 }
 
 # umap by Dataset or Batch_ID

@@ -30,7 +30,20 @@ system(command = paste0("cp ","/beegfs/scratch/bruening_scratch/lsteuernagel/dat
 system(command = paste0("cp ", "/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/hk2_fasting_all.txt ","figure_outputs/figure_5/"))
 system(command = paste0("cp ", "/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/global_fasting_all.txt ","figure_outputs/figure_5/"))
 
+##########
+### move reductions
+##########
 
+system(paste0("mkdir -p ",paste0(large_data_path,"best_reductions_per_method/")))
+
+# add reductions:
+key="hypothalamusMapNeurons_v4"
+scHarmonize_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/scHarmonize/"
+for( i in 1:length(names_to_check)){
+  integration_res_path = paste0(scHarmonize_path,key,"/","integration_results","/")
+  origin_path = paste0(integration_res_path,list.files(path=integration_res_path,pattern = names_to_check[i],recursive = TRUE)[1])
+  system(command = paste0("cp ",origin_path," ",large_data_path,"best_reductions_per_method/"))
+ }
 
 ##########
 ### sn seq markers results

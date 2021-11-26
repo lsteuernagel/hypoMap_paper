@@ -16,13 +16,11 @@ neurons_metrics = data.table::fread("data_inputs/hypothalamusMapNeurons_v4_compa
 ## plotting
 rasterize_point_size = 2.2
 rasterize_pixels = 2048
+text_size = 20
 
 ##########
 ### Figure 1b
 ##########
-
-#text_size = 80
-text_size = 30
 
 # add information
 neurons_metrics$assay=neurons_metrics$reduction %>% stringr::str_extract(pattern="\\.\\..[a-zA-Z]+\\.\\.") %>% stringr::str_replace(pattern = "\\.\\.",replacement = "") %>% stringr::str_replace(pattern = "\\.\\.",replacement = "")
@@ -49,8 +47,6 @@ ggsave(filename = paste0(results_path,"neurons_metrics_scatter.pdf"),
 ##########
 ### Figure 1c
 ##########
-
-text_size = 20
 
 full_celltype_plot = DimPlot(full_map_seurat,group.by = "Curated_Class",reduction = paste0("umap_","scvi"),label = TRUE,label.size = 6,raster = F,pt.size = 0.2)+NoAxes()+NoLegend()+
   theme(text = element_text(size=text_size))+ggtitle("Celltypes on hypothalamus reference map")

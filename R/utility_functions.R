@@ -1,3 +1,110 @@
+##########
+### add_reduction_seurat
+##########
+
+# TODO: also include clustering in this function
+
+#' Adds the integration embedding and calculates umap. 
+#' @param seurat_object
+#' @param integration_files
+#' @param global_seed seed
+#' @return .
+
+add_reduction_seurat = function(seurat_object,integration_name,new_name=NULL,integration_path,max_dim=50,global_seed=123,calc_umap=TRUE,k_param_umap=30,overwrite =FALSE,overwrite2=FALSE){
+  
+  require(Seurat)
+  require(dplyr)
+  message("Running add_reduction_seurat with calc_umap = ",calc_umap)
+  # get current result
+  current_file = list.files(integration_path,recursive = TRUE,pattern = integration_name)
+  if(is.null(new_name)){new_name=integration_name}
+  
+  if(length(current_file)!=1){
+    message("Did not find an unambigous file corresponding to the provided name. Files: ")
+    message(paste0(current_file,collapse = " | "))
+    stop("Stop")
+  }else{
+    message("Found file for ",integration_name)
+  }
+  if(! new_name %in% names(seurat_object@reductions) | overwrite){
+    
+    current_embedding = read_embedding(paste0(integration_path,current_file),seurat_object)
+    # make dim red
+    dimred <- Seurat::CreateDimReducObject(
+      embeddings = as.matrix(current_embedding),
+      stdev = as.numeric(apply(current_embedding, 2, stats::sd)),
+      assay = "RNA",
+      key = new_name
+    )
+    # add
+    seurat_object@reductions[[new_name]] = dimred
+    
+  }else{
+    message("Reduction with this name already found. Use overwrite = TRUE to overwrite")
+  }
+  if(calc_umap){
+    message("Calculating umap for ",new_name)
+    if((! paste0("umap_",new_name) %in% names(seurat_object@reductions)) | overwrite2){
+      col_dimred = ncol(seurat_object@reductions[[new_name]])
+      #print(seurat_object@reductions[[new_name]]@key)
+      seurat_object = RunUMAP(seurat_object,reduction = new_name,seed.use=global_seed,dims=1:min(col_dimred,max_dim),n.neighbors=k_param_umap,
+                              reduction.name=paste0("umap_",new_name),reduction.key = paste0("umap_",new_name),verbose=FALSE)
+    }else{
+      message("Umap with this name already found. Use overwrite2 = TRUE to overwrite")
+    }
+  }
+  
+  return(seurat_object)
+  
+}
+
+##########
+### read_embedding
+##########
+
+#' Load an emebedding with cells x lowDims from flatfile, ensuring consistency with a Seurat object (or metadata only for faster usage)
+#' @param filename_withpath filepath
+#' @param seurat_object seuratobject associated with current embedding. If specified metadata does not have to be set explicitly.
+#' @param seurat_object_metadata metadata only of seuratobject associated with current embedding
+#' @return 
+
+read_embedding = function(filename_withpath,seurat_object=NULL,seurat_object_metadata=NULL){
+  
+  #get metadata
+  if(!is.null(seurat_object_metadata)){
+    metadata = seurat_object_metadata
+    rownames(metadata) = metadata[,"Cell_ID"] # manually set rownames
+  }else{
+    if(!is.null(seurat_object)){
+      metadata = seurat_object@meta.data
+    }else{
+      stop("Please provide either a dataframe with metadata or a seurat object with metadata that can be exctracted!")
+    }
+  }
+  # load
+  current_embedding = data.table::fread(filename_withpath,data.table = F)
+  # use first col as rownames 
+  if(is.character(current_embedding[,1])){
+    # message("Using first column of loaded file as rownames for reduction")
+    rnames = current_embedding[,1]
+    current_embedding = current_embedding[,2:ncol(current_embedding)]
+    rownames(current_embedding)=rnames
+    # reorder to align with rest of object
+    if(any(is.na(match(rownames(metadata),rownames(current_embedding))))){
+      stop("Cell names from loaded reduction and new object are not matching exactly. Stopping import.")
+    }
+    current_embedding = current_embedding[match(rownames(metadata),rownames(current_embedding)),]
+  }else{
+    warning("First column of loaded file is not of type character, using rownames of metadata as rownames of added reduction. This can induce bugs if the order changed due to split/merge of the Seurat object!")
+    rownames(current_embedding) = rownames(metadata)
+  }
+  return(current_embedding)
+  
+}
+
+##########
+### Custom DEG functions
+##########
 
 # custome wrapper around Find_DEGs
 
