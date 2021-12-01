@@ -1,4 +1,31 @@
 ##########
+### get_expression_stats
+##########
+
+#' Get gene pct and average expression for cells
+#' TODO: does nearly the same as the above function! Refactor?
+#' @param object object
+#' @param cells.1 which cells
+#' @param features genes
+#' @param thresh.min min expressio
+#' @return dataframe
+
+### function to get_expression_stats
+get_expression_stats <- function(object, cells.1,features = NULL,  thresh.min = 0) {
+  features <- features %||% rownames(x = object)
+  # Calculate percent expressed
+  #thresh.min <- 0
+  pct.1 <- round(
+    x = rowSums(x = object@assays$RNA@data[features, cells.1] > thresh.min) /length(x = cells.1),
+    digits = 3
+  )
+  mean.1 <- rowMeans(object@assays$RNA@data[features, cells.1]) #mean.fxn(object[features, cells.1, drop = FALSE])
+  expression_stats <- data.frame(features,mean.1, pct.1)
+  colnames(expression_stats) <- c("gene", "mean.1", "pct.1")
+  return(expression_stats)
+}
+
+##########
 ### add_reduction_seurat
 ##########
 

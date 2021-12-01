@@ -3,112 +3,121 @@
 ##########
 
 #set path
-results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_supplementary_7/"
+results_path = "figure_outputs/figure_supplementary_7/"
 system(paste0("mkdir -p ",results_path))
 # load everything required
-source("scripts/paper_figures_new/load_data.R")
-source("utils.R")
-
-# path with output files
-data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_input/"
-
-# subsample ids for plotting
-subsample_ids = data.table::fread(paste0(data_path,"_subsampled_Cell_IDs_neuronMap.txt"),data.table = F,header = F)[,1]
+source("R/load_data.R")
+source("R/plot_functions.R")
+large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
 
 ## load mapped object
-query_snseq_neurons = readRDS(paste0("/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/nucseq_neurons_map.rds"))
+query_snseq_neurons = readRDS(paste0(large_data_path,"nucseq_neurons_map.rds"))
 
 ## plotting
 rasterize_point_size = 2.2
 rasterize_pixels = 2048
-colorvec = RColorBrewer::brewer.pal(9, "Blues")
-colorvec[1] =  "#dedede"
+cols_for_feature_plot = c("#dedede","#0b3ebd") # "#0b3ebd"
+
 
 ##########
-### Figure 7: Glp1r
+###  DEGs in all clusters
 ##########
 
+Idents(query_snseq_neurons) = "predicted_K169_named"
+all_clusters = unique(query_snseq_neurons@meta.data$predicted_K169_named)
+all_conditionGenes_list = list()
+for(i in 1:length(all_clusters)){
+  current_cluster = all_clusters[i]
+  message(current_cluster)
+  cells_adlib = length(query_snseq_neurons@meta.data$predicted_K169_named[query_snseq_neurons@meta.data$predicted_K169_named == current_cluster & query_snseq_neurons@meta.data$Diet=="adlib"])
+  cells_fasting = length(query_snseq_neurons@meta.data$predicted_K169_named[query_snseq_neurons@meta.data$predicted_K169_named == current_cluster & query_snseq_neurons@meta.data$Diet=="fast"])
+  if(cells_adlib >= min_cells & cells_fasting >= min_cells ){
+    conditionGenes_current = Seurat::FindMarkers(query_snseq_neurons, ident.1 = "adlib",ident.2 = "fast" , group.by = "Diet", 
+                                                 subset.ident = current_cluster,min.pct = 0.1,logfc.threshold = 0.25,max.cells.per.ident = 5000)
+    conditionGenes_current$gene = rownames(conditionGenes_current) # add gene name 
+    conditionGenes_current$pct_diff = conditionGenes_current$pct.1 - conditionGenes_current$pct.2
+    conditionGenes_current$current_cluster = current_cluster
+    all_conditionGenes_list[[current_cluster]] = conditionGenes_current
+  }
+}
+
+# rbind
+all_conditionGenes = do.call(rbind,all_conditionGenes_list)
+
+# save !
+conditionGenes_all_file = paste0(results_path,"all_clusters_fasting_DEG.txt")
+data.table::fwrite(all_conditionGenes,conditionGenes_all_file,sep="\t")
+
+
+##########
+### plot on UMAP
+##########
+
+#all_conditionGenes = data.table::fread(conditionGenes_all_file,data.table = FALSE)
+
+all_conditionGenes_filtered = all_conditionGenes[all_conditionGenes$p_val_adj < 0.01,] # filter pval
+
+n_cells_per_cluster = query_snseq_neurons@meta.data %>% dplyr::group_by(predicted_K169_named) %>% dplyr::count(name="n_cells_per_cluster")
+n_DEG_per_cluster = all_conditionGenes_filtered %>% dplyr::group_by(current_cluster) %>% dplyr::count(name="n_DEG_per_cluster") %>% 
+  dplyr::full_join(n_cells_per_cluster,by=c("current_cluster"="predicted_K169_named"))
+n_DEG_per_cluster$n_DEG_per_cluster[is.na(n_DEG_per_cluster$n_DEG_per_cluster)] = 0
+
+ggplot(n_DEG_per_cluster,aes(n_DEG_per_cluster,n_cells_per_cluster))+geom_point()
+
+n_DEG_per_cluster$deg_score = n_DEG_per_cluster$n_DEG_per_cluster / (n_DEG_per_cluster$n_cells_per_cluster - 0)
+
+temp_meta = dplyr::left_join(query_snseq_neurons@meta.data,n_DEG_per_cluster,by=c("predicted_K169_named"="current_cluster"))
+rownames(temp_meta) = temp_meta$Cell_ID
+query_snseq_neurons@meta.data = temp_meta
+query_snseq_neurons@meta.data$n_DEG_per_cluster_zscore = (query_snseq_neurons@meta.data$n_DEG_per_cluster - mean(query_snseq_neurons@meta.data$n_DEG_per_cluster)) / sd(query_snseq_neurons@meta.data$n_DEG_per_cluster)
 
 ### Glp1r expression in neuron map
-glp1r_neuron_map = FeaturePlot(neuron_map_seurat,features = "Glp1r",reduction =paste0("umap_scvi"), combine = TRUE,order = TRUE,pt.size = 0.2)+
-  NoAxes() +scale_color_gradientn(colours = colorvec)  #+ scale_color_gradient(low="lightgrey",high = colorvec[9])
-  #scale_color_gradientn(colours = colorvec) #+ NoLegend() #+scale_color_gradient(low="lightgrey",high=max_color)
-glp1r_neuron_map = rasterize_ggplot(glp1r_neuron_map,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
-glp1r_neuron_map
+ndeg_sn_seq = FeaturePlot(query_snseq_neurons,features = "deg_score",reduction =paste0("umap_scvi"),cols = cols_for_feature_plot,order = TRUE,pt.size = 0.2)+
+  NoAxes() 
+ndeg_sn_seq = rasterize_ggplot(ndeg_sn_seq,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
+ndeg_sn_seq
 
-#save
-ggsave(filename = paste0(results_path,"glp1r_neuron_map.png"),
-       plot = glp1r_neuron_map, "png",dpi=600,width=350,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"glp1r_neuron_map.pdf"),
-       plot = glp1r_neuron_map, "pdf",dpi=600,width=350,height = 300,units="mm")
+# save
+ggsave(filename = paste0(results_path,"snseq_n_deg_fasting_umap.png"),
+       plot = ndeg_sn_seq, "png",dpi=400,width=300,height = 300,units="mm")
+ggsave(filename = paste0(results_path,"snseq_n_deg_fasting_umap.pdf"),
+       plot = ndeg_sn_seq, "pdf",dpi=400,width=300,height =300,units="mm")
 
-
-### Glp1r expression in nucseq
-glp1r_snseq =FeaturePlot(query_snseq_neurons,features = "Glp1r",reduction =paste0("umap_scvi"), combine = TRUE,order = TRUE,pt.size = 0.2)+
-  NoAxes() +scale_color_gradientn(colours = colorvec)   #+ scale_color_gradientn(colours = colorvec) #+ NoLegend() #+scale_color_gradient(low="lightgrey",high=max_color)
-glp1r_snseq = rasterize_ggplot(glp1r_snseq,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
-glp1r_snseq
-
-#save
-ggsave(filename = paste0(results_path,"glp1r_snseq.png"),
-       plot = glp1r_snseq, "png",dpi=600,width=350,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"glp1r_snseq.pdf"),
-       plot = glp1r_snseq, "pdf",dpi=600,width=350,height = 300,units="mm")
-
-### glp1r in bacTRAp
-# USE unlabelled plot from figure 3 script !
-system(paste0("cp ",gsub("figure_supplementary_7","figure_3",results_path),"bacTRAP_glp1r_rbo_plot.pdf"," ",results_path))
+## plot z_score version (but I think above plot is better for figure)
+ndeg_sn_seq = FeaturePlot(query_snseq_neurons,features = "n_DEG_per_cluster_zscore",reduction =paste0("umap_scvi"),cols = cols_for_feature_plot,order = TRUE,pt.size = 0.2)+
+  NoAxes() 
+ndeg_sn_seq = rasterize_ggplot(ndeg_sn_seq,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
+ndeg_sn_seq
 
 
-# selected clusters !
-anno_df = neuron_map_seurat@misc$annotations
-selected_cluster_K169_named = c("Ttr.Pomc.Tcf7l2.Tbx3.HY1","Sstr1.Sst.Il1rapl2.Otp.HY1","Ghrh.Gsx1.Hmx2.HY1","Crabp1.Nfib.Six3.Hmx2.HY1","Trh.Nkx2-4.Gsx1.Hmx2.HY1","Ebf3.Oxt")
-# make a subset 
-subset_seurat_glp1r = subset(neuron_map_seurat, K169_named %in% selected_cluster_K169_named)
-# only keep labels for celltypes with mapped neuron
-subset_seurat_glp1r@meta.data$label_col = subset_seurat_glp1r@meta.data$K169_named
-neuron_map_seurat@meta.data$label_col = as.factor(neuron_map_seurat@meta.data$K169_named)
-neuron_map_seurat@meta.data$label_col[!neuron_map_seurat@meta.data$K169_named %in% unique(subset_seurat_glp1r@meta.data$label_col)] = NA
-# make plot using mapscvi:
-selected_clusters_plot = mapscvi::plot_query_labels(query_seura_object=subset_seurat_glp1r,reference_seurat=neuron_map_seurat,label_col="label_col",label_col_query="label_col", 
-                                          overlay = TRUE,query_pt_size = 0.1,labelonplot = TRUE,label.size=6,repel=TRUE)+ggtitle("Selected clusters")
-selected_clusters_plot = rasterize_ggplot(selected_clusters_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
-selected_clusters_plot
+##########
+### Plot fos and ieg
+##########
 
-# #save
-# ggsave(filename = paste0(results_path,"selected_glp1r_clusters_plot.png"),
-#        plot = selected_clusters_plot, "png",dpi=600,width=350,height = 300,units="mm")
-# ggsave(filename = paste0(results_path,"selected_glp1r_clusters_plot"),
-#        plot = selected_clusters_plot, "pdf",dpi=600,width=350,height = 300,units="mm")
+# subset tto campbell
+campbell_diet = subset(neuron_map_seurat,subset = Dataset=="Campbell" & Diet %in% c("Normal","Fasted" ))
+
+#  feature plot
+Idents(campbell_diet) <- "K31_named"
+fos_plot = Seurat::FeaturePlot(campbell_diet,"Fos",split.by = "Diet",label = TRUE,label.size = 3.5,repel = TRUE,pt.size = 0.5,
+                               keep.scale="feature",order = TRUE,combine = FALSE,cols = cols_for_feature_plot)
+fos_plot_fasting = fos_plot[[1]]+NoAxes()+theme(panel.border = element_blank())+ylab("") +ggplot2::ggtitle("fasted") #+ scale_color_gradientn(colours = colorvec) #+scale_color_gradient(low = "lightgrey",high = "#8c390a")
+fos_plot_adlib = fos_plot[[2]]+NoAxes()+theme(panel.border = element_blank())+ylab("") +ggplot2::ggtitle("adlib")#+ scale_color_gradientn(colours = colorvec) #+scale_color_gradient(low = "lightgrey",high = "#8c390a")
+
+fos_plot_adlib = rasterize_ggplot(fos_plot_adlib,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
+fos_plot_adlib
+fos_plot_fasting = rasterize_ggplot(fos_plot_fasting,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
+fos_plot_fasting
+
+# save
+ggsave(filename = paste0(results_path,"fos_campbell_adlib.png"),
+       plot = fos_plot_adlib, "png",dpi=450,width=200,height = 200,units="mm")
+ggsave(filename = paste0(results_path,"fos_campbell_adlib.pdf"),
+       plot = fos_plot_adlib, "pdf",dpi=450,width=200,height = 200,units="mm")
+ggsave(filename = paste0(results_path,"fos_campbell_fasting.png"),
+       plot = fos_plot_fasting, "png",dpi=450,width=200,height = 200,units="mm")
+ggsave(filename = paste0(results_path,"fos_campbell_fasting.pdf"),
+       plot = fos_plot_fasting, "pdf",dpi=450,width=200,height = 200,units="mm")
 
 
-# use percentages from RNAscope
-ish_quantification = data.table::fread(paste0(gsub("figure_supplementary_7","figure_6",results_path),"pct_expressed_cells_clusters_ISH.txt"),data.table = FALSE)
-ish_quantification_summary = ish_quantification %>% group_by(Experiment) %>% dplyr::summarise(mean_expressed_cells = mean(total_2_pct))
-ish_quantification_summary$celltype[ish_quantification_smmary$Experiment == "Ghrh"] = "Ghrh.Gsx1.Hmx2.HY1"
-ish_quantification_summary$celltype[ish_quantification_smmary$Experiment == "Oxt"] = "Ebf3.Oxt"
-ish_quantification_summary$celltype[ish_quantification_smmary$Experiment == "Pomc"] = "Ttr.Pomc.Tcf7l2.Tbx3.HY1"
-ish_quantification_summary$celltype[ish_quantification_smmary$Experiment == "Pomc Anxa2"] = "Anxa2.Pomc.Tcf7l2.Tbx3.HY1"
-ish_quantification_summary$celltype[ish_quantification_smmary$Experiment == "Sst Unc13c"] = "Sstr1.Sst.Il1rapl2.Otp.HY1"
-ish_quantification_summary$celltype[ish_quantification_smmary$Experiment == "Tbx19 Anxa2"] = "Crabp1.Nfib.Six3.Hmx2.HY1"
-ish_quantification_summary$celltype[ish_quantification_smmary$Experiment == "Trh Nkx2-4"] = "Trh.Nkx2-4.Gsx1.Hmx2.HY1"
-#ish_quantification_summary$celltype[ish_quantification_smmary$Experiment == "Npw Nkx2-4"] = "Ebf1.Nkx2-4.Gsx1.Hmx2.HY1"
 
-neuron_map_seurat@meta.data = neuron_map_seurat@meta.data[,!colnames(neuron_map_seurat@meta.data) %in% c("Experiment","mean_expressed_cells","new_label_col")]
-neuron_map_seurat@meta.data = dplyr::left_join(neuron_map_seurat@meta.data,ish_quantification_summary, by=c("K169_named"="celltype"))
-rownames(neuron_map_seurat@meta.data) = neuron_map_seurat@meta.data$Cell_ID
-
-colorvec = RColorBrewer::brewer.pal(9, "Blues")
-#colorvec[1] =  "lightgrey"
-neuron_map_seurat@meta.data$new_label_col = NA
-neuron_map_seurat@meta.data$new_label_col[!is.na(neuron_map_seurat@meta.data$mean_expressed_cells)] = neuron_map_seurat@meta.data$K169_named[!is.na(neuron_map_seurat@meta.data$mean_expressed_cells)]
-Idents(neuron_map_seurat) = "new_label_col"
-ish_pct_umap_plot = FeaturePlot(neuron_map_seurat,features = "mean_expressed_cells",label = TRUE,label.size = 5,repel = TRUE)+NoAxes()+
-  scale_color_gradientn(colours = colorvec,na.value = "lightgrey",limits=c(0,100))+ggtitle("Pct of expressing cells in ISH")
-ish_pct_umap_plot
-
-#save
-ggsave(filename = paste0(results_path,"ish_pct_umap_plot.png"),
-       plot = ish_pct_umap_plot, "png",dpi=600,width=350,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"ish_pct_umap_plot.pdf"),
-       plot = ish_pct_umap_plot, "pdf",dpi=600,width=350,height = 300,units="mm")

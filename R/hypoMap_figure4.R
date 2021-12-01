@@ -6,11 +6,16 @@
 results_path = "figure_outputs/figure_4/"
 system(paste0("mkdir -p ",results_path))
 
-# load everything required
-source("R/load_data.R")
+# set path for additional data
+large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
+
+# load functions
+source("R/utility_functions.R")
 source("R/plot_functions.R")
 library(mapscvi) # please install the mapscvi package that was used to project the nucseq data and provides additional visualization functions for the projected data
-large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
+
+# load everything required
+source("R/load_data.R")
 
 ## load nucseq mapped object
 query_snseq_neurons = readRDS(paste0(large_data_path,"nucseq_neurons_map.rds"))
@@ -18,7 +23,7 @@ query_snseq_neurons = readRDS(paste0(large_data_path,"nucseq_neurons_map.rds"))
 # colors
 reference_color = "#cc2118"
 query_sn_color = "#302ac9"
-bg_col = "lightgrey"
+bg_col = "#dedede"
 
 rasterize_point_size = 2.2
 rasterize_pixels = 2048
@@ -67,12 +72,22 @@ data.table::fwrite(overview_clustering,paste0(results_path,"overview_clustering_
 # sankey
 clustering_2_filter = c("C32-C1ql3/Rgs16","C40-Vip")
 clustering_1_filter = overview_clustering$clustering_1[overview_clustering$clustering_2 %in% clustering_2_filter]
-sankey_scn = mapscvi::plot_sankey_comparison(overview_clustering,clustering_1_filter = clustering_1_filter,clustering_2_filter = clustering_2_filter,text_size=20, col1 = reference_color, col2 = query_sn_color)
+sankey_scn = mapscvi::plot_sankey_comparison(overview_clustering,clustering_1_filter = clustering_1_filter,clustering_2_filter = clustering_2_filter,
+                                             text_size=20, col1 = reference_color, col2 = query_sn_color)
 sankey_scn
+# get the numbers:
+sankey_scn_numbers = mapscvi::plot_sankey_comparison(overview_clustering,clustering_1_filter = clustering_1_filter,clustering_2_filter = clustering_2_filter,text_size=20, col1 = reference_color, col2 = query_sn_color,return_data = TRUE)
+sum(sankey_scn_numbers$edges$n) / ncol(query_snseq_neurons) # total number of SCN neurons in this analysis (with the sankey)
+length(query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K169_named %in% sankey_scn_numbers$edges$clustering_1]) # this is all cells mapped to the likely SCN clusters
+# are the clustering_1_filter really scn:
+table(neuron_map_seurat@meta.data$suggested_region_curated[neuron_map_seurat@meta.data$K169_named %in% clustering_1_filter],neuron_map_seurat@meta.data$K169_named[neuron_map_seurat@meta.data$K169_named %in% clustering_1_filter])
+unique(neuron_map_seurat@meta.data$other_likely_regions[neuron_map_seurat@meta.data$K169_named %in% clustering_1_filter])
+
 
 # orientation umap:
 clustering_2_filter = c("C32-C1ql3/Rgs16","C40-Vip")
-cellsh = query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$Cluster_IDs %in% clustering_2_filter]
+cellsh = query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$Cluster_IDs %in% sankey_scn_numbers$edges$clustering_2 & 
+                                                 query_snseq_neurons@meta.data$predicted_K169_named %in% sankey_scn_numbers$edges$clustering_1]
 scn_dimplot = DimPlot(query_snseq_neurons,cells.highlight = cellsh,sizes.highlight = 0.15)+NoLegend()+NoAxes()
 scn_dimplot = rasterize_ggplot(scn_dimplot,pixel_raster = 1024,pointsize = 1.1)
 scn_dimplot
@@ -107,6 +122,7 @@ sankey_vmh
 # sankey_vmh = mapscvi::plot_sankey_comparison(overview_clustering_2,clustering_1_filter = clustering_1_filter,clustering_2_filter = clustering_2_filter,text_size=20, col1 = reference_color, col2 = query_sn_color)
 # sankey_vmh
 
+length(query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K169_named %in% sankey_scn_numbers$edges$clustering_1]) # this is all cells mapped to the likely SCN clusters
 
 # orientation umap:
 clustering_2_filter = overview_clustering$clustering_2[overview_clustering$clustering_1=="Fgf10.Gpr149.Cd40.Fezf1.HY2"]
@@ -181,6 +197,10 @@ snseq_mean_expression = as.matrix(do.call(cbind,mean_expr_sn))
 ### Calculate highest percentage per cluster to subset genes
 ##########
 
+# minimum values for genes to keep
+min_pct_genes = 0.2
+min_mean_genes = 0.2
+
 ## add a max pct value
 Idents(neuron_map_seurat) = "K169_pruned"
 all_clusterstats_sc = list()
@@ -192,8 +212,7 @@ for(cluster in unique(neuron_map_seurat@meta.data$K169_pruned)){
 }
 all_clusterstats_sc_df = do.call(rbind,all_clusterstats_sc)
 all_clusterstats_sc_df_summarized = all_clusterstats_sc_df %>% dplyr::filter(pct.1 > 0) %>% dplyr::group_by(gene) %>% dplyr::filter(pct.1 == max(pct.1)) %>% distinct(gene,.keep_all = TRUE)
-sc_genes_to_keep = all_clusterstats_sc_df_summarized$gene[all_clusterstats_sc_df_summarized$mean.1>0.5 | all_clusterstats_sc_df_summarized$pct.1 > 0.5]
-ggplot(all_clusterstats_sc_df_summarized,aes(mean.1,pct.1))+geom_point(size=0.2)
+sc_genes_to_keep = all_clusterstats_sc_df_summarized$gene[all_clusterstats_sc_df_summarized$mean.1>min_mean_genes | all_clusterstats_sc_df_summarized$pct.1 > min_pct_genes]
 
 # run the same for sn
 Idents(query_snseq_neurons) = "predicted_K169_pruned"
@@ -208,8 +227,7 @@ for(cluster in unique(query_snseq_neurons@meta.data$predicted_K169_pruned)){
 }
 all_clusterstats_sn_df = do.call(rbind,all_clusterstats_sn)
 all_clusterstats_sn_df_summarized = all_clusterstats_sn_df %>% dplyr::filter(pct.1 > 0) %>% dplyr::group_by(gene) %>% dplyr::filter(pct.1 == max(pct.1)) %>% distinct(gene,.keep_all = TRUE)
-sn_genes_to_keep = all_clusterstats_sn_df_summarized$gene[all_clusterstats_sn_df_summarized$mean.1>0.5 | all_clusterstats_sn_df_summarized$pct.1 > 0.5]
-ggplot(all_clusterstats_sn_df_summarized,aes(mean.1,pct.1))+geom_point(size=0.2)
+sn_genes_to_keep = all_clusterstats_sn_df_summarized$gene[all_clusterstats_sn_df_summarized$mean.1>min_mean_genes | all_clusterstats_sn_df_summarized$pct.1 > min_pct_genes]
 
 all_genes_to_keep = base::union(sc_genes_to_keep,sn_genes_to_keep)
 
@@ -224,6 +242,7 @@ all_clusterstats_both_summarized = dplyr::full_join(all_clusterstats_sc_df_summa
 # need to subset to same genes 
 shared_genes = sort(intersect(rownames(neuron_map_mean_expression),rownames(snseq_mean_expression)))
 shared_genes = shared_genes[shared_genes %in% all_genes_to_keep] 
+
 # and same order
 neuron_map_mean_expression_subset = neuron_map_mean_expression[shared_genes,]
 snseq_mean_expression_subset = snseq_mean_expression[shared_genes,]
@@ -259,6 +278,7 @@ per_gene_cor = dplyr::left_join(per_gene_cor,all_clusterstats_both_summarized_fo
 # save gene cors!
 data.table::fwrite(per_gene_cor,paste0(results_path,"per_gene_correlations.txt"),sep = "\t")
 
+per_gene_cor = data.table::fread(paste0(results_path,"per_gene_correlations.txt"),data.table = FALSE)
 
 ##########
 ### Heatmaps per gene 'class'
@@ -280,7 +300,7 @@ class_list[["enzyme"]] = unique(c(class_list[["peptidase"]],class_list[["Gphosph
 class_list_subset = class_list[names(class_list) %in% c("ligand-dependent nuclear receptor", "transmembrane receptor", "G-protein coupled receptor",
                                                         "neuropeptide/hormone","transcription regulator","translation regulator","enzyme",
                                                         "ion channel","growth factor","markers_both" ,"markers_sc","markers_sn")]
-
+# get density per class
 n_density = 300
 list_df = lapply(class_list_subset,function(genes,per_gene_cor,subset_genes,min_genes = 10,n_density = n_density){
   genes = genes[genes %in% subset_genes & genes %in% unique(per_gene_cor$gene)]
@@ -290,37 +310,43 @@ list_df = lapply(class_list_subset,function(genes,per_gene_cor,subset_genes,min_
     y=NULL 
   }
   return(y)
-}, per_gene_cor = per_gene_cor,subset_genes = shared_genes,n_density=n_density)
+}, per_gene_cor = per_gene_cor,subset_genes = per_gene_cor$gene,n_density=n_density)
 
+# make a dataframe for plotting with ggplot2
 steps = seq(-1,1,(1/(n_density*0.5)))
 density_per_class_df = as.data.frame(cbind(steps=steps[2:length(steps)],do.call(cbind,list_df)))
 density_per_class_df_long = density_per_class_df %>% tidyr::gather(key="class","density",-steps)
-density_per_class_df_long = density_per_class_df_long %>% dplyr::group_by(class) %>% dplyr::mutate(max_pearson = steps[density == max(density)])
 
-density_per_class_df_long$class = fct_reorder(.f = density_per_class_df_long$class, .x = density_per_class_df_long$max_pearson, .fun = mean)
-
+# add classes to split heatmap by
 density_per_class_df_long$group = "gene classes"
 density_per_class_df_long$group[density_per_class_df_long$class %in% c("markers_sc","markers_sn","markers_both")] = "celltype markers"
 density_per_class_df_long$group = factor(density_per_class_df_long$group,levels=(c("celltype markers","gene classes")))
 
 # add numbers per class
-gene_per_class = data.frame(class = names(sapply(class_list_subset,length)),n_genes = sapply(class_list_subset,length))
+gene_per_class = sapply(class_list_subset,function(genes,subset_genes){length(genes[genes %in% subset_genes])},subset_genes = per_gene_cor$gene)
+gene_per_class = data.frame(class = names(gene_per_class),n_genes = gene_per_class)
 density_per_class_df_long = density_per_class_df_long %>% dplyr::left_join(gene_per_class,by="class")
+
+# reorder based on maximal pearson value, see below solution for one that worked in this case
+density_per_class_df_long = density_per_class_df_long %>% dplyr::group_by(class) %>% dplyr::mutate(max_pearson = steps[density == max(density)])
+density_per_class_df_long = density_per_class_df_long %>% dplyr::arrange((max_pearson))
+density_per_class_df_long$class_ordered = factor(density_per_class_df_long$class,levels = unique(density_per_class_df_long$class))
+#or:
+#density_per_class_df_long$class = forcats::fct_reorder(.f = density_per_class_df_long$class, .x = density_per_class_df_long$max_pearson, .fun = mean)
 ## make heatmap 
 
 require(scales)
-class_heatmap = ggplot(density_per_class_df_long[density_per_class_df_long$steps> (-0.3),], aes(x = class, y = steps , fill = density)) +
+class_heatmap = ggplot2::ggplot(density_per_class_df_long[density_per_class_df_long$steps> (-0.3),], aes(x = class_ordered, y = steps , fill = density)) +
   geom_tile() +
   geom_text(aes(x = class, y = 1.11,label=n_genes), hjust =1,size=5)+ # add cell numbers
   ggplot2::scale_fill_gradient(low="white",high="#ff1414",na.value = "grey80",
-                               limits=c(0,max(density_per_class_df_long$density)), oob=squish) + 
- # ylim(c(-0.3,1))+
-  theme(text = element_text(size=25), axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
+                               limits=c(0,max(density_per_class_df_long$density)), oob=squish) +
   xlab("Gene class")+ylab("Pearson correlation")+ guides(fill=guide_legend(title="Density"))+
   scale_fill_gradient(low = "white",high = reference_color)+
   geom_hline(yintercept = 0,color="grey60",linetype = "dashed")+
   coord_flip()+facet_grid(group ~ ., scales = "free",space = "free_y",drop=TRUE)  + 
-  theme(panel.spacing = unit(2, "lines"),
+  theme(text = element_text(size=25), axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        panel.spacing = unit(2, "lines"),
         strip.text.y = element_blank(),
         panel.background = element_rect(fill = "white"))
 # and show
@@ -334,12 +360,30 @@ ggsave(filename = paste0(results_path,"geneclass_cor_heatmap.pdf"),
        plot = class_heatmap, "pdf",dpi=600,width=330,height = 200,units="mm")
 
 
+### calculate table with stats per class for paper Text
+summary_per_class_list = lapply(class_list_subset,function(genes,per_gene_cor,subset_genes,min_genes = 10,n_density = n_density){
+  genes = genes[genes %in% subset_genes & genes %in% unique(per_gene_cor$gene)]
+  vals = per_gene_cor$pearson[per_gene_cor$gene %in% genes] %>% na.omit()
+  tmp = data.frame(mean = mean(vals), sd = sd(vals), sem = sd(vals)/sqrt(length(vals)))
+  return(tmp)
+}, per_gene_cor = per_gene_cor,subset_genes = per_gene_cor$gene,n_density=n_density)
+summary_per_class = do.call(rbind,summary_per_class_list)
+
+# specifically for
+
+# check some genes manually:
+# per_gene_cor_channel = per_gene_cor[per_gene_cor$gene %in% class_list_subset$`ion channel`, ]
+# per_gene_cor_gpcr = per_gene_cor[per_gene_cor$gene %in% class_list_subset$`G-protein coupled receptor`, ]
+# per_gene_cor_nucRec = per_gene_cor[per_gene_cor$gene %in% class_list_subset$`ligand-dependent nuclear receptor`, ]
+# per_gene_cor_growth = per_gene_cor[per_gene_cor$gene %in% class_list_subset$`growth factor`, ]
+
+
 ##########
 ### gene characteristics -- we excluded this for now
 ##########
 # 
 # ## which genes do we want to check ?
-# genes_of_interest = shared_genes
+# genes_of_interest = per_gene_cor$gene
 # 
 # ## query biomart to obtain relevant characteristics
 # # I use nov2020.archive.ensembl.org because it is still on 38 mm genome.
@@ -400,7 +444,7 @@ min_expr = 0.1
 # remove uncorrelated genes
 include_genes = unique(per_gene_cor$gene[per_gene_cor$pearson>0.3])
 # ensure that only genes occuring in both are compared:
-# use shared_genes as defined above!!
+# use shared_genes which are the same as all genes in the per_gene_cor df as defined above!!
 
 #### Need to get mean per dataset and cluster
 datasets = unique(neuron_map_seurat@meta.data$Dataset)
@@ -429,8 +473,8 @@ for(i in 1:length(clusters_to_check)){
   current_cluster= clusters_to_check[i]
   #message("  ",current_cluster)
   # get cluster markers
-  sn_Seq_based_markers = sn_seq_markers_K169$gene[sn_seq_markers_K169$p_val_adj<padj_cut & sn_seq_markers_K169$avg_log2FC>fc_min & sn_seq_markers_K169$cluster==current_cluster & sn_seq_markers_K169$gene %in% shared_genes]
-  sc_Seq_based_markers = sc_seq_markers_K169$gene[sc_seq_markers_K169$p_val_adj<padj_cut & sc_seq_markers_K169$avg_logFC>fc_min & sc_seq_markers_K169$cluster==current_cluster & sc_seq_markers_K169$gene %in% shared_genes]
+  sn_Seq_based_markers = sn_seq_markers_K169$gene[sn_seq_markers_K169$p_val_adj<padj_cut & sn_seq_markers_K169$avg_log2FC>fc_min & sn_seq_markers_K169$cluster==current_cluster & sn_seq_markers_K169$gene %in% per_gene_cor$gene]
+  sc_Seq_based_markers = sc_seq_markers_K169$gene[sc_seq_markers_K169$p_val_adj<padj_cut & sc_seq_markers_K169$avg_logFC>fc_min & sc_seq_markers_K169$cluster==current_cluster & sc_seq_markers_K169$gene %in% per_gene_cor$gene]
   union_markers = union(sn_Seq_based_markers,sc_Seq_based_markers)
   union_markers = sn_Seq_based_markers
   
