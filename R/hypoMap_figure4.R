@@ -303,6 +303,7 @@ class_list_subset = class_list[names(class_list) %in% c("ligand-dependent nuclea
 # get density per class
 n_density = 300
 list_df = lapply(class_list_subset,function(genes,per_gene_cor,subset_genes,min_genes = 10,n_density = n_density){
+  genes = unlist(genes)
   genes = genes[genes %in% subset_genes & genes %in% unique(per_gene_cor$gene)]
   if(length(genes)>min_genes){
     y = density(per_gene_cor$pearson[per_gene_cor$gene %in% genes] %>% na.omit(),n=n_density,from = -1,to = 1)$y
@@ -369,7 +370,10 @@ summary_per_class_list = lapply(class_list_subset,function(genes,per_gene_cor,su
 }, per_gene_cor = per_gene_cor,subset_genes = per_gene_cor$gene,n_density=n_density)
 summary_per_class = do.call(rbind,summary_per_class_list)
 
-# specifically for
+# specifically for bimodal:
+vals = per_gene_cor$pearson[per_gene_cor$gene %in% unlist(class_list_subset$`transmembrane receptor`)]
+length(vals[vals<0.6]) / length(vals)
+length(vals[vals>0.6])  / length(vals)
 
 # check some genes manually:
 # per_gene_cor_channel = per_gene_cor[per_gene_cor$gene %in% class_list_subset$`ion channel`, ]
@@ -524,6 +528,10 @@ per_dataset_cor_df$global_cor = round(global_cor_res,digits = ndigits) #round(gl
 per_dataset_cor_df$K169_pruned = rownames(per_dataset_cor_df)
 # add paired anno
 per_dataset_cor_df$K169_named = add_paired_annotation(input_annotation = per_dataset_cor_df$K169_pruned,reference_annotations = neuron_map_seurat@meta.data[,c("K169_pruned","K169_named")])
+
+# save gene cors!
+per_dataset_cor_df_print = per_dataset_cor_df[,c(16,15,14,1:13)]
+data.table::fwrite(per_dataset_cor_df_print,paste0(results_path,"per_cluster_correlations.txt"),sep = "\t")
 
 ##########
 ### Make heatmap - currently use treeplot below!
