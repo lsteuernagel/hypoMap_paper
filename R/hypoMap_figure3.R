@@ -15,9 +15,8 @@ require(mapscvi)
 subsample_ids = data.table::fread(paste0(data_path,"_subsampled_Cell_IDs_neuronMap.txt"),data.table = F,header = F)[,1]
 
 ######### TODO: 
-# TODO: Currently loading the deseq2 results directly! Move into paper results folder as well !
-# TODO: discuss this with Paul regarding geo etc.
-# TODO loads rbo2 finction from scHarmonize
+# TODO: discuss this with Paul regarding geo etc. and whether I am using all the right results
+# TODO loads rbo2 function from scHarmonize
 source("/beegfs/scratch/bruening_scratch/lsteuernagel/projects/scHarmonize/harmonization/gesper_rbo_functions.R")
 
 ##########
@@ -28,64 +27,22 @@ fc_cut = 0.5
 padj_cut = 0.01
 all_signatures_bacTRAP= list()
 
-#corinna glp1r:
-datafile = "/beegfs/scratch/bruening_scratch/pklemm/2021-04-corinna-traps/release/dereportr/hypo/deseq_diff/deseq2_diff.csv"
-corinna_deseq2_diff_bac_hypo = as.data.frame(fread(paste0(datafile),data.table = F))
-bacTRAP_glp1r = corinna_deseq2_diff_bac_hypo[corinna_deseq2_diff_bac_hypo$log2FoldChange>fc_cut & corinna_deseq2_diff_bac_hypo$padj<padj_cut & !is.na(corinna_deseq2_diff_bac_hypo$external_gene_name),]
-all_signatures_bacTRAP[["bacTRAP_glp1r"]] = convert_df_toVec(df = bacTRAP_glp1r[,c("log2FoldChange","external_gene_name")])
+# convert list to ordered named list of foldchanges
+convert_df_toVec = function(df){
+  vec = as.numeric(df[,1])
+  names(vec) = as.character(df[,2])
+  vec = sort(vec,decreasing = TRUE)
+  return(vec)
+}
 
-#alex pnoc:
-datafile = "/beegfs/scratch/bruening_scratch/pklemm/2019-02-alex-trap-nfcore/release/trapdiff/bactrap/de.rds"
-alex_deseq2_diff_bac_pnoc = as.data.frame(readRDS(paste0(datafile)))
-bacTRAP_pnoc = alex_deseq2_diff_bac_pnoc[alex_deseq2_diff_bac_pnoc$log2FoldChange>fc_cut & alex_deseq2_diff_bac_pnoc$padj<padj_cut & alex_deseq2_diff_bac_pnoc$comparison %in% c("ip_input_cd")  & !is.na(alex_deseq2_diff_bac_pnoc$external_gene_name) & !is.na(alex_deseq2_diff_bac_pnoc$padj) ,]
-all_signatures_bacTRAP[["bacTRAP_pnoc_cd"]] = convert_df_toVec(df = bacTRAP_pnoc[,c("log2FoldChange","external_gene_name")])
-
-#nasim pomc lepr:
-datafile = "/beegfs/scratch/bruening_scratch/pklemm/2020-02-nasim-bactrap/release/deseq/de/lepr_deseq2_diff.xlsx"
-nasim_deseq2_diff_bac_pomc_lepr = as.data.frame(readxl::read_xlsx(paste0(datafile),sheet = 1))
-bacTRAP_pomc_lepr = nasim_deseq2_diff_bac_pomc_lepr[nasim_deseq2_diff_bac_pomc_lepr$log2FoldChange>fc_cut & nasim_deseq2_diff_bac_pomc_lepr$padj<padj_cut & !is.na(nasim_deseq2_diff_bac_pomc_lepr$external_gene_name) & !is.na(nasim_deseq2_diff_bac_pomc_lepr$padj) & nasim_deseq2_diff_bac_pomc_lepr$gene_biotype == "protein_coding",]
-all_signatures_bacTRAP[["bacTRAP_pomc_lepr"]] = convert_df_toVec(df = bacTRAP_pomc_lepr[,c("log2FoldChange","external_gene_name")])
-
-#nasim pomc glp1r:
-datafile = "/beegfs/scratch/bruening_scratch/pklemm/2020-02-nasim-bactrap/release/deseq/de/glp1r_deseq2_diff.xlsx"
-nasim_deseq2_diff_bac_pomc_glp1r =  as.data.frame(readxl::read_xlsx(paste0(datafile),sheet = 1))
-bacTRAP_pomc_glp1r = nasim_deseq2_diff_bac_pomc_glp1r[nasim_deseq2_diff_bac_pomc_glp1r$log2FoldChange>fc_cut & nasim_deseq2_diff_bac_pomc_glp1r$padj<padj_cut & !is.na(nasim_deseq2_diff_bac_pomc_glp1r$external_gene_name) & !is.na(nasim_deseq2_diff_bac_pomc_glp1r$padj) & nasim_deseq2_diff_bac_pomc_glp1r$gene_biotype == "protein_coding",]
-all_signatures_bacTRAP[["bacTRAP_pomc_glp1r"]] = convert_df_toVec(df = bacTRAP_pomc_glp1r[,c("log2FoldChange","external_gene_name")])
-
-#nasim pomc vglut:
-datafile = "/beegfs/scratch/bruening_scratch/pklemm/2020-02-nasim-bactrap/release/deseq/de/vglut_deseq2_diff.xlsx"
-nasim_deseq2_diff_bac_pomc_vglut = as.data.frame(readxl::read_xlsx(paste0(datafile),sheet = 1))
-bacTRAP_pomc_vglut= nasim_deseq2_diff_bac_pomc_vglut[nasim_deseq2_diff_bac_pomc_vglut$log2FoldChange>fc_cut & nasim_deseq2_diff_bac_pomc_vglut$padj<padj_cut  & !is.na(nasim_deseq2_diff_bac_pomc_vglut$external_gene_name) & !is.na(nasim_deseq2_diff_bac_pomc_vglut$padj) & nasim_deseq2_diff_bac_pomc_vglut$gene_biotype == "protein_coding",]
-all_signatures_bacTRAP[["bacTRAP_pomc_vglut"]] = convert_df_toVec(df = bacTRAP_pomc_vglut[,c("log2FoldChange","external_gene_name")])
-
-# #nasim pomc vglut:
-# datafile = "/beegfs/scratch/bruening_scratch/pklemm/2020-02-nasim-bactrap/release/deseq/de/vglut_deseq2_diff.xlsx"
-# nasim_deseq2_diff_bac_pomc_vglut = as.data.frame(readxl::read_xlsx(paste0(datafile),sheet = 1))
-# bacTRAP_pomc_vglut= nasim_deseq2_diff_bac_pomc_vglut[nasim_deseq2_diff_bac_pomc_vglut$log2FoldChange>fc_cut & nasim_deseq2_diff_bac_pomc_vglut$padj<padj_cut  & !is.na(nasim_deseq2_diff_bac_pomc_vglut$external_gene_name) & !is.na(nasim_deseq2_diff_bac_pomc_vglut$padj) & nasim_deseq2_diff_bac_pomc_vglut$gene_biotype == "protein_coding",]
-# all_signatures_bacTRAP[["bacTRAP_pomc_vglut"]] = convert_df_toVec(df = bacTRAP_pomc_vglut[,c("log2FoldChange","external_gene_name")])
-
-#nasim pomc gck:
-datafile = "/beegfs/scratch/bruening_scratch/pklemm/2020-02-nasim-bactrap/release/deseq/de/gck_deseq2_diff.xlsx"
-nasim_deseq2_diff_bac_pomc_gck = as.data.frame(readxl::read_xlsx(paste0(datafile),sheet = 1))
-bacTRAP_pomc_gck= nasim_deseq2_diff_bac_pomc_gck[nasim_deseq2_diff_bac_pomc_gck$log2FoldChange>fc_cut & nasim_deseq2_diff_bac_pomc_gck$padj<padj_cut  & !is.na(nasim_deseq2_diff_bac_pomc_gck$external_gene_name) & !is.na(nasim_deseq2_diff_bac_pomc_gck$padj) & nasim_deseq2_diff_bac_pomc_gck$gene_biotype == "protein_coding",]
-all_signatures_bacTRAP[["bacTRAP_pomc_gck"]] = convert_df_toVec(df = bacTRAP_pomc_gck[,c("log2FoldChange","external_gene_name")])
-
-#kasia agrp:
-datafile = "/beegfs/scratch/bruening_scratch/pklemm/2020-05-kasia-bactrap/release/trapdiff/fasted_vs_control/de.rds"
-kasia_bac_agrp=  as.data.frame(readRDS(paste0(datafile)))
-bacTRAP_agrp_ctrl= kasia_bac_agrp[kasia_bac_agrp$log2FoldChange>fc_cut & kasia_bac_agrp$padj<padj_cut & kasia_bac_agrp$comparison =="ip_input_control"  & !is.na(kasia_bac_agrp$external_gene_name) & !is.na(kasia_bac_agrp$padj),]
-all_signatures_bacTRAP[["bacTRAP_agrp_ctrl"]] = convert_df_toVec(df = bacTRAP_agrp_ctrl[,c("log2FoldChange","external_gene_name")])
-
-#alai Pomc agrp:
-datafile = "/beegfs/scratch/bruening_scratch/pklemm/2021-05-alai-bactrap/release/trapdiff/dre_cre/de.rds"
-alai_bac_pomc =  as.data.frame(readRDS(paste0(datafile)))
-bacTRAP_Pomc = alai_bac_pomc[alai_bac_pomc$log2FoldChange>fc_cut & alai_bac_pomc$padj<padj_cut & alai_bac_pomc$comparison =="ip_input_cre"  & !is.na(alai_bac_pomc$external_gene_name) & !is.na(alai_bac_pomc$padj),]
-all_signatures_bacTRAP[["bacTRAP_pomc"]] = convert_df_toVec(df = bacTRAP_Pomc[,c("log2FoldChange","external_gene_name")])
-
-sapply(all_signatures_bacTRAP,length)
-# save as backup
-saveRDS(all_signatures_bacTRAP,paste0(data_path,"bacTRAP_signatures_rbo.rds"))
-
+# run on all files:
+bacTRAP_files = list.files("data_inputs/",pattern = "bacTRAP_deseq2")
+for(i in 1:length(bacTRAP_files)){
+  current_res = data.table::fread(paste0("data_inputs/",bacTRAP_files[i]),data.table = FALSE)
+  current_signature = current_res[current_res$log2FoldChange >fc_cut & current_res$padj<padj_cut & !is.na(current_res$external_gene_name),]
+  current_name = gsub("bacTRAP_deseq2_|\\.csv","",bacTRAP_files[i])
+  all_signatures_bacTRAP[[current_name]] = convert_df_toVec(df = current_signature[,c("log2FoldChange","external_gene_name")]) 
+}
 
 ##########
 ### Prepare markers
@@ -101,13 +58,6 @@ marker_table = marker_table[grepl("K169",marker_table$cluster_1),]
 
 # split into list of dfs
 marker_list = base::split(marker_table[,c("specificity","gene")],f=marker_table[,"cluster_1"]) # or: avg_log2fc or fc_mast
-# convert list to ordered named list of foldchanges
-convert_df_toVec = function(df){
-  vec = as.numeric(df[,1])
-  names(vec) = as.character(df[,2])
-  vec = sort(vec,decreasing = TRUE)
-  return(vec)
-}
 marker_list = lapply(marker_list, convert_df_toVec)
 
 all_genes_for_subset = as.character(unique(marker_table[,"gene"]))
@@ -115,6 +65,12 @@ all_genes_for_subset = as.character(unique(marker_table[,"gene"]))
 ##########
 ### RBO enrichment
 ##########
+
+# this code requires the rbo function from the gesper package:
+# https://rdrr.io/bioc/gespeR/src/R/gespeR-concordance.R 
+# https://www.bioconductor.org/packages/release/bioc/html/gespeR.html 
+
+# Here I am using an adapted version (to avoid installing all gesper dependencies)
 
 # parameters
 all_p = c(0.98)# c(0.94,0.96,0.98,0.99)

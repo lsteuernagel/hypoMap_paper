@@ -56,6 +56,8 @@ data.table::fwrite(all_conditionGenes,conditionGenes_all_file,sep="\t")
 #all_conditionGenes = data.table::fread(conditionGenes_all_file,data.table = FALSE)
 
 all_conditionGenes_filtered = all_conditionGenes[all_conditionGenes$p_val_adj < 0.01,] # filter pval
+# how many express Fos:
+fos_degs = all_conditionGenes[all_conditionGenes$gene == "Fos",]
 
 n_cells_per_cluster = query_snseq_neurons@meta.data %>% dplyr::group_by(predicted_K169_named) %>% dplyr::count(name="n_cells_per_cluster")
 n_DEG_per_cluster = all_conditionGenes_filtered %>% dplyr::group_by(current_cluster) %>% dplyr::count(name="n_DEG_per_cluster") %>% 
