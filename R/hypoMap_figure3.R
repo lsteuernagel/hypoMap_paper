@@ -17,7 +17,6 @@ subsample_ids = data.table::fread(paste0(data_path,"_subsampled_Cell_IDs_neuronM
 ######### TODO: 
 # TODO: discuss this with Paul regarding geo etc. and whether I am using all the right results
 # TODO loads rbo2 function from scHarmonize -- keep them as this for now
-# TODO look into results: not like before !!!!
 source("/beegfs/scratch/bruening_scratch/lsteuernagel/projects/scHarmonize/harmonization/gesper_rbo_functions.R")
 
 ##########
@@ -201,7 +200,7 @@ rasterize_point_size = 1.5
 
 all_signature_names =  unique(rbo_result_bacTRAP$signature_name)#c("bacTRAP_agrp_ctrl","bacTRAP_pomc" ,"bacTRAP_pomc_lepr","bacTRAP_pomc_glp1r","bacTRAP_pnoc_cd","bacTRAP_glp1r")# unique(rbo_result_bacTRAP$signature_name)
 all_signature_names
-center_cutoff_vector = c(0.2,0.06,0.08,0.15,0.15,0.15)
+center_cutoff_vector = c(0.15,0.06,0.04,0.15,0.15,0.15)
 all_signature_plots = list()
 all_signature_plots_unlabelled = list()
 for(i in 1:length(all_signature_names)){
@@ -211,8 +210,18 @@ for(i in 1:length(all_signature_names)){
     dplyr::arrange(desc(rbo))
   rbo_result_current_sig=left_join(rbo_result_current_sig,anno_df[,c("cluster_id","cluster_name","ncells")],by=c("cluster"="cluster_id"))
   # make plot w/ labels
+  relevant_clusters = anno_df$cluster_name[anno_df$clusterlevel=="K169"]
+  # customize labels for heterogeneous bacTRAPs
+  if(current_signature_name=="glp1r"){## glp1r
+    arh_clusters = c("K169-32","K169-82","K169-116","K169-17","K169-39","K169-86","K169-58","K169-89","K169-149","K169-18","K169-1","K169-68","K169-75","K169-12","K169-44","K169-105","K169-70","K169-60","K169-154","K169-21","K169-35","K169-125","K169-130","K169-28","K169-24","K169-72","K169-48","K169-50","K169-130","K169-172","K169-6","K169-45")
+    relevant_clusters = anno_df$cluster_name[anno_df$cluster_id %in%  c("K169-40","K169-144","K169-24","K169-128",arh_clusters)]
+  }
+  if(current_signature_name=="pnoc"){
+    arh_clusters = c("K169-32","K169-82","K169-116","K169-17","K169-39","K169-86","K169-58","K169-89","K169-149","K169-18","K169-1","K169-68","K169-75","K169-12","K169-44","K169-105","K169-70","K169-60","K169-154","K169-21","K169-35","K169-125","K169-130","K169-28","K169-24","K169-72","K169-48","K169-50","K169-130","K169-172","K169-6","K169-45")
+    relevant_clusters = anno_df$cluster_name[anno_df$cluster_id  %in%  c("K169-139","K169-107",arh_clusters)]
+  }
   all_signature_plots[[current_signature_name]] =plot_rbo(rbo_result_current_sig,neuron_map_seurat,clusterlevel,cols_for_feature_plot,na_color=na_color,center_cutoff=center_cutoff,
-                                                          label_col_name="cluster_name",label_size=label_size,remove_grep_text=remove_grep_text,
+                                                          label_col_name="cluster_name",label_size=label_size,remove_grep_text=remove_grep_text,relevant_clusters=relevant_clusters,
                                                           text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=5,plot_max = max_scale)
   all_signature_plots[[current_signature_name]] = rasterize_ggplot(all_signature_plots[[current_signature_name]],pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
   # make plot w/o labels
@@ -224,7 +233,7 @@ for(i in 1:length(all_signature_names)){
 }
 
 names(all_signature_plots)
-all_signature_plots$glp1r
+all_signature_plots$pnoc
 
 all_signature_plots_unlabelled$glp1r
 

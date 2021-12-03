@@ -78,29 +78,6 @@ ieg_set = c(ieg_set,"1700016P03Rik")
 # Seurat::FeaturePlot(query_snseq_neurons,"Btg1",split.by = "Diet",label = TRUE,label.size = 3.5,repel = TRUE,pt.size = 0.4,
 #                    keep.scale="feature",order = TRUE)
 
-##########
-### Immediate early genes in Agrp neurons - Violin plot
-##########
-
-activation_genes_plot_subset = ieg_set[ieg_set %in% c("Fos","Gem","Btg2","Noct","Nr4a1","Junb","1700016P03Rik")]
-
-Idents(query_snseq_neurons) <- "predicted_K98_pruned"
-p <- Seurat::VlnPlot(query_snseq_neurons,features = activation_genes_plot_subset,split.by = "Diet",idents = c("K98-4"),cols=c(adlib_color,fasting_color),
-                     ncol =4,same.y.lims = TRUE,combine = FALSE) 
-legend <- cowplot::get_legend( p[[1]])
-for(i in 1:length(p)) {
-  p[[i]] <- p[[i]] + theme(axis.title.x = element_text(size = 10),axis.ticks.x =  element_blank(),axis.text.x=element_blank())+
-    NoLegend()+xlab(NULL)+ylab(NULL) #xlab("Agrp neurons")+ylab("")
-}
-p[[8]] = cowplot::plot_grid(legend)
-activation_genes_agrp_vlnPlot = cowplot::plot_grid(plotlist = p,ncol = 4)
-activation_genes_agrp_vlnPlot
-
-# save
-ggsave(filename = paste0(results_path,"activation_genes_agrp_vlnPlot.png"),
-       plot = activation_genes_agrp_vlnPlot, "png",dpi=450,width=250,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"activation_genes_agrp_vlnPlot.pdf"),
-       plot = activation_genes_agrp_vlnPlot, "pdf",dpi=450,width=250,height = 200,units="mm")
 
 ##########
 ### Immediate early genes quantification across celtypes
@@ -124,11 +101,12 @@ for(i in 1:length(all_clusters)){
   cells_adlib = length(query_snseq_neurons@meta.data$predicted_K169_named[query_snseq_neurons@meta.data$predicted_K169_named == current_cluster & query_snseq_neurons@meta.data$Diet=="adlib"])
   cells_fasting = length(query_snseq_neurons@meta.data$predicted_K169_named[query_snseq_neurons@meta.data$predicted_K169_named == current_cluster & query_snseq_neurons@meta.data$Diet=="fast"])
   if(cells_adlib >= min_cells & cells_fasting >= min_cells ){
-    activationGenes_current = Seurat::FindMarkers(query_snseq_neurons, ident.1 = "adlib",ident.2 = "fast" , group.by = "Diet",features = activation_genes,
+    activationGenes_current = Seurat::FindMarkers(query_snseq_neurons, ident.1 = "adlib",ident.2 = "fast" , group.by = "Diet",features = ieg_set,
                                                   subset.ident = current_cluster,min.pct = min_pct,logfc.threshold = 0.1,max.cells.per.ident = 5000)
     if(nrow(activationGenes_current)>0){
       activationGenes_current$gene = rownames(activationGenes_current) # add gene name 
       activationGenes_current$pct_diff = activationGenes_current$pct.1 - activationGenes_current$pct.2
+      activationGenes_current$p_val_adjusted = p.adjust(activationGenes_current$p_val,method = "hochberg") # manual fdr
       activationGenes_current$current_cluster = current_cluster
       all_activationGenes_list[[current_cluster]] = activationGenes_current
     }
@@ -139,8 +117,8 @@ for(i in 1:length(all_clusters)){
 activation_per_cluster = do.call(rbind,all_activationGenes_list)
 
 # make a manual fdr adjustement
-activation_per_cluster$p_val_adjusted = p.adjust(activation_per_cluster$p_val,method = "hochberg") # manual fdr
-head(activation_per_cluster)
+# activation_per_cluster$p_val_adjusted_all = p.adjust(activation_per_cluster$p_val,method = "hochberg") # manual fdr
+# head(activation_per_cluster)
 
 # save table
 data.table::fwrite(activation_per_cluster,file = paste0(results_path,"activation_genes_per_cluster.txt"),sep="\t")
@@ -151,20 +129,21 @@ activation_per_cluster$Identity = activation_per_cluster$current_cluster
 activation_per_cluster$pvalue_for_calc = activation_per_cluster$p_val_adjusted
 pval_ieg_max = 0.05
 fc_ieg_min = 0.1
+
 # summarise per cluster
-activation_per_cluster_stat = activation_per_cluster %>% group_by(Identity) %>% 
-  dplyr::summarise( fisher_sig_pval_down = -2 * sum(log(pvalue_for_calc[pvalue_for_calc<pval_ieg_max & avg_log2FC < (-fc_ieg_min)])),  # summarise tests
-                    fisher_sig_pval_up = -2 * sum(log(pvalue_for_calc[pvalue_for_calc<pval_ieg_max & avg_log2FC > fc_ieg_min])), 
-                    mean_fc_up = mean(avg_log2FC[pvalue_for_calc<pval_ieg_max & avg_log2FC > fc_ieg_min]),
-                    mean_fc_down = mean(avg_log2FC[pvalue_for_calc<pval_ieg_max  & avg_log2FC < (-fc_ieg_min)]),
-                    n_down_sig = sum(pvalue_for_calc<pval_ieg_max  & avg_log2FC < (-fc_ieg_min)), # count genes
-                    n_up_sig = sum(pvalue_for_calc<pval_ieg_max  & avg_log2FC > fc_ieg_min)) %>%
-  dplyr::filter(!is.nan(mean_fc_up) | !is.nan(mean_fc_down)) %>% # general filter for anything significant
-  dplyr::filter((n_down_sig >= 1 & fisher_sig_pval_down>20) | (n_up_sig >= 1 & fisher_sig_pval_up>20)) %>% # reduce to a bit more relevant
-  dplyr::arrange(desc(fisher_sig_pval_down))
-n_cells_per_cluster = query_snseq_neurons@meta.data %>% dplyr::group_by(predicted_K169_named) %>% dplyr::count(name="n_cells_cluster")
-activation_per_cluster_stat = dplyr::left_join(activation_per_cluster_stat,n_cells_per_cluster,by=c("Identity"="predicted_K169_named"))
-activation_per_cluster_stat
+# activation_per_cluster_stat = activation_per_cluster %>% group_by(Identity) %>% 
+#   dplyr::summarise( fisher_sig_pval_down = -2 * sum(log(pvalue_for_calc[pvalue_for_calc<pval_ieg_max & avg_log2FC < (-fc_ieg_min)])),  # summarise tests
+#                     fisher_sig_pval_up = -2 * sum(log(pvalue_for_calc[pvalue_for_calc<pval_ieg_max & avg_log2FC > fc_ieg_min])), 
+#                     mean_fc_up = mean(avg_log2FC[pvalue_for_calc<pval_ieg_max & avg_log2FC > fc_ieg_min]),
+#                     mean_fc_down = mean(avg_log2FC[pvalue_for_calc<pval_ieg_max  & avg_log2FC < (-fc_ieg_min)]),
+#                     n_down_sig = sum(pvalue_for_calc<pval_ieg_max  & avg_log2FC < (-fc_ieg_min)), # count genes
+#                     n_up_sig = sum(pvalue_for_calc<pval_ieg_max  & avg_log2FC > fc_ieg_min)) %>%
+#   dplyr::filter(!is.nan(mean_fc_up) | !is.nan(mean_fc_down)) %>% # general filter for anything significant
+#   dplyr::filter((n_down_sig >= 1 & fisher_sig_pval_down>20) | (n_up_sig >= 1 & fisher_sig_pval_up>20)) %>% # reduce to a bit more relevant
+#   dplyr::arrange(desc(fisher_sig_pval_down))
+# n_cells_per_cluster = query_snseq_neurons@meta.data %>% dplyr::group_by(predicted_K169_named) %>% dplyr::count(name="n_cells_cluster")
+# activation_per_cluster_stat = dplyr::left_join(activation_per_cluster_stat,n_cells_per_cluster,by=c("Identity"="predicted_K169_named"))
+# activation_per_cluster_stat
 
 # changed to simple number of genes:
 activation_per_cluster_stat = activation_per_cluster %>% group_by(Identity) %>% 
@@ -173,7 +152,7 @@ activation_per_cluster_stat = activation_per_cluster %>% group_by(Identity) %>%
                     n_down_sig = sum(pvalue_for_calc<pval_ieg_max  & avg_log2FC < (-fc_ieg_min)), # count genes
                     n_up_sig = sum(pvalue_for_calc<pval_ieg_max  & avg_log2FC > fc_ieg_min)) %>%
   dplyr::filter(!is.nan(mean_fc_up) | !is.nan(mean_fc_down)) %>% # general filter for anything significant
-  dplyr::filter((n_down_sig >= 1 ) | (n_up_sig >= 1)) %>%
+  dplyr::filter( (n_down_sig - n_up_sig) >= 1 & n_down_sig >= 2) %>% # here I FILTER !!!!!
   dplyr::arrange(desc(n_down_sig),mean_fc_down)
 n_cells_per_cluster = query_snseq_neurons@meta.data %>% dplyr::group_by(predicted_K169_named) %>% dplyr::count(name="n_cells_cluster")
 activation_per_cluster_stat = dplyr::left_join(activation_per_cluster_stat,n_cells_per_cluster,by=c("Identity"="predicted_K169_named"))
@@ -185,7 +164,7 @@ activation_celltype_barplot = ggplot(activation_per_cluster_stat,aes(x=Identity,
   geom_text(aes(x = Identity, y = max(n_down_sig)*1.1,label=n_cells_cluster), hjust =1,size=6)+ # add cell numbers
   scale_fill_gradient(low="grey80",high=fasting_color,limits=c(0,max(abs(activation_per_cluster_stat$mean_fc_down))))+
   ylim(c(0,max(activation_per_cluster_stat$n_down_sig)*1.1)) + # extend the y axis a bit so that the n cell labels doN#t overlap with the highest plot!
-  scale_y_continuous(breaks=c(2,4,6,8))+
+  scale_y_continuous(breaks=c(2,4,6,8,10))+
   coord_flip()+ylab("Number of IEGs")+xlab(NULL)+  #"Summed adjusted p-value"
   labs(fill='Mean log2-Foldchange')+
   theme_bw()+ theme(text = element_text(size=text_size),axis.title.x = element_text(size = text_size))
@@ -196,6 +175,36 @@ ggsave(filename = paste0(results_path,"activation_celltype_barplot.png"),
        plot = activation_celltype_barplot, "png",dpi=450,width=250,height = 200,units="mm")
 ggsave(filename = paste0(results_path,"activation_celltype_barplot.pdf"),
        plot = activation_celltype_barplot, "pdf",dpi=450,width=250,height = 200,units="mm")
+
+##########
+### Immediate early genes in Agrp neurons - Violin plot
+##########
+
+# activation_genes_plot_subset = ieg_set[ieg_set %in% c("Fos","Gem","Btg2","Noct","Nr4a1","Junb","1700016P03Rik")]
+a1=activation_per_cluster[activation_per_cluster$pvalue_for_calc<0.05 & activation_per_cluster$Identity %in% c("Gm8773.Agrp.Npy.Otp.HY1","Serpina3n.Agrp.Npy.Otp.HY1"),]
+
+# top Agrp genes
+activation_genes_plot_subset = unique(activation_per_cluster$gene[activation_per_cluster$pvalue_for_calc<0.05 & 
+                                     activation_per_cluster$Identity %in% c("Gm8773.Agrp.Npy.Otp.HY1","Serpina3n.Agrp.Npy.Otp.HY1") &
+                                     activation_per_cluster$avg_log2FC < -0.4 ])
+
+Idents(query_snseq_neurons) <- "predicted_K98_pruned"
+p <- Seurat::VlnPlot(query_snseq_neurons,features = activation_genes_plot_subset,split.by = "Diet",idents = c("K98-4"),cols=c(adlib_color,fasting_color),
+                     ncol =4,same.y.lims = TRUE,combine = FALSE) 
+legend <- cowplot::get_legend( p[[1]])
+for(i in 1:length(p)) {
+  p[[i]] <- p[[i]] + theme(axis.title.x = element_text(size = 10),axis.ticks.x =  element_blank(),axis.text.x=element_blank())+
+    NoLegend()+xlab(NULL)+ylab(NULL) #xlab("Agrp neurons")+ylab("")
+}
+p[[8]] = cowplot::plot_grid(legend)
+activation_genes_agrp_vlnPlot = cowplot::plot_grid(plotlist = p,ncol = 4)
+activation_genes_agrp_vlnPlot
+
+# save
+ggsave(filename = paste0(results_path,"activation_genes_agrp_vlnPlot.png"),
+       plot = activation_genes_agrp_vlnPlot, "png",dpi=450,width=250,height = 200,units="mm")
+ggsave(filename = paste0(results_path,"activation_genes_agrp_vlnPlot.pdf"),
+       plot = activation_genes_agrp_vlnPlot, "pdf",dpi=450,width=250,height = 200,units="mm")
 
 ##########
 ### Transcriptional changes in Agrp
