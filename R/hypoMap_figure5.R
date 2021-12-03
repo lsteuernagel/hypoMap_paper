@@ -66,11 +66,12 @@ ieg_expression = FetchData(query_snseq_neurons,vars = immediate_early_genes)
 ieg_expression[ieg_expression>0] = 1
 ieg_occurence = data.frame(occ = colSums(ieg_expression), mouse_symbol = names(colSums(ieg_expression)))
 # filter to a miniumu occurence (I use 200 for now)
-ieg_set = ieg_occurence$mouse_symbol[ieg_occurence$occ > 300 & ieg_occurence$occ < 10000]
+ieg_set = ieg_occurence$mouse_symbol[ieg_occurence$occ > 300 & ieg_occurence$occ < 10000 ] # 
 # filter to relevant IEG and add 1700016P03Rik
 #ieg_set = c(immediate_early_genes_filtered$mouse_symbol,"1700016P03Rik")# NO!!!!
 # remove some gene manually e.g. JUND (reverese effect?),
 ieg_set = ieg_set[! ieg_set %in% c("Jund","Crebzf","Sh3gl3")]
+ieg_set = c(ieg_set,"1700016P03Rik")
 
 ## how to define this set best ? Only use Agrp changing genes ? only use gloabl genes ?
 # --> less genes means less strongly adjusted pvalues when testing !
@@ -123,9 +124,34 @@ ggsave(filename = paste0(results_path,"activation_genes_agrp_vlnPlot.pdf"),
 
 # calculate marker statistics but require 10% occurence in either group
 min_pct = 0.1
+# 
+# activation_per_cluster_ALL = FindAll_DEGs(query_snseq_neurons,group_var = "Diet",idents_name = "predicted_K169_named",max.cells.per.ident = 5000,
+#                                       features = activation_genes,logfc.threshold=0,pval_filter=Inf,min.pct = min_pct)
 
-activation_per_cluster = FindAll_DEGs(query_snseq_neurons,group_var = "Diet",idents_name = "predicted_K169_named",max.cells.per.ident = 5000,
-                                      features = activation_genes,logfc.threshold=0,pval_filter=Inf,min.pct = min_pct)
+###
+Idents(query_snseq_neurons) = "predicted_K169_named"
+all_clusters = unique(query_snseq_neurons@meta.data$predicted_K169_named)
+all_activationGenes_list = list()
+for(i in 1:length(all_clusters)){
+  current_cluster = all_clusters[i]
+  message(current_cluster)
+  cells_adlib = length(query_snseq_neurons@meta.data$predicted_K169_named[query_snseq_neurons@meta.data$predicted_K169_named == current_cluster & query_snseq_neurons@meta.data$Diet=="adlib"])
+  cells_fasting = length(query_snseq_neurons@meta.data$predicted_K169_named[query_snseq_neurons@meta.data$predicted_K169_named == current_cluster & query_snseq_neurons@meta.data$Diet=="fast"])
+  if(cells_adlib >= min_cells & cells_fasting >= min_cells ){
+    activationGenes_current = Seurat::FindMarkers(query_snseq_neurons, ident.1 = "adlib",ident.2 = "fast" , group.by = "Diet",features = activation_genes,
+                                                  subset.ident = current_cluster,min.pct = min_pct,logfc.threshold = 0.1,max.cells.per.ident = 5000)
+    if(nrow(activationGenes_current)>0){
+      activationGenes_current$gene = rownames(activationGenes_current) # add gene name 
+      activationGenes_current$pct_diff = activationGenes_current$pct.1 - activationGenes_current$pct.2
+      activationGenes_current$current_cluster = current_cluster
+      all_activationGenes_list[[current_cluster]] = activationGenes_current
+    }
+  }
+}
+
+# rbind
+activation_per_cluster = do.call(rbind,all_activationGenes_list)
+
 # make a manual fdr adjustement
 activation_per_cluster$p_val_adjusted = p.adjust(activation_per_cluster$p_val,method = "hochberg") # manual fdr
 head(activation_per_cluster)
@@ -135,7 +161,8 @@ data.table::fwrite(activation_per_cluster,file = paste0(results_path,"activation
 
 ## summarise:
 # define a column for pvalue aggregation
-activation_per_cluster$pvalue_for_calc = activation_per_cluster$p_val_adjusted
+activation_per_cluster$Identity = activation_per_cluster$current_cluster
+activation_per_cluster$pvalue_for_calc = activation_per_cluster$p_val_adj
 pval_ieg_max = 0.05
 fc_ieg_min = 0.1
 # summarise per cluster

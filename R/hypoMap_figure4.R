@@ -278,7 +278,7 @@ per_gene_cor = dplyr::left_join(per_gene_cor,all_clusterstats_both_summarized_fo
 # save gene cors!
 data.table::fwrite(per_gene_cor,paste0(results_path,"per_gene_correlations.txt"),sep = "\t")
 
-per_gene_cor = data.table::fread(paste0(results_path,"per_gene_correlations.txt"),data.table = FALSE)
+#per_gene_cor = data.table::fread(paste0(results_path,"per_gene_correlations.txt"),data.table = FALSE)
 
 ##########
 ### Heatmaps per gene 'class'
@@ -287,19 +287,20 @@ per_gene_cor = data.table::fread(paste0(results_path,"per_gene_correlations.txt"
 ## we defined gene classes based on KEGG, GO and Ingenuity that can be loaded from a json file provided in this repo
 # to make this scipt shroter I have removed the full creation procedure.
 class_list = jsonlite::read_json("data_inputs/gene_classes.json")
+names(class_list) = paste0(names(class_list),"s")
 
 # add markers from above to list
-class_list[["markers_both"]] = per_gene_cor$gene[per_gene_cor$both_marker]
-class_list[["markers_sc"]] = per_gene_cor$gene[per_gene_cor$sc_marker]
-class_list[["markers_sn"]] = per_gene_cor$gene[per_gene_cor$sn_marker]
+class_list[["Markers"]] = per_gene_cor$gene[per_gene_cor$both_marker]
+class_list[["Unique sc-seq"]] = per_gene_cor$gene[per_gene_cor$sc_marker]
+class_list[["Unique Nuc-seq"]] = per_gene_cor$gene[per_gene_cor$sn_marker]
 
 # make a combined receptor class
 class_list[["enzyme"]] = unique(c(class_list[["peptidase"]],class_list[["Gphosphatase"]],class_list[["kinase"]],class_list[["enzyme"]]))
 
 # reduce class lists to the ones we want to show in the final map:
-class_list_subset = class_list[names(class_list) %in% c("ligand-dependent nuclear receptor", "transmembrane receptor", "G-protein coupled receptor",
-                                                        "neuropeptide/hormone","transcription regulator","translation regulator","enzyme",
-                                                        "ion channel","growth factor","markers_both" ,"markers_sc","markers_sn")]
+class_list_subset = class_list[names(class_list) %in% c("ligand-dependent nuclear receptors", "transmembrane receptors", "G-protein coupled receptors",
+                                                        "neuropeptide/hormones","transcription regulators","translation regulators",
+                                                        "ion channels","growth factors","Markers" ,"Unique sc-seq","Unique Nuc-seq")]
 # get density per class
 n_density = 300
 list_df = lapply(class_list_subset,function(genes,per_gene_cor,subset_genes,min_genes = 10,n_density = n_density){
@@ -320,9 +321,10 @@ density_per_class_df_long = density_per_class_df %>% tidyr::gather(key="class","
 
 # add classes to split heatmap by
 density_per_class_df_long$group = "gene classes"
-density_per_class_df_long$group[density_per_class_df_long$class %in% c("markers_sc","markers_sn","markers_both")] = "celltype markers"
+density_per_class_df_long$group[density_per_class_df_long$class %in% c("Markers" ,"Unique sc-seq","Unique Nuc-seq")] = "celltype markers"
 density_per_class_df_long$group = factor(density_per_class_df_long$group,levels=(c("celltype markers","gene classes")))
 
+# neuropeptide/hormone
 # add numbers per class
 gene_per_class = sapply(class_list_subset,function(genes,subset_genes){length(genes[genes %in% subset_genes])},subset_genes = per_gene_cor$gene)
 gene_per_class = data.frame(class = names(gene_per_class),n_genes = gene_per_class)
@@ -334,8 +336,15 @@ density_per_class_df_long = density_per_class_df_long %>% dplyr::arrange((max_pe
 density_per_class_df_long$class_ordered = factor(density_per_class_df_long$class,levels = unique(density_per_class_df_long$class))
 #or:
 #density_per_class_df_long$class = forcats::fct_reorder(.f = density_per_class_df_long$class, .x = density_per_class_df_long$max_pearson, .fun = mean)
-## make heatmap 
 
+# rename classes
+# density_per_class_df_long$class[density_per_class_df_long$class=="markers_both"]="Markers"
+# density_per_class_df_long$class[density_per_class_df_long$class=="markers_sn"]="Unique Nuc-seq"
+# density_per_class_df_long$class[density_per_class_df_long$class=="markers_sc"]="Unique sc-seq"
+# density_per_class_df_long$class[density_per_class_df_long$class=="neuropeptide/hormones"]="neuropeptides/hormones"
+
+
+## make heatmap 
 require(scales)
 class_heatmap = ggplot2::ggplot(density_per_class_df_long[density_per_class_df_long$steps> (-0.3),], aes(x = class_ordered, y = steps , fill = density)) +
   geom_tile() +
@@ -374,13 +383,6 @@ summary_per_class = do.call(rbind,summary_per_class_list)
 vals = per_gene_cor$pearson[per_gene_cor$gene %in% unlist(class_list_subset$`transmembrane receptor`)]
 length(vals[vals<0.6]) / length(vals)
 length(vals[vals>0.6])  / length(vals)
-
-# check some genes manually:
-# per_gene_cor_channel = per_gene_cor[per_gene_cor$gene %in% class_list_subset$`ion channel`, ]
-# per_gene_cor_gpcr = per_gene_cor[per_gene_cor$gene %in% class_list_subset$`G-protein coupled receptor`, ]
-# per_gene_cor_nucRec = per_gene_cor[per_gene_cor$gene %in% class_list_subset$`ligand-dependent nuclear receptor`, ]
-# per_gene_cor_growth = per_gene_cor[per_gene_cor$gene %in% class_list_subset$`growth factor`, ]
-
 
 ##########
 ### gene characteristics -- we excluded this for now

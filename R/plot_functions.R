@@ -31,6 +31,10 @@ rasterize_ggplot = function(plot,pixel_raster = 1024,pixel_raster_y = NULL,inter
   # in case there are multiple GeomPoint mappings: do for each:
   for(layer_idx in layer_idx_all){
     geom_point_layer = plot$layers[[layer_idx]]
+    # if mapping is not in layer: substitute with global
+    if(is.null(geom_point_layer$mapping)){
+      geom_point_layer$mapping = plot$mapping
+    }
     # make a plot with a rasterized geom
     rasterized_plot = rasterized_plot + scattermore::geom_scattermore(
       mapping = aes_string(

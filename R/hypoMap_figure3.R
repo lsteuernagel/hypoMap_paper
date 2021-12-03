@@ -16,7 +16,8 @@ subsample_ids = data.table::fread(paste0(data_path,"_subsampled_Cell_IDs_neuronM
 
 ######### TODO: 
 # TODO: discuss this with Paul regarding geo etc. and whether I am using all the right results
-# TODO loads rbo2 function from scHarmonize
+# TODO loads rbo2 function from scHarmonize -- keep them as this for now
+# TODO look into results: not like before !!!!
 source("/beegfs/scratch/bruening_scratch/lsteuernagel/projects/scHarmonize/harmonization/gesper_rbo_functions.R")
 
 ##########
@@ -35,11 +36,18 @@ convert_df_toVec = function(df){
   return(vec)
 }
 
+# TODO: restrict to protein coding ?
+library(biomaRt)
+mart <- useMart(dataset="mmusculus_gene_ensembl",biomart='ensembl',host="nov2020.archive.ensembl.org")
+mouse_biotype = getBM(attributes = c('ensembl_gene_id', 'external_gene_name','gene_biotype'),mart = mart)
+mouse_protein_coding_genes = unique(mouse_biotype$external_gene_name[mouse_biotype$gene_biotype=="protein_coding"])
+
 # run on all files:
 bacTRAP_files = list.files("data_inputs/",pattern = "bacTRAP_deseq2")
 for(i in 1:length(bacTRAP_files)){
   current_res = data.table::fread(paste0("data_inputs/",bacTRAP_files[i]),data.table = FALSE)
   current_signature = current_res[current_res$log2FoldChange >fc_cut & current_res$padj<padj_cut & !is.na(current_res$external_gene_name),]
+  current_signature = current_signature[current_signature$external_gene_name %in% mouse_protein_coding_genes, ]
   current_name = gsub("bacTRAP_deseq2_|\\.csv","",bacTRAP_files[i])
   all_signatures_bacTRAP[[current_name]] = convert_df_toVec(df = current_signature[,c("log2FoldChange","external_gene_name")]) 
 }
@@ -57,7 +65,7 @@ marker_table$specificity[marker_table$specificity>1000] = 1000
 marker_table = marker_table[grepl("K169",marker_table$cluster_1),]
 
 # split into list of dfs
-marker_list = base::split(marker_table[,c("specificity","gene")],f=marker_table[,"cluster_1"]) # or: avg_log2fc or fc_mast
+marker_list = base::split(marker_table[,c("avg_logFC","gene")],f=marker_table[,"cluster_1"]) # or: avg_log2fc or fc_mast
 marker_list = lapply(marker_list, convert_df_toVec)
 
 all_genes_for_subset = as.character(unique(marker_table[,"gene"]))
@@ -113,7 +121,8 @@ for(k in 1:length(signature_list)){
 rbo_result_bacTRAP = do.call(rbind,bacTRAP_signatures_rbo)
 
 #save
-# data.table::fwrite(rbo_result_bacTRAP,file=output_file_name)
+output_file_name=paste0(results_path,"bacTRAP_rbo_enrichment.txt")
+data.table::fwrite(rbo_result_bacTRAP,file=output_file_name)
 
 ##########
 ### plotting helper function
@@ -121,8 +130,8 @@ rbo_result_bacTRAP = do.call(rbind,bacTRAP_signatures_rbo)
 
 # This function creates ggplots similar to Suerat's Feature plot to plot the rbo score per cell
 
-plot_rbo = function(rbo_result,map_seurat,clusterlevel,colorvec,center_cutoff =NULL,label_col_name = "cluster_name",label_size=5,remove_grep_text = "",
-                    relevant_clusters=NULL,text_color="black",text_size=5,plot_max=NULL,point_size=0.2,nudge_x=0,rasterize_plot=FALSE,rasterize_pixels = 1536,rasterize_point_size = 1.5){
+plot_rbo = function(rbo_result,map_seurat,clusterlevel,colorvec,na_color,center_cutoff =NULL,label_col_name = "cluster_name",label_size=5,remove_grep_text = "",
+                    relevant_clusters=NULL,text_color="black",text_size=5,plot_max=NULL,point_size=0.2,nudge_x=0){
   require(ggplot2)
   require(scales)
   # gett coordinates and named column from seurat metadata 
@@ -138,7 +147,7 @@ plot_rbo = function(rbo_result,map_seurat,clusterlevel,colorvec,center_cutoff =N
   plot_cluster = plot_cluster %>% dplyr::arrange(rbo)
   # make initial plot without labels
   p=ggplot(plot_cluster,aes_string(x=col_labels[3],y=col_labels[4],color=col_labels[5]))+geom_point(size=point_size)+ 
-    scale_color_gradientn(colours = colorvec,limits = c(0, plot_max),na.value = colorvec[1],oob=squish)#+ # +ggtitle("RBO per cluster")
+    scale_color_gradient(low = colorvec[1],high = colorvec[2],limits = c(0, plot_max),na.value = na_color,oob=squish)#+ # +ggtitle("RBO per cluster")
   #scale_fill_gradientn(colours = colorvec,limits = c(0, plot_max),na.value = colorvec[1],oob=squish)
   # optionally add labels 
   if(!is.null(center_cutoff)){
@@ -158,10 +167,6 @@ plot_rbo = function(rbo_result,map_seurat,clusterlevel,colorvec,center_cutoff =N
                                      inherit.aes = F , size=label_size,color=text_color,min.segment.length = 0, seed = 42,nudge_x = nudge_x)#,
   }
   p = p + theme(text = element_text(size=text_size),panel.background = element_rect(fill = "white"))+NoAxes()+ggtitle("RBO per cluster")#,axis.line=element_line(color="grey40",size = 1)
-  # rasterize
-  if(rasterize_plot){
-    p = rasterize_ggplot(p,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
-  }
   #output
   p
 }
@@ -173,28 +178,30 @@ plot_rbo = function(rbo_result,map_seurat,clusterlevel,colorvec,center_cutoff =N
 # need annotations
 anno_df = neuron_map_seurat@misc$annotations
 
-### downsample for plotting
-neuron_map_seurat_downsampled =  subset(neuron_map_seurat,cells = subsample_ids)
-
 require(RColorBrewer)
-
 # graph params
 clusterlevel = "K169"
 colorvec = RColorBrewer::brewer.pal(9, "Blues")
-colorvec[1] = "#dedede"
+colorvec[1] =  "#dedede"
+cols_for_feature_plot = c("#dedede","#0b3ebd") # "#0b3ebd"
+na_color = "#dedede"
 text_color="black"
-text_size = 20
+text_size = 15
 label_size = 7
 point_size = 0.3
 # others
 max_scale= 0.3
-nudge_x=4.5
+nudge_x=4
 nudge_x_klabel=2.5
 current_p=0.98
 remove_grep_text = ""
+# raster
+rasterize_pixels = 1536
+rasterize_point_size = 1.5
 
-all_signature_names = c("bacTRAP_agrp_ctrl","bacTRAP_pomc" ,"bacTRAP_pomc_lepr","bacTRAP_pomc_glp1r","bacTRAP_pnoc_cd","bacTRAP_glp1r")# unique(rbo_result_bacTRAP$signature_name)
-center_cutoff_vector = c(0.2,0.1,0.2,0.2,0.06,0.06)
+all_signature_names =  unique(rbo_result_bacTRAP$signature_name)#c("bacTRAP_agrp_ctrl","bacTRAP_pomc" ,"bacTRAP_pomc_lepr","bacTRAP_pomc_glp1r","bacTRAP_pnoc_cd","bacTRAP_glp1r")# unique(rbo_result_bacTRAP$signature_name)
+all_signature_names
+center_cutoff_vector = c(0.2,0.06,0.08,0.15,0.15,0.15)
 all_signature_plots = list()
 all_signature_plots_unlabelled = list()
 for(i in 1:length(all_signature_names)){
@@ -204,17 +211,22 @@ for(i in 1:length(all_signature_names)){
     dplyr::arrange(desc(rbo))
   rbo_result_current_sig=left_join(rbo_result_current_sig,anno_df[,c("cluster_id","cluster_name","ncells")],by=c("cluster"="cluster_id"))
   # make plot w/ labels
-  all_signature_plots[[current_signature_name]] =plot_rbo(rbo_result_current_sig,neuron_map_seurat_downsampled,clusterlevel,colorvec,center_cutoff=center_cutoff,
+  all_signature_plots[[current_signature_name]] =plot_rbo(rbo_result_current_sig,neuron_map_seurat,clusterlevel,cols_for_feature_plot,na_color=na_color,center_cutoff=center_cutoff,
                                                           label_col_name="cluster_name",label_size=label_size,remove_grep_text=remove_grep_text,
                                                           text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=5,plot_max = max_scale)
+  all_signature_plots[[current_signature_name]] = rasterize_ggplot(all_signature_plots[[current_signature_name]],pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
   # make plot w/o labels
-  all_signature_plots_unlabelled[[current_signature_name]] =plot_rbo(rbo_result_current_sig,neuron_map_seurat_downsampled,clusterlevel,colorvec,center_cutoff=NULL,
+  all_signature_plots_unlabelled[[current_signature_name]] =plot_rbo(rbo_result_current_sig,neuron_map_seurat,clusterlevel,cols_for_feature_plot,na_color=na_color,center_cutoff=NULL,
                                                                      label_size=label_size,remove_grep_text=remove_grep_text,text_color=text_color,
                                                                      text_size=text_size,point_size = point_size,nudge_x=nudge_x,plot_max = max_scale)
+  all_signature_plots_unlabelled[[current_signature_name]] = rasterize_ggplot(all_signature_plots_unlabelled[[current_signature_name]],pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
+  
 }
 
 names(all_signature_plots)
-all_signature_plots$bacTRAP_pnoc_cd
+all_signature_plots$glp1r
+
+all_signature_plots_unlabelled$glp1r
 
 ##########
 ### save all files
@@ -239,226 +251,13 @@ for(i in 1:length(all_signature_names)){
   
 }
 
-
-
-
-
-
-##########
-### Old:
-##########
-
-
-## pomc lepr
-rbo_result_pomc_lepr = rbo_result_bacTRAP %>% dplyr::filter(signature_name=="bacTRAP_pomc_lepr" & current_p==0.98 & grepl(clusterlevel,cluster)) %>% # & rbo > 0.03 
-  dplyr::arrange(desc(rbo))
-rbo_result_pomc_lepr=left_join(rbo_result_pomc_lepr,anno_df[,c("cluster_id","Map_CellType","ncells")],by=c("cluster"="cluster_id"))
-p_pomc_lepr=plot_rbo(rbo_result_pomc_lepr,neuron_map_seurat,clusterlevel,colorvec,center_cutoff=0.2,label_col_name="cluster_name",label_size=label_size,remove_grep_text="Slc32a1\\.|Slc17a6\\.",
-                     text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=5,plot_max = max_scale)
-p_pomc_lepr
-
-# and save:
-ggsave(filename = paste0(results_path,"pomc_lepr_rbo_plot.png"),
-       plot = p_pomc_lepr, "png",dpi=600,width=330,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"pomc_lepr_rbo_plot.pdf"),
-       plot = p_pomc_lepr, "pdf",dpi=600,width=330,height = 300,units="mm")
-#without label
-p_pomc_lepr_unlabelled=plot_rbo(rbo_result_pomc_lepr,neuron_map_seurat,clusterlevel,colorvec,center_cutoff=NULL,label_size=label_size,remove_grep_text="Slc32a1\\.|Slc17a6\\.",
-                                text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=nudge_x,plot_max = max_scale)
-p_pomc_lepr_unlabelled
-ggsave(filename = paste0(results_path,"pomc_lepr_rbo_nolabel_plot.png"),
-       plot = p_pomc_lepr_unlabelled, "png",dpi=600,width=330,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"pomc_lepr_rbo_nolabel_plot.pdf"),
-       plot = p_pomc_lepr_unlabelled, "pdf",dpi=600,width=330,height = 300,units="mm")
-#with K label
-p_pomc_lepr_klabel =plot_rbo(rbo_result_pomc_lepr,neuron_map_seurat,clusterlevel,colorvec,center_cutoff=0.2,label_col_name="cluster",label_size=label_size,remove_grep_text="Slc32a1\\.|Slc17a6\\.",
-                             text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=nudge_x_klabel,plot_max = max_scale)
-p_pomc_lepr_klabel
-ggsave(filename = paste0(results_path,"pomc_lepr_rbo_klabel_plot.png"),
-       plot = p_pomc_lepr_klabel, "png",dpi=600,width=330,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"pomc_lepr_rbo_klabel_plot.pdf"),
-       plot = p_pomc_lepr_klabel, "pdf",dpi=600,width=330,height = 300,units="mm")
-
-
-## pomc glp1r
-rbo_result_pomc_glp1r = rbo_result_bacTRAP %>% dplyr::filter(signature_name=="bacTRAP_pomc_glp1r" & current_p==0.98 & grepl(clusterlevel,cluster)) %>% # & rbo > 0.03 
-  dplyr::arrange(desc(rbo))
-rbo_result_pomc_glp1r=left_join(rbo_result_pomc_glp1r,anno_df[,c("cluster_id","Map_CellType","ncells")],by=c("cluster"="cluster_id"))
-p_pomc_glp1r=plot_rbo(rbo_result_pomc_glp1r,neuron_map_seurat,clusterlevel,colorvec,center_cutoff=0.2,label_size=label_size,remove_grep_text="Slc32a1\\.|Slc17a6\\.",
-                      text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=4.5,plot_max = max_scale)
-p_pomc_glp1r
-# and save:
-ggsave(filename = paste0(results_path,"pomc_glp1r_rbo_plot.png"),
-       plot = p_pomc_glp1r, "png",dpi=600,width=330,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"pomc_glp1r_rbo_plot.pdf"),
-       plot = p_pomc_glp1r, "pdf",dpi=600,width=330,height = 300,units="mm")
-#without label
-p_pomc_glp1r_unlabelled=plot_rbo(rbo_result_pomc_glp1r,neuron_map_seurat,clusterlevel,colorvec,center_cutoff=NULL,label_size=label_size,remove_grep_text="Slc32a1\\.|Slc17a6\\.",
-                                 text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=nudge_x,plot_max = max_scale)
-p_pomc_glp1r_unlabelled
-ggsave(filename = paste0(results_path,"pomc_glp1r_rbo_nolabel_plot.png"),
-       plot = p_pomc_glp1r_unlabelled, "png",dpi=600,width=330,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"pomc_glp1r_rbo_nolabel_plot.pdf"),
-       plot = p_pomc_glp1r_unlabelled, "pdf",dpi=600,width=330,height = 300,units="mm")
-#with K label
-p_pomc_glp1r_klabel =plot_rbo(rbo_result_pomc_glp1r,neuron_map_seurat,clusterlevel,colorvec,center_cutoff=0.2,label_col_name="cluster",label_size=label_size,remove_grep_text="Slc32a1\\.|Slc17a6\\.",
-                              text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=nudge_x_klabel,plot_max = max_scale)
-p_pomc_glp1r_klabel
-ggsave(filename = paste0(results_path,"pomc_glp1r_rbo_klabel_plot.png"),
-       plot = p_pomc_glp1r_klabel, "png",dpi=600,width=330,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"pomc_glp1r_rbo_klabel_plot.pdf"),
-       plot = p_pomc_glp1r_klabel, "pdf",dpi=600,width=330,height = 300,units="mm")
-
-
-## glp1r
-arh_clusters = c("K169-32","K169-82","K169-116","K169-17","K169-39","K169-86","K169-58","K169-89","K169-149","K169-18","K169-1","K169-68","K169-75","K169-12","K169-44","K169-105","K169-70","K169-60","K169-154","K169-21","K169-35","K169-125","K169-130","K169-28","K169-24","K169-72","K169-48","K169-50","K169-130","K169-172","K169-6","K169-45")
-relevant_clusters_glp1r = anno_df$Map_CellType[anno_df$cluster_id %in%  c("K169-40","K169-144","K169-24","K169-128",arh_clusters)]
-rbo_result_glp1r = rbo_result_bacTRAP %>% dplyr::filter(signature_name=="bacTRAP_glp1r" & current_p==0.98 & grepl(clusterlevel,cluster)) %>% # & rbo > 0.03 
-  dplyr::arrange(desc(rbo))
-rbo_result_glp1r=left_join(rbo_result_glp1r,anno_df[,c("cluster_id","Map_CellType","ncells")],by=c("cluster"="cluster_id"))
-p_glp1r=plot_rbo(rbo_result_glp1r,neuron_map_seurat,clusterlevel,colorvec,center_cutoff=0.06,label_size=label_size,remove_grep_text="Slc32a1\\.|Slc17a6\\.",
-                 text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=3.25,plot_max = max_scale,relevant_clusters = relevant_clusters_glp1r)
-p_glp1r
-# and save:
-ggsave(filename = paste0(results_path,"glp1r_rbo_plot.png"),
-       plot = p_glp1r, "png",dpi=600,width=330,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"glp1r_rbo_plot.pdf"),
-       plot = p_glp1r, "pdf",dpi=600,width=330,height = 300,units="mm")
-#without label
-p_glp1r_unlabelled=plot_rbo(rbo_result_glp1r,neuron_map_seurat,clusterlevel,colorvec,center_cutoff=NULL,label_size=label_size,remove_grep_text="Slc32a1\\.|Slc17a6\\.",
-                            text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=nudge_x,plot_max = max_scale)
-p_glp1r_unlabelled
-ggsave(filename = paste0(results_path,"glp1r_rbo_nolabel_plot.png"),
-       plot = p_glp1r_unlabelled, "png",dpi=600,width=330,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"glp1r_rbo_nolabel_plot.pdf"),
-       plot = p_glp1r_unlabelled, "pdf",dpi=600,width=330,height = 300,units="mm")
-#with K label
-p_glp1r_klabel =plot_rbo(rbo_result_glp1r,neuron_map_seurat,clusterlevel,colorvec,center_cutoff=0.05,label_col_name="cluster",label_size=label_size,remove_grep_text="Slc32a1\\.|Slc17a6\\.",
-                         text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=nudge_x_klabel,plot_max = max_scale,relevant_clusters = c("K169-40","K169-144","K169-24","K169-128",arh_clusters))
-p_glp1r_klabel
-ggsave(filename = paste0(results_path,"glp1r_rbo_klabel_plot.png"),
-       plot = p_glp1r_klabel, "png",dpi=600,width=330,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"glp1r_rbo_klabel_plot.pdf"),
-       plot = p_glp1r_klabel, "pdf",dpi=600,width=330,height = 300,units="mm")
-
-
-## pnoc
-arh_clusters = c("K169-32","K169-82","K169-116","K169-17","K169-39","K169-86","K169-58","K169-89","K169-149","K169-18","K169-1","K169-68","K169-75","K169-12","K169-44","K169-105","K169-70","K169-60","K169-154","K169-21","K169-35","K169-125","K169-130","K169-28","K169-24","K169-72","K169-48","K169-50","K169-130","K169-172","K169-6","K169-45")
-relevant_clusters_pnoc = anno_df$Map_CellType[anno_df$cluster_id %in%  c("K169-139","K169-107",arh_clusters)]
-rbo_result_pnoc= rbo_result_bacTRAP %>% dplyr::filter(signature_name=="bacTRAP_pnoc_cd" & current_p==0.98 & grepl(clusterlevel,cluster)) %>% # & rbo > 0.03 
-  dplyr::arrange(desc(rbo))
-rbo_result_pnoc=left_join(rbo_result_pnoc,anno_df[,c("cluster_id","Map_CellType","ncells")],by=c("cluster"="cluster_id"))
-p_pnoc=plot_rbo(rbo_result_pnoc,neuron_map_seurat,clusterlevel,colorvec,center_cutoff=0.04,label_size=label_size,remove_grep_text="Slc32a1\\.|Slc17a6\\.",
-                text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=3.25,plot_max = max_scale,relevant_clusters = relevant_clusters_pnoc)
-p_pnoc
-# and save:
-ggsave(filename = paste0(results_path,"pnoc_rbo_plot.png"),
-       plot = p_pnoc, "png",dpi=600,width=330,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"pnoc_rbo_plot.pdf"),
-       plot = p_pnoc, "pdf",dpi=600,width=330,height = 300,units="mm")
-#without label
-p_pnoc_unlabelled=plot_rbo(rbo_result_pnoc,neuron_map_seurat,clusterlevel,colorvec,center_cutoff=NULL,label_size=label_size,remove_grep_text="Slc32a1\\.|Slc17a6\\.",
-                           text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=nudge_x,plot_max = max_scale)
-p_pnoc_unlabelled
-ggsave(filename = paste0(results_path,"pnoc_rbo_nolabel_plot.png"),
-       plot = p_pnoc_unlabelled, "png",dpi=600,width=330,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"pnoc_rbo_nolabel_plot.pdf"),
-       plot = p_pnoc_unlabelled, "pdf",dpi=600,width=330,height = 300,units="mm")
-#with K label
-p_pnoc_klabel =plot_rbo(rbo_result_pnoc,neuron_map_seurat,clusterlevel,colorvec,center_cutoff=0.035,label_col_name="cluster",label_size=label_size,remove_grep_text="Slc32a1\\.|Slc17a6\\.",
-                        text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=2,plot_max = max_scale, relevant_clusters = c("K169-139","K169-107",arh_clusters))
-p_pnoc_klabel
-ggsave(filename = paste0(results_path,"pnoc_rbo_klabel_plot.png"),
-       plot = p_pnoc_klabel, "png",dpi=600,width=330,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"pnoc_rbo_klabel_plot.pdf"),
-       plot = p_pnoc_klabel, "pdf",dpi=600,width=330,height = 300,units="mm")
-
-## agrp
-rbo_result_agrp= rbo_result_bacTRAP %>% dplyr::filter(signature_name=="bacTRAP_agrp_ctrl" & current_p==0.98 & grepl(clusterlevel,cluster)) %>% # & rbo > 0.03 
-  dplyr::arrange(desc(rbo))
-rbo_result_agrp=left_join(rbo_result_agrp,anno_df[,c("cluster_id","Map_CellType","ncells")],by=c("cluster"="cluster_id"))
-p_agrp=plot_rbo(rbo_result_agrp,neuron_map_seurat,clusterlevel,colorvec,center_cutoff=0.2,label_size=label_size,remove_grep_text="Slc32a1\\.|Slc17a6\\.",
-                text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=4,plot_max = max_scale)
-p_agrp
-# and save:
-ggsave(filename = paste0(results_path,"agrp_rbo_plot.png"),
-       plot = p_agrp, "png",dpi=600,width=330,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"agrp_rbo_plot.pdf"),
-       plot = p_agrp, "pdf",dpi=600,width=330,height = 300,units="mm")
-#without label
-p_agrp_unlabelled=plot_rbo(rbo_result_agrp,neuron_map_seurat,clusterlevel,colorvec,center_cutoff=NULL,label_size=label_size,remove_grep_text="Slc32a1\\.|Slc17a6\\.",
-                           text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=nudge_x,plot_max = max_scale)
-p_agrp_unlabelled
-ggsave(filename = paste0(results_path,"agrp_rbo_nolabel_plot.png"),
-       plot = p_agrp_unlabelled, "png",dpi=600,width=330,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"agrp_rbo_nolabel_plot.pdf"),
-       plot = p_agrp_unlabelled, "pdf",dpi=600,width=330,height = 300,units="mm")
-#with K label
-p_agrp_klabel =plot_rbo(rbo_result_agrp,neuron_map_seurat,clusterlevel,colorvec,center_cutoff=0.2,label_col_name="cluster",label_size=label_size,remove_grep_text="Slc32a1\\.|Slc17a6\\.",
-                        text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=nudge_x_klabel,plot_max = max_scale)
-p_agrp_klabel
-ggsave(filename = paste0(results_path,"agrp_rbo_klabel_plot.png"),
-       plot = p_agrp_klabel, "png",dpi=600,width=330,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"agrp_rbo_klabel_plot.pdf"),
-       plot = p_agrp_klabel, "pdf",dpi=600,width=330,height = 300,units="mm")
-
-## pomc
-rbo_result_pomc= rbo_result_bacTRAP %>% dplyr::filter(signature_name=="bacTRAP_pomc" & current_p==0.98 & grepl(clusterlevel,cluster)) %>% # & rbo > 0.03 
-  dplyr::arrange(desc(rbo))
-rbo_result_pomc=left_join(rbo_result_pomc,anno_df[,c("cluster_id","Map_CellType","ncells")],by=c("cluster"="cluster_id"))
-p_pomc=plot_rbo(rbo_result_pomc,neuron_map_seurat,clusterlevel,colorvec,center_cutoff=0.1,label_size=label_size,remove_grep_text="Slc32a1\\.|Slc17a6\\.",
-                text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=3.75,plot_max = max_scale)
-p_pomc
-# and save:
-ggsave(filename = paste0(results_path,"pomc_rbo_plot.png"),
-       plot = p_pomc, "png",dpi=600,width=330,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"pomc_rbo_plot.pdf"),
-       plot = p_pomc, "pdf",dpi=600,width=330,height = 300,units="mm")
-#without label
-p_pomc_unlabelled=plot_rbo(rbo_result_pomc,neuron_map_seurat,clusterlevel,colorvec,center_cutoff=NULL,label_size=label_size,remove_grep_text="Slc32a1\\.|Slc17a6\\.",
-                           text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=nudge_x,plot_max = max_scale)
-p_pomc_unlabelled
-ggsave(filename = paste0(results_path,"pomc_rbo_nolabel_plot.png"),
-       plot = p_pomc_unlabelled, "png",dpi=600,width=330,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"pomc_rbo_nolabel_plot.pdf"),
-       plot = p_pomc_unlabelled, "pdf",dpi=600,width=330,height = 300,units="mm")
-#with K label
-p_pomc_klabel =plot_rbo(rbo_result_pomc,neuron_map_seurat,clusterlevel,colorvec,center_cutoff=0.15,label_col_name="cluster",label_size=label_size,remove_grep_text="Slc32a1\\.|Slc17a6\\.",
-                        text_color=text_color,text_size=text_size,point_size = point_size,nudge_x=nudge_x_klabel,plot_max = max_scale)
-p_pomc_klabel
-ggsave(filename = paste0(results_path,"pomc_rbo_klabel_plot.png"),
-       plot = p_pomc_klabel, "png",dpi=600,width=330,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"pomc_rbo_klabel_plot.pdf"),
-       plot = p_pomc_klabel, "pdf",dpi=600,width=330,height = 300,units="mm")
-### and save with ggsave pdf
-# ggsave(filename = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/analysis_results/cers/kimVMH_cers1to6_genes.pdf",
-#        plot = p_all_kimVMH, "pdf",dpi=300,width=300,height = 200,units="mm")
-
-##########
-### Pnoc
-##########
-
-pnoc_stats = cbind(neuron_map_seurat@meta.data[,c("Cell_ID","Dataset","K169_named")] ,FetchData(neuron_map_seurat,vars = "Pnoc")) %>% group_by(K169_named) %>%
-  dplyr::summarise(mean_pnoc= mean(Pnoc) )
-
-rbo_result_pnoc_with_expression = dplyr::left_join(rbo_result_pnoc,pnoc_stats,by=c("clean_names"="K169_named"))
-
-cellshigh=neuron_map_seurat@meta.data$Cell_ID[neuron_map_seurat@meta.data$K169_named=="Slc32a1.Six6.Arx.Penk"]
-DimPlot(neuron_map_seurat,group.by = "K329_named",reduction = paste0("umap_","scvi"),label = F,label.size = 3,repel = TRUE,cells.highlight = cellshigh,sizes.highlight = 0.1)+NoAxes()+NoLegend()
-
-FeaturePlot(neuron_map_seurat,features = c("Trh"),reduction = paste0("umap_","scvi"),order = TRUE)+NoAxes()#+NoLegend()
-
-table(neuron_map_seurat@meta.data$Dataset[neuron_map_seurat@meta.data$K98_named == "Slc17a6.Nrn1.Sim1.Trh"])
-
-#bacTRAp_signatures$bacTRAP_pnoc_cd[names(bacTRAp_signatures$bacTRAP_pnoc_cd) %in% markers_comparisons_all$gene[markers_comparisons_all$cluster_1=="K169-161" & markers_comparisons_all$specificity>5]]
-
 ##########
 ### EXPORT
 ##########
-
-list_rbo_plots = list( p_agrp = p_agrp  , p_pomc = p_pomc, p_pomc_lepr = p_pomc_lepr, p_pomc_glp1r= p_pomc_glp1r,p_pnoc = p_pnoc, p_glp1r  = p_glp1r)
-
-list_rbo_plots$p_agrp
-
-saveRDS(list_rbo_plots,paste0(results_path,"Figure_3_july/","Figure_3_plots.rds"))
-
+# 
+# list_rbo_plots = list( p_agrp = p_agrp  , p_pomc = p_pomc, p_pomc_lepr = p_pomc_lepr, p_pomc_glp1r= p_pomc_glp1r,p_pnoc = p_pnoc, p_glp1r  = p_glp1r)
+# 
+# list_rbo_plots$p_agrp
+# 
+# saveRDS(list_rbo_plots,paste0(results_path,"Figure_3_plots.rds"))
+# 
