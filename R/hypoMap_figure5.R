@@ -24,6 +24,7 @@ bg_col = "#dedede"
 colorvec = RColorBrewer::brewer.pal(9, "Blues")
 colorvec[1] =  "#dedede"
 cols_for_feature_plot = c("#dedede","#0b3ebd") # "#0b3ebd"
+text_size = 20
 
 rasterize_point_size = 2.2
 rasterize_pixels = 2048
@@ -70,23 +71,8 @@ ieg_set = ieg_occurence$mouse_symbol[ieg_occurence$occ > 300 & ieg_occurence$occ
 # filter to relevant IEG and add 1700016P03Rik
 #ieg_set = c(immediate_early_genes_filtered$mouse_symbol,"1700016P03Rik")# NO!!!!
 # remove some gene manually e.g. JUND (reverese effect?),
-ieg_set = ieg_set[! ieg_set %in% c("Jund","Crebzf","Sh3gl3")]
+#ieg_set = ieg_set[! ieg_set %in% c("Jund","Crebzf","Sh3gl3")]
 ieg_set = c(ieg_set,"1700016P03Rik")
-
-## how to define this set best ? Only use Agrp changing genes ? only use gloabl genes ?
-# --> less genes means less strongly adjusted pvalues when testing !
-
-## calculate agrp fcs:
-Idents(query_snseq_neurons) <- "predicted_K98_pruned"
-ieg_in_agrp_fcs = Seurat::FindMarkers(query_snseq_neurons, ident.1 = "adlib",ident.2 = "fast" , group.by = "Diet", 
-                                      subset.ident = "K98-4",min.pct = 0,logfc.threshold = 0,features = ieg_set)
-ieg_in_agrp_fcs$gene = rownames(ieg_in_agrp_fcs)
-#ieg_in_agrp_fcs$padj =  p.adjust(ieg_in_agrp_fcs$p_val, method = "fdr")
-# which genes are significant:
-activation_genes = ieg_in_agrp_fcs$gene[ieg_in_agrp_fcs$p_val_adj<0.05]
-# manually add two other well known genes:
-activation_genes = c(activation_genes,"Nr4a3","Egr1","1700016P03Rik")
-activation_genes
 
 # example plot
 # Seurat::FeaturePlot(query_snseq_neurons,"Btg1",split.by = "Diet",label = TRUE,label.size = 3.5,repel = TRUE,pt.size = 0.4,
@@ -96,7 +82,7 @@ activation_genes
 ### Immediate early genes in Agrp neurons - Violin plot
 ##########
 
-activation_genes_plot_subset = activation_genes[activation_genes %in% c("Fos","Gem","Btg2","Noct","Nr4a1","Junb", "1700016P03Rik")]
+activation_genes_plot_subset = ieg_set[ieg_set %in% c("Fos","Gem","Btg2","Noct","Nr4a1","Junb","1700016P03Rik")]
 
 Idents(query_snseq_neurons) <- "predicted_K98_pruned"
 p <- Seurat::VlnPlot(query_snseq_neurons,features = activation_genes_plot_subset,split.by = "Diet",idents = c("K98-4"),cols=c(adlib_color,fasting_color),
@@ -162,7 +148,7 @@ data.table::fwrite(activation_per_cluster,file = paste0(results_path,"activation
 ## summarise:
 # define a column for pvalue aggregation
 activation_per_cluster$Identity = activation_per_cluster$current_cluster
-activation_per_cluster$pvalue_for_calc = activation_per_cluster$p_val_adj
+activation_per_cluster$pvalue_for_calc = activation_per_cluster$p_val_adjusted
 pval_ieg_max = 0.05
 fc_ieg_min = 0.1
 # summarise per cluster
@@ -180,16 +166,29 @@ n_cells_per_cluster = query_snseq_neurons@meta.data %>% dplyr::group_by(predicte
 activation_per_cluster_stat = dplyr::left_join(activation_per_cluster_stat,n_cells_per_cluster,by=c("Identity"="predicted_K169_named"))
 activation_per_cluster_stat
 
+# changed to simple number of genes:
+activation_per_cluster_stat = activation_per_cluster %>% group_by(Identity) %>% 
+  dplyr::summarise( mean_fc_up = mean(avg_log2FC[pvalue_for_calc<pval_ieg_max & avg_log2FC > fc_ieg_min]),
+                    mean_fc_down = mean(avg_log2FC[pvalue_for_calc<pval_ieg_max  & avg_log2FC < (-fc_ieg_min)]),
+                    n_down_sig = sum(pvalue_for_calc<pval_ieg_max  & avg_log2FC < (-fc_ieg_min)), # count genes
+                    n_up_sig = sum(pvalue_for_calc<pval_ieg_max  & avg_log2FC > fc_ieg_min)) %>%
+  dplyr::filter(!is.nan(mean_fc_up) | !is.nan(mean_fc_down)) %>% # general filter for anything significant
+  dplyr::filter((n_down_sig >= 1 ) | (n_up_sig >= 1)) %>%
+  dplyr::arrange(desc(n_down_sig),mean_fc_down)
+n_cells_per_cluster = query_snseq_neurons@meta.data %>% dplyr::group_by(predicted_K169_named) %>% dplyr::count(name="n_cells_cluster")
+activation_per_cluster_stat = dplyr::left_join(activation_per_cluster_stat,n_cells_per_cluster,by=c("Identity"="predicted_K169_named"))
+activation_per_cluster_stat
 
 # make barplot for Figure
 activation_per_cluster_stat$Identity = factor(activation_per_cluster_stat$Identity,levels = rev(activation_per_cluster_stat$Identity))
-activation_celltype_barplot = ggplot(activation_per_cluster_stat,aes(x=Identity,y=fisher_sig_pval_down,fill= -1*mean_fc_down))+geom_bar(stat="identity")+
-  geom_text(aes(x = Identity, y = max(fisher_sig_pval_down)*1.1,label=n_cells_cluster), hjust =1,size=6)+ # add cell numbers
+activation_celltype_barplot = ggplot(activation_per_cluster_stat,aes(x=Identity,y=n_down_sig,fill= -1*mean_fc_down))+geom_bar(stat="identity")+
+  geom_text(aes(x = Identity, y = max(n_down_sig)*1.1,label=n_cells_cluster), hjust =1,size=6)+ # add cell numbers
   scale_fill_gradient(low="grey80",high=fasting_color,limits=c(0,max(abs(activation_per_cluster_stat$mean_fc_down))))+
-  ylim(c(0,max(activation_per_cluster_stat$fisher_sig_pval_down)*1.1)) + # extend the y axis a bit so that the n cell labels doN#t overlap with the highest plot!
-  coord_flip()+ylab("Summed adjusted p-value")+xlab(NULL)+ 
+  ylim(c(0,max(activation_per_cluster_stat$n_down_sig)*1.1)) + # extend the y axis a bit so that the n cell labels doN#t overlap with the highest plot!
+  scale_y_continuous(breaks=c(2,4,6,8))+
+  coord_flip()+ylab("Number of IEGs")+xlab(NULL)+  #"Summed adjusted p-value"
   labs(fill='Mean log2-Foldchange')+
-  theme_bw()+ theme(text = element_text(size=20),axis.title.x = element_text(size = 20))
+  theme_bw()+ theme(text = element_text(size=text_size),axis.title.x = element_text(size = text_size))
 activation_celltype_barplot
 
 # save
