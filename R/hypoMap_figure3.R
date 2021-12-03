@@ -4,7 +4,7 @@
 ##########
 
 #set path
-results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_3/"
+results_path = "figure_outputs/figure_3/"
 system(paste0("mkdir -p ",results_path))
 
 # load everything required

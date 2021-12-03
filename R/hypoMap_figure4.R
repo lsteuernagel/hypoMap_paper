@@ -353,6 +353,7 @@ class_heatmap = ggplot2::ggplot(density_per_class_df_long[density_per_class_df_l
                                limits=c(0,max(density_per_class_df_long$density)), oob=squish) +
   xlab("Gene class")+ylab("Pearson correlation")+ guides(fill=guide_legend(title="Density"))+
   scale_fill_gradient(low = "white",high = reference_color)+
+  guides(fill = guide_colorbar()) + # ensure continous colorbar
   geom_hline(yintercept = 0,color="grey60",linetype = "dashed")+
   coord_flip()+facet_grid(group ~ ., scales = "free",space = "free_y",drop=TRUE)  + 
   theme(text = element_text(size=25), axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
@@ -585,9 +586,9 @@ circular_tree_cor_rotated
 #save:
 ggsave(filename = paste0(results_path,"circular_tree_correlation.png"),
        plot = circular_tree_cor, "png",dpi=600,width=400,height = 400,units="mm")
-
 ggsave(filename = paste0(results_path,"circular_tree_correlation.pdf"),
        plot = circular_tree_cor, "pdf",dpi=600,width=400,height = 400,units="mm")
+
 
 
 
