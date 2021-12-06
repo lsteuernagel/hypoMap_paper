@@ -184,7 +184,8 @@ a1=activation_per_cluster[activation_per_cluster$pvalue_for_calc<0.05 & activati
 # top Agrp genes
 activation_genes_plot_subset = unique(activation_per_cluster$gene[activation_per_cluster$pvalue_for_calc<0.05 & 
                                      activation_per_cluster$Identity %in% c("Gm8773.Agrp.Npy.Otp.HY1","Serpina3n.Agrp.Npy.Otp.HY1") &
-                                     activation_per_cluster$avg_log2FC < -0.4 ])
+                                     activation_per_cluster$avg_log2FC < -0.5 ])
+activation_genes_plot_subset = c("Fos",activation_genes_plot_subset[activation_genes_plot_subset!="Fos"])
 
 Idents(query_snseq_neurons) <- "predicted_K98_pruned"
 p <- Seurat::VlnPlot(query_snseq_neurons,features = activation_genes_plot_subset,split.by = "Diet",idents = c("K98-4"),cols=c(adlib_color,fasting_color),
@@ -203,6 +204,16 @@ ggsave(filename = paste0(results_path,"activation_genes_agrp_vlnPlot.png"),
        plot = activation_genes_agrp_vlnPlot, "png",dpi=450,width=250,height = 200,units="mm")
 ggsave(filename = paste0(results_path,"activation_genes_agrp_vlnPlot.pdf"),
        plot = activation_genes_agrp_vlnPlot, "pdf",dpi=450,width=250,height = 200,units="mm")
+
+#### save as vertical version
+activation_genes_agrp_vlnPlot_vertical = cowplot::plot_grid(plotlist = p,ncol =2)
+activation_genes_agrp_vlnPlot_vertical
+
+# save
+ggsave(filename = paste0(results_path,"activation_genes_agrp_vlnPlot_vertical.png"),
+       plot = activation_genes_agrp_vlnPlot_vertical, "png",dpi=450,width=150,height = 250,units="mm")
+ggsave(filename = paste0(results_path,"activation_genes_agrp_vlnPlot_vertical.pdf"),
+       plot = activation_genes_agrp_vlnPlot_vertical, "pdf",dpi=450,width=150,height = 250,units="mm")
 
 ##########
 ### Transcriptional changes in Agrp
