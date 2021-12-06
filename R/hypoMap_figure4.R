@@ -584,9 +584,9 @@ circular_tree_cor_rotated
 
 #save:
 ggsave(filename = paste0(results_path,"circular_tree_correlation.png"),
-       plot = circular_tree_cor, "png",dpi=600,width=400,height = 400,units="mm")
+       plot = circular_tree_cor_rotated, "png",dpi=600,width=400,height = 400,units="mm")
 ggsave(filename = paste0(results_path,"circular_tree_correlation.pdf"),
-       plot = circular_tree_cor, "pdf",dpi=600,width=400,height = 400,units="mm")
+       plot = circular_tree_cor_rotated, "pdf",dpi=600,width=400,height = 400,units="mm")
 
 
 
