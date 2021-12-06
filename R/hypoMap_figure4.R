@@ -3,8 +3,8 @@
 ### Load & Prepare
 ##########
 
-results_path = "figure_outputs/figure_4/"
-system(paste0("mkdir -p ",results_path))
+results_path_figure4 = "figure_outputs/figure_4/"
+system(paste0("mkdir -p ",results_path_figure4))
 
 # load required functions
 require(mapscvi)
@@ -37,9 +37,9 @@ mapped_query_snseq_neurons_plot = mapscvi::plot_query_labels(query_seura_object=
 mapped_query_snseq_neurons_plot = rasterize_ggplot(mapped_query_snseq_neurons_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 mapped_query_snseq_neurons_plot
 
-ggsave(filename = paste0(results_path,"mapping_snseq.png"),
+ggsave(filename = paste0(results_path_figure4,"mapping_snseq.png"),
        plot = mapped_query_snseq_neurons_plot, "png",dpi=450,width=200,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"mapping_snseq.pdf"),
+ggsave(filename = paste0(results_path_figure4,"mapping_snseq.pdf"),
        plot = mapped_query_snseq_neurons_plot, "pdf",dpi=450,width=200,height = 200,units="mm")
 
 
@@ -51,9 +51,9 @@ quality_query_snseq_neurons_plot=Seurat::FeaturePlot(query_snseq_neurons,feature
 quality_query_snseq_neurons_plot = rasterize_ggplot(quality_query_snseq_neurons_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 quality_query_snseq_neurons_plot
 
-ggsave(filename = paste0(results_path,"mapping_prob_snseq.png"),
+ggsave(filename = paste0(results_path_figure4,"mapping_prob_snseq.png"),
        plot = quality_query_snseq_neurons_plot, "png",dpi=450,width=200,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"mapping_prob_snseq.pdf"),
+ggsave(filename = paste0(results_path_figure4,"mapping_prob_snseq.pdf"),
        plot = quality_query_snseq_neurons_plot, "pdf",dpi=450,width=200,height = 200,units="mm")
 
 
@@ -65,7 +65,7 @@ ggsave(filename = paste0(results_path,"mapping_prob_snseq.pdf"),
 
 # create cluster overview using mapscvi:
 overview_clustering = mapscvi::compare_clustering(query_snseq_neurons,"predicted_K98_named","Cluster_IDs",min_cells = 10,min_pct = 0.1,return_data=TRUE)
-data.table::fwrite(overview_clustering,paste0(results_path,"overview_clustering_nucSeq.txt"),sep="\t")
+data.table::fwrite(overview_clustering,paste0(results_path_figure4,"overview_clustering_nucSeq.txt"),sep="\t")
 
 #### SCN plots
 # sankey
@@ -94,16 +94,16 @@ scn_dimplot
 # save sankeys
 library(webshot)
 # https://stackoverflow.com/questions/65158327/how-can-i-save-a-networkd3sankeynetwork-into-a-static-image-automatically-vi
-networkD3::saveNetwork(sankey_scn, paste0(results_path,"sankey_scn_neurons.html"))
+networkD3::saveNetwork(sankey_scn, paste0(results_path_figure4,"sankey_scn_neurons.html"))
 # convert it
 # need: webshot::install_phantomjs()
-webshot::webshot(paste0(results_path,"sankey_scn_neurons.html"),file=paste0(results_path,"sankey_scn_neurons.png"), vwidth = 1000, vheight = 900)
-webshot::webshot(paste0(results_path,"sankey_scn_neurons.html"),file=paste0(results_path,"sankey_scn_neurons.pdf"), vwidth = 1000, vheight = 900)
+webshot::webshot(paste0(results_path_figure4,"sankey_scn_neurons.html"),file=paste0(results_path_figure4,"sankey_scn_neurons.png"), vwidth = 1000, vheight = 900)
+webshot::webshot(paste0(results_path_figure4,"sankey_scn_neurons.html"),file=paste0(results_path_figure4,"sankey_scn_neurons.pdf"), vwidth = 1000, vheight = 900)
 
 # save dimplot
-ggsave(filename = paste0(results_path,"scn_dimplot.png"),
+ggsave(filename = paste0(results_path_figure4,"scn_dimplot.png"),
        plot = scn_dimplot, "png",dpi=450,width=200,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"scn_dimplot.pdf"),
+ggsave(filename = paste0(results_path_figure4,"scn_dimplot.pdf"),
        plot = scn_dimplot, "pdf",dpi=450,width=200,height = 200,units="mm")
 
 
@@ -131,15 +131,15 @@ vmh_dimplot = rasterize_ggplot(vmh_dimplot,pixel_raster = 1024,pointsize = 1.1)
 vmh_dimplot
 
 # save sankeys
-networkD3::saveNetwork(sankey_vmh, paste0(results_path,"sankey_vmh_neurons.html"))
+networkD3::saveNetwork(sankey_vmh, paste0(results_path_figure4,"sankey_vmh_neurons.html"))
 # convert it
-webshot::webshot(paste0(results_path,"sankey_vmh_neurons.html"),file=paste0(results_path,"sankey_vmh_neurons.png"), vwidth = 1000, vheight = 900)
-webshot::webshot(paste0(results_path,"sankey_vmh_neurons.html"),file=paste0(results_path,"sankey_vmh_neurons.pdf"), vwidth = 1000, vheight = 900)
+webshot::webshot(paste0(results_path_figure4,"sankey_vmh_neurons.html"),file=paste0(results_path_figure4,"sankey_vmh_neurons.png"), vwidth = 1000, vheight = 900)
+webshot::webshot(paste0(results_path_figure4,"sankey_vmh_neurons.html"),file=paste0(results_path_figure4,"sankey_vmh_neurons.pdf"), vwidth = 1000, vheight = 900)
 
 # save dimplot
-ggsave(filename = paste0(results_path,"vmh_dimplot.png"),
+ggsave(filename = paste0(results_path_figure4,"vmh_dimplot.png"),
        plot = vmh_dimplot, "png",dpi=450,width=200,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"vmh_dimplot.pdf"),
+ggsave(filename = paste0(results_path_figure4,"vmh_dimplot.pdf"),
        plot = vmh_dimplot, "pdf",dpi=450,width=200,height = 200,units="mm")
 
 
@@ -232,7 +232,7 @@ all_genes_to_keep = base::union(sc_genes_to_keep,sn_genes_to_keep)
 
 # make a table that can be saved 
 all_clusterstats_both_summarized = dplyr::full_join(all_clusterstats_sc_df_summarized,all_clusterstats_sn_df_summarized, by =c("gene"="gene"),suffix=c("_sc","_sn"))
-# data.table::fwrite(all_clusterstats_both_summarized,paste0(results_path,"max_expression_in_any_cluster_per_gene.txt"),sep = "\t")
+# data.table::fwrite(all_clusterstats_both_summarized,paste0(results_path_figure4,"max_expression_in_any_cluster_per_gene.txt"),sep = "\t")
 
 ##########
 ### Calculate per gene correlations
@@ -275,9 +275,9 @@ all_clusterstats_both_summarized_for_join = all_clusterstats_both_summarized %>%
   dplyr::select(gene,max_pct_any,max_mean_any)
 per_gene_cor = dplyr::left_join(per_gene_cor,all_clusterstats_both_summarized_for_join,by=c("gene"="gene"))
 # save gene cors!
-data.table::fwrite(per_gene_cor,paste0(results_path,"per_gene_correlations.txt"),sep = "\t")
+data.table::fwrite(per_gene_cor,paste0(results_path_figure4,"per_gene_correlations.txt"),sep = "\t")
 
-#per_gene_cor = data.table::fread(paste0(results_path,"per_gene_correlations.txt"),data.table = FALSE)
+#per_gene_cor = data.table::fread(paste0(results_path_figure4,"per_gene_correlations.txt"),data.table = FALSE)
 
 ##########
 ### Heatmaps per gene 'class'
@@ -363,10 +363,10 @@ class_heatmap = ggplot2::ggplot(density_per_class_df_long[density_per_class_df_l
 class_heatmap
 
 #store:
-ggsave(filename = paste0(results_path,"geneclass_cor_heatmap.png"),
+ggsave(filename = paste0(results_path_figure4,"geneclass_cor_heatmap.png"),
        plot = class_heatmap, "png",dpi=600,width=330,height = 200,units="mm")
 
-ggsave(filename = paste0(results_path,"geneclass_cor_heatmap.pdf"),
+ggsave(filename = paste0(results_path_figure4,"geneclass_cor_heatmap.pdf"),
        plot = class_heatmap, "pdf",dpi=600,width=330,height = 200,units="mm")
 
 
@@ -533,7 +533,7 @@ per_dataset_cor_df$K169_named = add_paired_annotation(input_annotation = per_dat
 
 # save gene cors!
 per_dataset_cor_df_print = per_dataset_cor_df[,c(16,15,14,1:13)]
-data.table::fwrite(per_dataset_cor_df_print,paste0(results_path,"per_cluster_correlations.txt"),sep = "\t")
+data.table::fwrite(per_dataset_cor_df_print,paste0(results_path_figure4,"per_cluster_correlations.txt"),sep = "\t")
 
 ##########
 ### Make heatmap - currently use treeplot below!
@@ -583,9 +583,9 @@ circular_tree_cor_rotated = rotate_tree(circular_tree_cor, -90)
 circular_tree_cor_rotated
 
 #save:
-ggsave(filename = paste0(results_path,"circular_tree_correlation.png"),
+ggsave(filename = paste0(results_path_figure4,"circular_tree_correlation.png"),
        plot = circular_tree_cor_rotated, "png",dpi=600,width=400,height = 400,units="mm")
-ggsave(filename = paste0(results_path,"circular_tree_correlation.pdf"),
+ggsave(filename = paste0(results_path_figure4,"circular_tree_correlation.pdf"),
        plot = circular_tree_cor_rotated, "pdf",dpi=600,width=400,height = 400,units="mm")
 
 

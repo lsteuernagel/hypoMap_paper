@@ -3,8 +3,8 @@
 ### Load & Prepare
 ##########
 
-results_path ="figure_outputs/figure_5/"
-system(paste0("mkdir -p ",results_path))
+results_path_figure5 ="figure_outputs/figure_5/"
+system(paste0("mkdir -p ",results_path_figure5))
 
 # load required functions
 require(mapscvi)
@@ -47,13 +47,13 @@ fos_plot_fasting = rasterize_ggplot(fos_plot_fasting,pixel_raster = rasterize_pi
 fos_plot_fasting
 
 # save
-ggsave(filename = paste0(results_path,"fos_plot_adlib.png"),
+ggsave(filename = paste0(results_path_figure5,"fos_plot_adlib.png"),
        plot = fos_plot_adlib, "png",dpi=450,width=200,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"fos_plot_adlib.pdf"),
+ggsave(filename = paste0(results_path_figure5,"fos_plot_adlib.pdf"),
        plot = fos_plot_adlib, "pdf",dpi=450,width=200,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"fos_plot_fasting.png"),
+ggsave(filename = paste0(results_path_figure5,"fos_plot_fasting.png"),
        plot = fos_plot_fasting, "png",dpi=450,width=200,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"fos_plot_fasting.pdf"),
+ggsave(filename = paste0(results_path_figure5,"fos_plot_fasting.pdf"),
        plot = fos_plot_fasting, "pdf",dpi=450,width=200,height = 200,units="mm")
 
 ##########
@@ -119,7 +119,7 @@ activation_per_cluster = do.call(rbind,all_activationGenes_list)
 # head(activation_per_cluster)
 
 # save table
-data.table::fwrite(activation_per_cluster,file = paste0(results_path,"activation_genes_per_cluster.txt"),sep="\t")
+data.table::fwrite(activation_per_cluster,file = paste0(results_path_figure5,"activation_genes_per_cluster.txt"),sep="\t")
 
 ## summarise:
 # define a column for pvalue aggregation
@@ -169,9 +169,9 @@ activation_celltype_barplot = ggplot(activation_per_cluster_stat,aes(x=Identity,
 activation_celltype_barplot
 
 # save
-ggsave(filename = paste0(results_path,"activation_celltype_barplot.png"),
+ggsave(filename = paste0(results_path_figure5,"activation_celltype_barplot.png"),
        plot = activation_celltype_barplot, "png",dpi=450,width=250,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"activation_celltype_barplot.pdf"),
+ggsave(filename = paste0(results_path_figure5,"activation_celltype_barplot.pdf"),
        plot = activation_celltype_barplot, "pdf",dpi=450,width=250,height = 200,units="mm")
 
 ##########
@@ -200,9 +200,9 @@ activation_genes_agrp_vlnPlot = cowplot::plot_grid(plotlist = p,ncol = 4)
 activation_genes_agrp_vlnPlot
 
 # save
-ggsave(filename = paste0(results_path,"activation_genes_agrp_vlnPlot.png"),
+ggsave(filename = paste0(results_path_figure5,"activation_genes_agrp_vlnPlot.png"),
        plot = activation_genes_agrp_vlnPlot, "png",dpi=450,width=250,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"activation_genes_agrp_vlnPlot.pdf"),
+ggsave(filename = paste0(results_path_figure5,"activation_genes_agrp_vlnPlot.pdf"),
        plot = activation_genes_agrp_vlnPlot, "pdf",dpi=450,width=250,height = 200,units="mm")
 
 #### save as vertical version
@@ -210,9 +210,9 @@ activation_genes_agrp_vlnPlot_vertical = cowplot::plot_grid(plotlist = p,ncol =2
 activation_genes_agrp_vlnPlot_vertical
 
 # save
-ggsave(filename = paste0(results_path,"activation_genes_agrp_vlnPlot_vertical.png"),
+ggsave(filename = paste0(results_path_figure5,"activation_genes_agrp_vlnPlot_vertical.png"),
        plot = activation_genes_agrp_vlnPlot_vertical, "png",dpi=450,width=150,height = 250,units="mm")
-ggsave(filename = paste0(results_path,"activation_genes_agrp_vlnPlot_vertical.pdf"),
+ggsave(filename = paste0(results_path_figure5,"activation_genes_agrp_vlnPlot_vertical.pdf"),
        plot = activation_genes_agrp_vlnPlot_vertical, "pdf",dpi=450,width=150,height = 250,units="mm")
 
 ##########
@@ -220,7 +220,7 @@ ggsave(filename = paste0(results_path,"activation_genes_agrp_vlnPlot_vertical.pd
 ##########
 
 # get all DEG of Agrp
-conditionGenes_Agrp_file = paste0(results_path,"agrp_fasting_all.txt")
+conditionGenes_Agrp_file = paste0(results_path_figure5,"agrp_fasting_all.txt")
 if(!file.exists(conditionGenes_Agrp_file)){
   Idents(query_snseq_neurons) <- "predicted_K98_pruned"
   conditionGenes_Agrp = Seurat::FindMarkers(query_snseq_neurons, ident.1 = "adlib",ident.2 = "fast" , group.by = "Diet", subset.ident = "K98-4",min.pct = 0,logfc.threshold = 0)
@@ -262,9 +262,9 @@ agrp_fasting_volcano = ggplot(volcano_df,aes(-1*avg_log2FC,-log10(p_val_adj),lab
 agrp_fasting_volcano
 
 #save
-ggsave(filename = paste0(results_path,"agrp_fasting_volcano.png"),
+ggsave(filename = paste0(results_path_figure5,"agrp_fasting_volcano.png"),
        plot = agrp_fasting_volcano, "png",dpi=450,width=250,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"agrp_fasting_volcano.pdf"),
+ggsave(filename = paste0(results_path_figure5,"agrp_fasting_volcano.pdf"),
        plot = agrp_fasting_volcano, "pdf",dpi=450,width=250,height = 200,units="mm")
 
 ##########
@@ -313,7 +313,7 @@ agrp_fasting_go_enrichment_simplified = clusterProfiler::simplify(agrp_fasting_g
 agrp_fasting_go_enrichment_simplified_res=agrp_fasting_go_enrichment_simplified@result
 
 # save table
-data.table::fwrite(agrp_fasting_go_enrichment_simplified_res,file = paste0(results_path,"agrp_fasting_go_enrichment_simplified.txt"),sep="\t")
+data.table::fwrite(agrp_fasting_go_enrichment_simplified_res,file = paste0(results_path_figure5,"agrp_fasting_go_enrichment_simplified.txt"),sep="\t")
 
 # make dotplot
 go_bp_agrp_enrich_dotplot = enrichplot::dotplot(agrp_fasting_go_enrichment_simplified, showCategory=20) + 
@@ -322,9 +322,9 @@ go_bp_agrp_enrich_dotplot = enrichplot::dotplot(agrp_fasting_go_enrichment_simpl
 go_bp_agrp_enrich_dotplot
 
 # save
-ggsave(filename = paste0(results_path,"go_bp_agrp_enrich_dotplot.png"),
+ggsave(filename = paste0(results_path_figure5,"go_bp_agrp_enrich_dotplot.png"),
        plot = go_bp_agrp_enrich_dotplot, "png",dpi=450,width=250,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"go_bp_agrp_enrich_dotplot.pdf"),
+ggsave(filename = paste0(results_path_figure5,"go_bp_agrp_enrich_dotplot.pdf"),
        plot = go_bp_agrp_enrich_dotplot, "pdf",dpi=450,width=250,height = 200,units="mm")
 
 ##########
@@ -332,7 +332,7 @@ ggsave(filename = paste0(results_path,"go_bp_agrp_enrich_dotplot.pdf"),
 ##########
 
 ### Comparison with Campbell Agrp changes:
-campbell_agrp_file = paste0(results_path,"agrp_fasting_all_campbell.txt")
+campbell_agrp_file = paste0(results_path_figure5,"agrp_fasting_all_campbell.txt")
 if(!file.exists(campbell_agrp_file)){
   campbell_diet = subset(neuron_map_seurat,subset = Dataset=="Campbell")
   Idents(campbell_diet) <- "K98_pruned"
@@ -381,9 +381,9 @@ agrp_Campvell_vs_sn_plot = ggplot(agrp_sn_vs_sc_plot,aes(x=avg_log2FC_sc,y=avg_l
 agrp_Campvell_vs_sn_plot
 
 # save
-ggsave(filename = paste0(results_path,"agrp_Campvell_vs_sn_plot.png"),
+ggsave(filename = paste0(results_path_figure5,"agrp_Campvell_vs_sn_plot.png"),
        plot = agrp_Campvell_vs_sn_plot, "png",dpi=450,width=250,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"agrp_Campvell_vs_sn_plot.pdf"),
+ggsave(filename = paste0(results_path_figure5,"agrp_Campvell_vs_sn_plot.pdf"),
        plot = agrp_Campvell_vs_sn_plot, "pdf",dpi=450,width=250,height = 200,units="mm")
 
 
@@ -419,9 +419,9 @@ interesting_genes_violin_plot = interesting_genes_violin_plot+xlab("")
 interesting_genes_violin_plot
 
 # save
-ggsave(filename = paste0(results_path,"interesting_genes_violin_plot.png"),
+ggsave(filename = paste0(results_path_figure5,"interesting_genes_violin_plot.png"),
        plot = interesting_genes_violin_plot, "png",dpi=450,width=250,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"interesting_genes_violin_plot.pdf"),
+ggsave(filename = paste0(results_path_figure5,"interesting_genes_violin_plot.pdf"),
        plot = interesting_genes_violin_plot, "pdf",dpi=450,width=250,height = 200,units="mm")
 
 
@@ -434,7 +434,7 @@ ggsave(filename = paste0(results_path,"interesting_genes_violin_plot.pdf"),
 
 # get all DEG of Hk2
 # 	K169-123
-conditionGenes_Hk2_file = paste0(results_path,"hk2_fasting_all.txt")
+conditionGenes_Hk2_file = paste0(results_path_figure5,"hk2_fasting_all.txt")
 if(!file.exists(conditionGenes_Hk2_file)){
   Idents(query_snseq_neurons) <- "predicted_K169_named"
   conditionGenes_Hk2 = Seurat::FindMarkers(query_snseq_neurons, ident.1 = "adlib",ident.2 = "fast" , group.by = "Diet", subset.ident = "Hk2.HY14.HY10.HY2",min.pct = 0,logfc.threshold = 0)
@@ -448,7 +448,7 @@ if(!file.exists(conditionGenes_Hk2_file)){
 conditionGenes_Hk2_filtered = conditionGenes_Hk2[conditionGenes_Hk2$p_val_adj < 0.05,] # filter pval
 
 # get all DEG of Lef1/Sox14
-conditionGenes_Sox14_file = paste0(results_path,"Sox14_fasting_all.txt")
+conditionGenes_Sox14_file = paste0(results_path_figure5,"Sox14_fasting_all.txt")
 if(!file.exists(conditionGenes_Sox14_file)){
   Idents(query_snseq_neurons) <- "predicted_K169_named"
   conditionGenes_Sox14 = Seurat::FindMarkers(query_snseq_neurons, ident.1 = "adlib",ident.2 = "fast" , group.by = "Diet", subset.ident = "Sox14.Lef1.Hmx2.HY1",min.pct = 0,logfc.threshold = 0)
@@ -466,7 +466,7 @@ conditionGenes_Sox14_filtered = conditionGenes_Sox14[conditionGenes_Sox14$p_val_
 ##########
 
 ## global changes
-conditionGenes_global_file = paste0(results_path,"global_fasting_all.txt")
+conditionGenes_global_file = paste0(results_path_figure5,"global_fasting_all.txt")
 if(!file.exists(conditionGenes_global_file)){
   conditionGenes_global = Seurat::FindMarkers(query_snseq_neurons, ident.1 = "adlib",ident.2 = "fast" , group.by = "Diet",min.pct = 0,logfc.threshold = 0.1,max.cells.per.ident = 10000)
   conditionGenes_global$gene = rownames(conditionGenes_global) # add gene name 

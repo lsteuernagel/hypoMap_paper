@@ -3,8 +3,8 @@
 ##########
 
 #set path
-results_path = "figure_outputs/figure_supplementary_7/"
-system(paste0("mkdir -p ",results_path))
+results_path_supplementary_figure7 = "figure_outputs/figure_supplementary_7/"
+system(paste0("mkdir -p ",results_path_supplementary_figure7))
 
 # load required functions
 source("R/utility_functions.R")
@@ -48,7 +48,7 @@ for(i in 1:length(all_clusters)){
 all_conditionGenes = do.call(rbind,all_conditionGenes_list)
 
 # save !
-conditionGenes_all_file = paste0(results_path,"all_clusters_fasting_DEG.txt")
+conditionGenes_all_file = paste0(results_path_supplementary_figure7,"all_clusters_fasting_DEG.txt")
 data.table::fwrite(all_conditionGenes,conditionGenes_all_file,sep="\t")
 
 
@@ -83,9 +83,9 @@ ndeg_sn_seq = rasterize_ggplot(ndeg_sn_seq,pixel_raster = rasterize_pixels,point
 ndeg_sn_seq
 
 # save
-ggsave(filename = paste0(results_path,"snseq_n_deg_fasting_umap.png"),
+ggsave(filename = paste0(results_path_supplementary_figure7,"snseq_n_deg_fasting_umap.png"),
        plot = ndeg_sn_seq, "png",dpi=400,width=300,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"snseq_n_deg_fasting_umap.pdf"),
+ggsave(filename = paste0(results_path_supplementary_figure7,"snseq_n_deg_fasting_umap.pdf"),
        plot = ndeg_sn_seq, "pdf",dpi=400,width=300,height =300,units="mm")
 
 ## plot z_score version (but I think above plot is better for figure)
@@ -115,13 +115,13 @@ fos_plot_fasting = rasterize_ggplot(fos_plot_fasting,pixel_raster = rasterize_pi
 fos_plot_fasting
 
 # save
-ggsave(filename = paste0(results_path,"fos_campbell_adlib.png"),
+ggsave(filename = paste0(results_path_supplementary_figure7,"fos_campbell_adlib.png"),
        plot = fos_plot_adlib, "png",dpi=450,width=200,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"fos_campbell_adlib.pdf"),
+ggsave(filename = paste0(results_path_supplementary_figure7,"fos_campbell_adlib.pdf"),
        plot = fos_plot_adlib, "pdf",dpi=450,width=200,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"fos_campbell_fasting.png"),
+ggsave(filename = paste0(results_path_supplementary_figure7,"fos_campbell_fasting.png"),
        plot = fos_plot_fasting, "png",dpi=450,width=200,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"fos_campbell_fasting.pdf"),
+ggsave(filename = paste0(results_path_supplementary_figure7,"fos_campbell_fasting.pdf"),
        plot = fos_plot_fasting, "pdf",dpi=450,width=200,height = 200,units="mm")
 
 

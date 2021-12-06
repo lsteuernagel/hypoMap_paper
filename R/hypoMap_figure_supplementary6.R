@@ -4,8 +4,8 @@
 ##########
 
 #set path
-results_path = "figure_outputs/figure_supplementary_6/"
-system(paste0("mkdir -p ",results_path))
+results_path_supplementary_figure6 = "figure_outputs/figure_supplementary_6/"
+system(paste0("mkdir -p ",results_path_supplementary_figure6))
 
 # load required functions
 require(mapscvi)
@@ -42,9 +42,9 @@ original_full_umap = rasterize_ggplot(original_full_umap,pixel_raster = rasteriz
 original_full_umap
 
 # save
-ggsave(filename = paste0(results_path,"snseq_original_full_umap.png"),
+ggsave(filename = paste0(results_path_supplementary_figure6,"snseq_original_full_umap.png"),
        plot = original_full_umap, "png",dpi=400,width=300,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"snseq_original_full_umap.pdf"),
+ggsave(filename = paste0(results_path_supplementary_figure6,"snseq_original_full_umap.pdf"),
        plot = original_full_umap, "pdf",dpi=400,width=300,height =300,units="mm")
 
 
@@ -58,9 +58,9 @@ projected_full_umap = rasterize_ggplot(projected_full_umap,pixel_raster = raster
 projected_full_umap
 
 # save
-ggsave(filename = paste0(results_path,"snseq_projected_full_umap.png"),
+ggsave(filename = paste0(results_path_supplementary_figure6,"snseq_projected_full_umap.png"),
        plot = projected_full_umap, "png",dpi=400,width=300,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"snseq_projected_full_umap.pdf"),
+ggsave(filename = paste0(results_path_supplementary_figure6,"snseq_projected_full_umap.pdf"),
        plot = projected_full_umap, "pdf",dpi=400,width=300,height =300,units="mm")
 
 

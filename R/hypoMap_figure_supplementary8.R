@@ -3,8 +3,8 @@
 ##########
 
 #set path
-results_path = "figure_outputs/figure_supplementary_8/"
-system(paste0("mkdir -p ",results_path))
+results_path_supplementary_figure8 = "figure_outputs/figure_supplementary_8/"
+system(paste0("mkdir -p ",results_path_supplementary_figure8))
 
 # load required functions
 source("R/utility_functions.R")
@@ -33,9 +33,9 @@ glp1r_neuron_map = rasterize_ggplot(glp1r_neuron_map,pixel_raster = rasterize_pi
 glp1r_neuron_map
 
 #save
-ggsave(filename = paste0(results_path,"glp1r_neuron_map.png"),
+ggsave(filename = paste0(results_path_supplementary_figure8,"glp1r_neuron_map.png"),
        plot = glp1r_neuron_map, "png",dpi=600,width=350,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"glp1r_neuron_map.pdf"),
+ggsave(filename = paste0(results_path_supplementary_figure8,"glp1r_neuron_map.pdf"),
        plot = glp1r_neuron_map, "pdf",dpi=600,width=350,height = 300,units="mm")
 
 
@@ -46,15 +46,15 @@ glp1r_snseq = rasterize_ggplot(glp1r_snseq,pixel_raster = rasterize_pixels,point
 glp1r_snseq
 
 #save
-ggsave(filename = paste0(results_path,"glp1r_snseq.png"),
+ggsave(filename = paste0(results_path_supplementary_figure8,"glp1r_snseq.png"),
        plot = glp1r_snseq, "png",dpi=600,width=350,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"glp1r_snseq.pdf"),
+ggsave(filename = paste0(results_path_supplementary_figure8,"glp1r_snseq.pdf"),
        plot = glp1r_snseq, "pdf",dpi=600,width=350,height = 300,units="mm")
 
 ### glp1r in bacTRAp
 # USE unlabelled plot from figure 3 script !
-system(paste0("cp ",gsub("figure_supplementary_8","figure_3",results_path),"glp1r_rbo_nolabel_plot.pdf"," ",results_path))
-system(paste0("cp ",gsub("figure_supplementary_8","figure_3",results_path),"glp1r_rbo_nolabel_plot.png"," ",results_path))
+system(paste0("cp ",gsub("figure_supplementary_8","figure_3",results_path_supplementary_figure8),"glp1r_rbo_nolabel_plot.pdf"," ",results_path_supplementary_figure8))
+system(paste0("cp ",gsub("figure_supplementary_8","figure_3",results_path_supplementary_figure8),"glp1r_rbo_nolabel_plot.png"," ",results_path_supplementary_figure8))
 
 # selected clusters !
 anno_df = neuron_map_seurat@misc$annotations
@@ -72,15 +72,15 @@ selected_clusters_plot = rasterize_ggplot(selected_clusters_plot,pixel_raster = 
 selected_clusters_plot
 
 # #save
-# ggsave(filename = paste0(results_path,"selected_glp1r_clusters_plot.png"),
+# ggsave(filename = paste0(results_path_supplementary_figure8,"selected_glp1r_clusters_plot.png"),
 #        plot = selected_clusters_plot, "png",dpi=600,width=350,height = 300,units="mm")
-# ggsave(filename = paste0(results_path,"selected_glp1r_clusters_plot"),
+# ggsave(filename = paste0(results_path_supplementary_figure8,"selected_glp1r_clusters_plot"),
 #        plot = selected_clusters_plot, "pdf",dpi=600,width=350,height = 300,units="mm")
 
 # TODO update after figure 6 is updated !
 
 # use percentages from RNAscope
-ish_quantification = data.table::fread(paste0(gsub("figure_supplementary_8","figure_6",results_path),"pct_expressed_cells_clusters_ISH.txt"),data.table = FALSE)
+ish_quantification = data.table::fread(paste0(gsub("figure_supplementary_8","figure_6",results_path_supplementary_figure8),"pct_expressed_cells_clusters_ISH.txt"),data.table = FALSE)
 ish_quantification_summary = ish_quantification %>% group_by(Experiment) %>% dplyr::summarise(mean_expressed_cells = mean(total_2_pct))
 ish_quantification_summary$celltype =NA
 ish_quantification_summary$celltype[ish_quantification_summary$Experiment == "Ghrh"] = "Ghrh.Gsx1.Hmx2.HY1"
@@ -107,7 +107,7 @@ ish_pct_umap_plot = rasterize_ggplot(ish_pct_umap_plot,pixel_raster = rasterize_
 ish_pct_umap_plot
 
 #save
-ggsave(filename = paste0(results_path,"ish_pct_umap_plot.png"),
+ggsave(filename = paste0(results_path_supplementary_figure8,"ish_pct_umap_plot.png"),
        plot = ish_pct_umap_plot, "png",dpi=600,width=350,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"ish_pct_umap_plot.pdf"),
+ggsave(filename = paste0(results_path_supplementary_figure8,"ish_pct_umap_plot.pdf"),
        plot = ish_pct_umap_plot, "pdf",dpi=600,width=350,height = 300,units="mm")

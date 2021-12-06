@@ -3,8 +3,8 @@
 ##########
 
 #set path
-results_path = "figure_outputs/figure_supplementary_3_4/"
-system(paste0("mkdir -p ",results_path))
+results_path_supplementary_figure34 = "figure_outputs/figure_supplementary_3_4/"
+system(paste0("mkdir -p ",results_path_supplementary_figure34))
 
 # load required functions
 source("R/utility_functions.R")
@@ -105,19 +105,19 @@ purity_perCelltype_lineplot = ggplot(purity_perCelltype,aes(x=celltype,y=median_
 purity_perCelltype_lineplot
 
 ### save results
-ggsave(filename = paste0(results_path,"mixing_rf_perCelltype_methods.png"),
+ggsave(filename = paste0(results_path_supplementary_figure34,"mixing_rf_perCelltype_methods.png"),
        plot = mixing_prob_perCelltype_lineplot, "png",dpi=400,width=300,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"mixing_rf_perCelltype_methods.pdf"),
+ggsave(filename = paste0(results_path_supplementary_figure34,"mixing_rf_perCelltype_methods.pdf"),
        plot = mixing_prob_perCelltype_lineplot, "pdf",dpi=400,width=300,height =200,units="mm")
 
-ggsave(filename = paste0(results_path,"mixing_entropy_perCelltype_methods.png"),
+ggsave(filename = paste0(results_path_supplementary_figure34,"mixing_entropy_perCelltype_methods.png"),
        plot = mixing_entropy_perCelltype_lineplot, "png",dpi=400,width=300,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"mixing_entropy_perCelltype_methods.pdf"),
+ggsave(filename = paste0(results_path_supplementary_figure34,"mixing_entropy_perCelltype_methods.pdf"),
        plot = mixing_entropy_perCelltype_lineplot, "pdf",dpi=400,width=300,height =200,units="mm")
 
-ggsave(filename = paste0(results_path,"purity_perCelltype_methods.png"),
+ggsave(filename = paste0(results_path_supplementary_figure34,"purity_perCelltype_methods.png"),
        plot = purity_perCelltype_lineplot, "png",dpi=400,width=300,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"purity_perCelltype_methods.pdf"),
+ggsave(filename = paste0(results_path_supplementary_figure34,"purity_perCelltype_methods.pdf"),
        plot = purity_perCelltype_lineplot, "pdf",dpi=400,width=300,height =200,units="mm")
 
 
@@ -148,9 +148,9 @@ compareMthods_cp_batch = cowplot::plot_grid(plotlist = p,ncol=4)
 compareMthods_cp_batch
 
 #save
-ggsave(filename = paste0(results_path,"umap_dataset_methods.png"),
+ggsave(filename = paste0(results_path_supplementary_figure34,"umap_dataset_methods.png"),
        plot = compareMthods_cp_batch, "png",dpi=400,width=300,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"umap_dataset_methods.pdf"),
+ggsave(filename = paste0(results_path_supplementary_figure34,"umap_dataset_methods.pdf"),
        plot = compareMthods_cp_batch, "pdf",dpi=400,width=300,height =200,units="mm")
 
 

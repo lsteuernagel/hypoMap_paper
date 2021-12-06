@@ -3,8 +3,8 @@
 ### Load & Prepare
 ##########
 
-results_path = "figure_outputs/figure_1/"
-system(paste0("mkdir -p ",results_path))
+results_path_figure1 = "figure_outputs/figure_1/"
+system(paste0("mkdir -p ",results_path_figure1))
 
 # load required functions
 source("R/utility_functions.R")
@@ -45,9 +45,9 @@ metrics_plot = ggplot2::ggplot(neurons_metrics,aes(x=mixing_score,y=purity_score
 metrics_plot
 
 #save
-ggsave(filename = paste0(results_path,"neurons_metrics_scatter.png"),
+ggsave(filename = paste0(results_path_figure1,"neurons_metrics_scatter.png"),
        plot = metrics_plot, "png",dpi=600,width=350,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"neurons_metrics_scatter.pdf"),
+ggsave(filename = paste0(results_path_figure1,"neurons_metrics_scatter.pdf"),
        plot = metrics_plot, "pdf",dpi=600,width=350,height = 300,units="mm")
 
 ##########
@@ -60,9 +60,9 @@ full_celltype_plot = rasterize_ggplot(full_celltype_plot,pixel_raster = rasteriz
 full_celltype_plot
 
 #save
-ggsave(filename = paste0(results_path,"full_map_celltypes.png"),
+ggsave(filename = paste0(results_path_figure1,"full_map_celltypes.png"),
        plot = full_celltype_plot, "png",dpi=600,width=300,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"full_map_celltypes.pdf"),
+ggsave(filename = paste0(results_path_figure1,"full_map_celltypes.pdf"),
        plot = full_celltype_plot, "pdf",dpi=600,width=300,height = 300,units="mm")
 
 ##########
@@ -78,9 +78,9 @@ neurons_annotated_plot = DimPlot(neuron_map_seurat,group.by = "new_name_col",red
 neurons_annotated_plot = rasterize_ggplot(neurons_annotated_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 neurons_annotated_plot
 
-ggsave(filename = paste0(results_path,map_name,"_annotated_clusters.png"),
+ggsave(filename = paste0(results_path_figure1,map_name,"_annotated_clusters.png"),
        plot = neurons_annotated_plot, "png",dpi=600,width=300,height = 300,units="mm")
-ggsave(filename = paste0(results_path,map_name,"_annotated_clusters.pdf"),
+ggsave(filename = paste0(results_path_figure1,map_name,"_annotated_clusters.pdf"),
        plot = neurons_annotated_plot, "pdf",dpi=600,width=300,height = 300,units="mm")
 
 

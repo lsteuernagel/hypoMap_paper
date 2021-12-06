@@ -3,8 +3,8 @@
 ##########
 
 #set path
-results_path = "figure_outputs/figure_supplementary_5/"
-system(paste0("mkdir -p ",results_path))
+results_path_supplementary_figure5 = "figure_outputs/figure_supplementary_5/"
+system(paste0("mkdir -p ",results_path_supplementary_figure5))
 
 # load required functions
 source("R/utility_functions.R")
@@ -56,9 +56,9 @@ combined_feature_plots = cowplot::plot_grid(plotlist = new_list,ncol = 2)
 combined_feature_plots
 
 # save
-ggsave(filename = paste0(results_path,"genes_bacTRAP_Umaps.png"),
+ggsave(filename = paste0(results_path_supplementary_figure5,"genes_bacTRAP_Umaps.png"),
        plot = combined_feature_plots, "png",dpi=400,width=200,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"genes_bacTRAP_Umaps.pdf"),
+ggsave(filename = paste0(results_path_supplementary_figure5,"genes_bacTRAP_Umaps.pdf"),
        plot = combined_feature_plots, "pdf",dpi=400,width=200,height =300,units="mm")
 
 

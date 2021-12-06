@@ -3,8 +3,8 @@
 ##########
 
 #set path
-results_path = "figure_outputs/figure_supplementary_1/"
-system(paste0("mkdir -p ",results_path))
+results_path_supplementary_figure1 = "figure_outputs/figure_supplementary_1/"
+system(paste0("mkdir -p ",results_path_supplementary_figure1))
 
 # load required functions
 source("R/utility_functions.R")
@@ -37,8 +37,8 @@ length(p)
 cp_allcelltypes = cowplot::plot_grid(plotlist = p,ncol = 4)
 cp_allcelltypes
 
-ggsave(filename = paste0(results_path,"celltypes_miniUmaps.png"),
+ggsave(filename = paste0(results_path_supplementary_figure1,"celltypes_miniUmaps.png"),
        plot = cp_allcelltypes, "png",dpi=300,width=200,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"celltypes_miniUmaps.pdf"),
+ggsave(filename = paste0(results_path_supplementary_figure1,"celltypes_miniUmaps.pdf"),
        plot = cp_allcelltypes, "pdf",dpi=300,width=200,height =300,units="mm")
 

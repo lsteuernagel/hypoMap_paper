@@ -4,8 +4,8 @@
 ##########
 
 #set path
-results_path = "figure_outputs/figure_3/"
-system(paste0("mkdir -p ",results_path))
+results_path_figure3 = "figure_outputs/figure_3/"
+system(paste0("mkdir -p ",results_path_figure3))
 
 # load required functions
 require(mapscvi)
@@ -122,7 +122,7 @@ for(k in 1:length(signature_list)){
 rbo_result_bacTRAP = do.call(rbind,bacTRAP_signatures_rbo)
 
 #save
-output_file_name=paste0(results_path,"bacTRAP_rbo_enrichment.txt")
+output_file_name=paste0(results_path_figure3,"bacTRAP_rbo_enrichment.txt")
 data.table::fwrite(rbo_result_bacTRAP,file=output_file_name)
 
 ##########
@@ -248,16 +248,16 @@ for(i in 1:length(all_signature_names)){
   message(current_signature_name)
   current_plot = all_signature_plots[[current_signature_name]]
   # and save:
-  ggsave(filename = paste0(results_path,current_signature_name,"_rbo_plot.png"),
+  ggsave(filename = paste0(results_path_figure3,current_signature_name,"_rbo_plot.png"),
          plot = current_plot, "png",dpi=600,width=330,height = 300,units="mm")
-  ggsave(filename = paste0(results_path,current_signature_name,"_rbo_plot.pdf"),
+  ggsave(filename = paste0(results_path_figure3,current_signature_name,"_rbo_plot.pdf"),
          plot = current_plot, "pdf",dpi=600,width=330,height = 300,units="mm")
   
   current_plot_unlabelled = all_signature_plots_unlabelled[[current_signature_name]]
   # save non_labelled as well
-  ggsave(filename = paste0(results_path,current_signature_name,"_rbo_nolabel_plot.png"),
+  ggsave(filename = paste0(results_path_figure3,current_signature_name,"_rbo_nolabel_plot.png"),
          plot = current_plot_unlabelled, "png",dpi=600,width=330,height = 300,units="mm")
-  ggsave(filename = paste0(results_path,current_signature_name,"_rbo_nolabel_plot.pdf"),
+  ggsave(filename = paste0(results_path_figure3,current_signature_name,"_rbo_nolabel_plot.pdf"),
          plot = current_plot_unlabelled, "pdf",dpi=600,width=330,height = 300,units="mm")
   
 }
@@ -270,5 +270,5 @@ for(i in 1:length(all_signature_names)){
 # 
 # list_rbo_plots$p_agrp
 # 
-# saveRDS(list_rbo_plots,paste0(results_path,"Figure_3_plots.rds"))
+# saveRDS(list_rbo_plots,paste0(results_path_figure3,"Figure_3_plots.rds"))
 # 

@@ -3,8 +3,8 @@
 ### Load & Prepare
 ##########
 
-results_path = "figure_outputs/figure_2/"
-system(paste0("mkdir -p ",results_path))
+results_path_figure2 = "figure_outputs/figure_2/"
+system(paste0("mkdir -p ",results_path_figure2))
 
 # load required functions
 source("R/utility_functions.R")
@@ -64,10 +64,10 @@ circular_tree_heat_rotated = rotate_tree(circular_tree_heat, -90)
 circular_tree_heat_rotated
 
 #store:
-ggsave(filename = paste0(results_path,"circular_tree_heat_label2.png"),
+ggsave(filename = paste0(results_path_figure2,"circular_tree_heat_label2.png"),
        plot = circular_tree_heat_rotated, "png",dpi=600,width=400,height = 400,units="mm")
 
-ggsave(filename = paste0(results_path,"circular_tree_heat_label2.pdf"),
+ggsave(filename = paste0(results_path_figure2,"circular_tree_heat_label2.pdf"),
        plot = circular_tree_heat_rotated, "pdf",dpi=600,width=400,height = 400,units="mm")
 
 ##########
@@ -94,9 +94,9 @@ campbell_anno_plot$data = plot_data[order(plot_data$campbell_anno_col,na.last = 
 campbell_anno_plot = rasterize_ggplot(campbell_anno_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 campbell_anno_plot
 
-ggsave(filename = paste0(results_path,"campbell_annotations.png"),
+ggsave(filename = paste0(results_path_figure2,"campbell_annotations.png"),
        plot = campbell_anno_plot, "png",dpi=600,width=300,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"campbell_annotations.pdf"),
+ggsave(filename = paste0(results_path_figure2,"campbell_annotations.pdf"),
        plot = campbell_anno_plot, "pdf",dpi=600,width=300,height = 300,units="mm")
 
 ##########
@@ -112,9 +112,9 @@ vip_small_plot=DimPlot(neuron_map_seurat_vip_subset,group.by = "K169_named",redu
 vip_small_plot = rasterize_ggplot(vip_small_plot,pixel_raster = 1536,pointsize = 1.8)
 vip_small_plot
 
-ggsave(filename = paste0(results_path,"vip_small_plot.png"),
+ggsave(filename = paste0(results_path_figure2,"vip_small_plot.png"),
        plot = vip_small_plot, "png",dpi=450,width=200,height = 200,units="mm")
-ggsave(filename = paste0(results_path,"vip_small_plot.pdf"),
+ggsave(filename = paste0(results_path_figure2,"vip_small_plot.pdf"),
        plot = vip_small_plot, "pdf",dpi=450,width=200,height = 200,units="mm")
 
 
@@ -126,7 +126,7 @@ query_romanov_neurons = readRDS(paste0(large_data_path,"query_romanov_neurons.rd
 
 compare_clustering_romanov =mapscvi::compare_clustering(query_romanov_neurons,clustering_1 = "Author_CellType",clustering_2 = "predicted_K169_named" ,
                                                         min_cells = 0,min_pct = 0,return_data = TRUE)
-data.table::fwrite(compare_clustering_romanov,paste0(results_path,"compare_clustering_romanov.txt"),sep="\t")
+data.table::fwrite(compare_clustering_romanov,paste0(results_path_figure2,"compare_clustering_romanov.txt"),sep="\t")
 
 # make plot
 romanov_mapped_plot = mapscvi::plot_query_labels(query_seura_object=query_romanov_neurons,reference_seurat=neuron_map_seurat,label_col="K31_named",
@@ -136,9 +136,9 @@ romanov_mapped_plot = mapscvi::plot_query_labels(query_seura_object=query_romano
 romanov_mapped_plot = rasterize_ggplot(romanov_mapped_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 romanov_mapped_plot
 
-ggsave(filename = paste0(results_path,"romanov_neurons_mapped.png"),
+ggsave(filename = paste0(results_path_figure2,"romanov_neurons_mapped.png"),
        plot = romanov_mapped_plot, "png",dpi=600,width=300,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"romanov_neurons_mapped.pdf"),
+ggsave(filename = paste0(results_path_figure2,"romanov_neurons_mapped.pdf"),
        plot = romanov_mapped_plot, "pdf",dpi=600,width=300,height = 300,units="mm")
 
 

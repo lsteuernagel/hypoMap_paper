@@ -3,8 +3,9 @@
 ##########
 
 #set path
-results_path = "figure_outputs/figure_supplementary_2/"
-system(paste0("mkdir -p ",results_path))
+results_path_supplementary_figure2 = "figure_outputs/figure_supplementary_2/"
+system(paste0("mkdir -p ",results_path_supplementary_figure2))
+
 # load required functions
 source("R/utility_functions.R")
 source("R/plot_functions.R")
@@ -48,9 +49,9 @@ full_metrics_plot = ggplot2::ggplot(full_metrics,aes(x=mixing_score,y=purity_sco
 full_metrics_plot
 
 #save
-ggsave(filename = paste0(results_path,"full_metrics_scatter.png"),
+ggsave(filename = paste0(results_path_supplementary_figure2,"full_metrics_scatter.png"),
        plot = full_metrics_plot, "png",dpi=600,width=350,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"full_metrics_scatter.pdf"),
+ggsave(filename = paste0(results_path_supplementary_figure2,"full_metrics_scatter.pdf"),
        plot = full_metrics_plot, "pdf",dpi=600,width=350,height = 300,units="mm")
 
 
@@ -65,9 +66,9 @@ full_datasets_plot = rasterize_ggplot(full_datasets_plot,pixel_raster = rasteriz
 full_datasets_plot
 
 #save
-ggsave(filename = paste0(results_path,"full_map_datasets.png"),
+ggsave(filename = paste0(results_path_supplementary_figure2,"full_map_datasets.png"),
        plot = full_datasets_plot, "png",dpi=600,width=350,height = 300,units="mm")
-ggsave(filename = paste0(results_path,"full_map_datasets.pdf"),
+ggsave(filename = paste0(results_path_supplementary_figure2,"full_map_datasets.pdf"),
        plot = full_datasets_plot, "pdf",dpi=600,width=350,height = 300,units="mm")
 
 # by BatchID
@@ -77,9 +78,9 @@ full_BatchID_plot = rasterize_ggplot(full_BatchID_plot,pixel_raster = rasterize_
 full_BatchID_plot
 
 # # save
-# ggsave(filename = paste0(results_path,"full_map_BatchID.png"),
+# ggsave(filename = paste0(results_path_supplementary_figure2,"full_map_BatchID.png"),
 #        plot = full_BatchID_plot, "png",dpi=600,width=350,height = 300,units="mm")
-# ggsave(filename = paste0(results_path,"full_map_BatchID.pdf"),
+# ggsave(filename = paste0(results_path_supplementary_figure2,"full_map_BatchID.pdf"),
 #        plot = full_BatchID_plot, "pdf",dpi=600,width=350,height = 300,units="mm")
 
 # neuronmap:
@@ -90,9 +91,9 @@ neurons_datasets_plot = rasterize_ggplot(neurons_datasets_plot,pixel_raster = ra
 neurons_datasets_plot
 
 # save
-ggsave(filename = paste0(results_path,map_name,"_datasets.png"),
+ggsave(filename = paste0(results_path_supplementary_figure2,map_name,"_datasets.png"),
        plot = neurons_datasets_plot, "png",dpi=600,width=350,height = 300,units="mm")
-ggsave(filename = paste0(results_path,map_name,"_datasets.pdf"),
+ggsave(filename = paste0(results_path_supplementary_figure2,map_name,"_datasets.pdf"),
        plot = neurons_datasets_plot, "pdf",dpi=600,width=350,height = 300,units="mm")
 
 # by BatchID
@@ -102,7 +103,7 @@ neurons_batch_plot = rasterize_ggplot(neurons_batch_plot,pixel_raster = rasteriz
 neurons_batch_plot
 
 # # save
-# ggsave(filename = paste0(results_path,map_name,"_batchid.png"),
+# ggsave(filename = paste0(results_path_supplementary_figure2,map_name,"_batchid.png"),
 #        plot = neurons_batch_plot, "png",dpi=600,width=350,height = 300,units="mm")
-# ggsave(filename = paste0(results_path,map_name,"_batchid.pdf"),
+# ggsave(filename = paste0(results_path_supplementary_figure2,map_name,"_batchid.pdf"),
 #        plot = neurons_batch_plot, "pdf",dpi=600,width=350,height = 300,units="mm")
