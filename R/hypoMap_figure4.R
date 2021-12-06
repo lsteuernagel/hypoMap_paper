@@ -64,7 +64,7 @@ ggsave(filename = paste0(results_path,"mapping_prob_snseq.pdf"),
 # we selected the VMH and the SCN neurons as examples
 
 # create cluster overview using mapscvi:
-overview_clustering = mapscvi::compare_clustering(query_snseq_neurons,"predicted_K169_named","Cluster_IDs",min_cells = 10,min_pct = 0.1,return_data=TRUE)
+overview_clustering = mapscvi::compare_clustering(query_snseq_neurons,"predicted_K98_named","Cluster_IDs",min_cells = 10,min_pct = 0.1,return_data=TRUE)
 data.table::fwrite(overview_clustering,paste0(results_path,"overview_clustering_nucSeq.txt"),sep="\t")
 
 #### SCN plots
@@ -109,8 +109,8 @@ ggsave(filename = paste0(results_path,"scn_dimplot.pdf"),
 
 #### VMH plots
 # sankey
-clustering_1_filter = c("Fgf10.Gpr149.Cd40.Fezf1.HY2")
-clustering_2_filter = overview_clustering$clustering_2[overview_clustering$clustering_1=="Fgf10.Gpr149.Cd40.Fezf1.HY2"]
+clustering_1_filter = c("Gpr149.Cd40.Fezf1.HY2")
+clustering_2_filter = overview_clustering$clustering_2[overview_clustering$clustering_1=="Gpr149.Cd40.Fezf1.HY2"]
 sankey_vmh = mapscvi::plot_sankey_comparison(overview_clustering,clustering_1_filter = clustering_1_filter,clustering_2_filter = clustering_2_filter,text_size=20, col1 = reference_color, col2 = query_sn_color)
 sankey_vmh
 
@@ -121,7 +121,7 @@ sankey_vmh
 # sankey_vmh = mapscvi::plot_sankey_comparison(overview_clustering_2,clustering_1_filter = clustering_1_filter,clustering_2_filter = clustering_2_filter,text_size=20, col1 = reference_color, col2 = query_sn_color)
 # sankey_vmh
 
-length(query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K169_named %in% sankey_scn_numbers$edges$clustering_1]) # this is all cells mapped to the likely SCN clusters
+length(query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K98_named %in% sankey_scn_numbers$edges$clustering_1]) # this is all cells mapped to the likely SCN clusters
 
 # orientation umap:
 clustering_2_filter = overview_clustering$clustering_2[overview_clustering$clustering_1=="Fgf10.Gpr149.Cd40.Fezf1.HY2"]
