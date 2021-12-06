@@ -20,6 +20,7 @@ load_required_files(large_data_path = large_data_path)
 # colors
 reference_color = "#cc2118"
 query_sn_color = "#302ac9"
+cols_for_feature_plot = c("#dedede","#0b3ebd") # "#0b3ebd"
 bg_col = "#dedede"
 
 rasterize_point_size = 2.2
@@ -32,7 +33,7 @@ rasterize_pixels = 2048
 ## with labels on hypomap background:
 mapped_query_snseq_neurons_plot = mapscvi::plot_query_labels(query_seura_object=query_snseq_neurons,reference_seurat=neuron_map_seurat,label_col="K31_named",
                                                              label_col_query = "predicted_K31_named",overlay = TRUE,bg_col = bg_col,
-                                                             query_pt_size = 0.05,labelonplot = TRUE,label.size=5)
+                                                             query_pt_size = 0.05,labelonplot = TRUE,label.size=5,repel=TRUE)
 mapped_query_snseq_neurons_plot = rasterize_ggplot(mapped_query_snseq_neurons_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 mapped_query_snseq_neurons_plot
 
@@ -44,7 +45,8 @@ ggsave(filename = paste0(results_path,"mapping_snseq.pdf"),
 
 ## mapping quality:
 #colnames(query_snseq_neurons@meta.data)
-quality_query_snseq_neurons_plot=Seurat::FeaturePlot(query_snseq_neurons,features = "prediction_probability",reduction = paste0("umap_","scvi"),label = FALSE,raster=FALSE)+
+quality_query_snseq_neurons_plot=Seurat::FeaturePlot(query_snseq_neurons,features = "prediction_probability",reduction = paste0("umap_","scvi"),
+                                                     label = FALSE,raster=FALSE,cols = cols_for_feature_plot)+
   NoAxes()+ggtitle("Mapping probability")
 quality_query_snseq_neurons_plot = rasterize_ggplot(quality_query_snseq_neurons_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 quality_query_snseq_neurons_plot

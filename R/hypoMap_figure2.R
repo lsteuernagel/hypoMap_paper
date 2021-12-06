@@ -124,13 +124,14 @@ ggsave(filename = paste0(results_path,"vip_small_plot.pdf"),
 
 query_romanov_neurons = readRDS(paste0(large_data_path,"query_romanov_neurons.rds"))
 
-compare_clustering_romanov =mapscvi::compare_clustering(query_romanov_neurons,clustering_1 = "Author_CellType",clustering_2 = "predicted_K169_named" ,min_cells = 0,min_pct = 0,return_data = TRUE)
+compare_clustering_romanov =mapscvi::compare_clustering(query_romanov_neurons,clustering_1 = "Author_CellType",clustering_2 = "predicted_K169_named" ,
+                                                        min_cells = 0,min_pct = 0,return_data = TRUE)
 data.table::fwrite(compare_clustering_romanov,paste0(results_path,"compare_clustering_romanov.txt"),sep="\t")
 
 # make plot
 romanov_mapped_plot = mapscvi::plot_query_labels(query_seura_object=query_romanov_neurons,reference_seurat=neuron_map_seurat,label_col="K31_named",
                                                  label_col_query = "predicted_K31_named",overlay = TRUE,bg_col = "lightgrey",
-                                                 query_pt_size = 0.4,labelonplot = TRUE,label.size=5)+ggtitle("Romanov et al. mapped on HypoMap")
+                                                 query_pt_size = 0.6,labelonplot = TRUE,label.size=5,repel=TRUE)+ggtitle("Romanov et al. mapped on HypoMap")
 
 romanov_mapped_plot = rasterize_ggplot(romanov_mapped_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 romanov_mapped_plot
