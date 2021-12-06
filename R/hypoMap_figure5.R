@@ -88,11 +88,8 @@ ieg_set = c(ieg_set,"1700016P03Rik")
 
 # calculate marker statistics but require 10% occurence in either group
 min_pct = 0.1
-# 
-# activation_per_cluster_ALL = FindAll_DEGs(query_snseq_neurons,group_var = "Diet",idents_name = "predicted_K169_named",max.cells.per.ident = 5000,
-#                                       features = activation_genes,logfc.threshold=0,pval_filter=Inf,min.pct = min_pct)
 
-###
+### run
 Idents(query_snseq_neurons) = "predicted_K169_named"
 all_clusters = unique(query_snseq_neurons@meta.data$predicted_K169_named)
 all_activationGenes_list = list()

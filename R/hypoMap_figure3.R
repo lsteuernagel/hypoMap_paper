@@ -20,8 +20,6 @@ load_required_files(large_data_path = large_data_path)
 
 ######### TODO: 
 # TODO: discuss this with Paul regarding geo etc. and whether I am using all the right results
-# TODO loads rbo2 function from scHarmonize -- keep them as this for now
-source("/beegfs/scratch/bruening_scratch/lsteuernagel/projects/scHarmonize/harmonization/gesper_rbo_functions.R")
 
 ##########
 ### Make bacTRAP Signatures
@@ -110,7 +108,7 @@ for(k in 1:length(signature_list)){
     message(" Setting k to ",auto_k)
     k=auto_k
     # run
-    signature_rbo_l=lapply(marker_list,FUN=rbo2,t=signature,p=current_p,k=k,side="top", uneven.lengths = TRUE)
+    signature_rbo_l=lapply(marker_list,FUN=rbo2,t=signature,p=current_p,k=k,side="top", uneven.lengths = TRUE) # rbo2 is based on gesper package and loaded from utility_functions.R
     signature_rbo <- data.frame(rbo=matrix(unlist(signature_rbo_l), nrow=length(signature_rbo_l), byrow=TRUE),stringsAsFactors=FALSE)
     signature_rbo$cluster = names(signature_rbo_l)
     signature_rbo$signature_name = signature_name
