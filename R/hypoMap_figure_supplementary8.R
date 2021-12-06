@@ -49,9 +49,8 @@ ggsave(filename = paste0(results_path,"glp1r_snseq.pdf"),
 
 ### glp1r in bacTRAp
 # USE unlabelled plot from figure 3 script !
-# TODO: move plot here !!
-#system(paste0("cp ",gsub("figure_supplementary_7","figure_3",results_path),"bacTRAP_glp1r_rbo_plot.pdf"," ",results_path))
-
+system(paste0("cp ",gsub("figure_supplementary_8","figure_3",results_path),"glp1r_rbo_nolabel_plot.pdf"," ",results_path))
+system(paste0("cp ",gsub("figure_supplementary_8","figure_3",results_path),"glp1r_rbo_nolabel_plot.png"," ",results_path))
 
 # selected clusters !
 anno_df = neuron_map_seurat@misc$annotations
@@ -77,28 +76,30 @@ selected_clusters_plot
 # TODO update after figure 6 is updated !
 
 # use percentages from RNAscope
-ish_quantification = data.table::fread(paste0(gsub("figure_supplementary_7","figure_6",results_path),"pct_expressed_cells_clusters_ISH.txt"),data.table = FALSE)
+ish_quantification = data.table::fread(paste0(gsub("figure_supplementary_8","figure_6",results_path),"pct_expressed_cells_clusters_ISH.txt"),data.table = FALSE)
 ish_quantification_summary = ish_quantification %>% group_by(Experiment) %>% dplyr::summarise(mean_expressed_cells = mean(total_2_pct))
-ish_quantification_summary$celltype[ish_quantification_smmary$Experiment == "Ghrh"] = "Ghrh.Gsx1.Hmx2.HY1"
-ish_quantification_summary$celltype[ish_quantification_smmary$Experiment == "Oxt"] = "Ebf3.Oxt"
-ish_quantification_summary$celltype[ish_quantification_smmary$Experiment == "Pomc"] = "Ttr.Pomc.Tcf7l2.Tbx3.HY1"
-ish_quantification_summary$celltype[ish_quantification_smmary$Experiment == "Pomc Anxa2"] = "Anxa2.Pomc.Tcf7l2.Tbx3.HY1"
-ish_quantification_summary$celltype[ish_quantification_smmary$Experiment == "Sst Unc13c"] = "Sstr1.Sst.Il1rapl2.Otp.HY1"
-ish_quantification_summary$celltype[ish_quantification_smmary$Experiment == "Tbx19 Anxa2"] = "Crabp1.Nfib.Six3.Hmx2.HY1"
-ish_quantification_summary$celltype[ish_quantification_smmary$Experiment == "Trh Nkx2-4"] = "Trh.Nkx2-4.Gsx1.Hmx2.HY1"
+ish_quantification_summary$celltype =NA
+ish_quantification_summary$celltype[ish_quantification_summary$Experiment == "Ghrh"] = "Ghrh.Gsx1.Hmx2.HY1"
+ish_quantification_summary$celltype[ish_quantification_summary$Experiment == "Oxt"] = "Ebf3.Oxt"
+ish_quantification_summary$celltype[ish_quantification_summary$Experiment == "Pomc"] = "Ttr.Pomc.Tcf7l2.Tbx3.HY1"
+ish_quantification_summary$celltype[ish_quantification_summary$Experiment == "Pomc Anxa2"] = "Anxa2.Pomc.Tcf7l2.Tbx3.HY1"
+ish_quantification_summary$celltype[ish_quantification_summary$Experiment == "Sst Unc13c"] = "Sstr1.Sst.Il1rapl2.Otp.HY1"
+ish_quantification_summary$celltype[ish_quantification_summary$Experiment == "Tbx19 Anxa2"] = "Crabp1.Nfib.Six3.Hmx2.HY1"
+ish_quantification_summary$celltype[ish_quantification_summary$Experiment == "Trh Nkx2-4"] = "Trh.Nkx2-4.Gsx1.Hmx2.HY1"
 #ish_quantification_summary$celltype[ish_quantification_smmary$Experiment == "Npw Nkx2-4"] = "Ebf1.Nkx2-4.Gsx1.Hmx2.HY1"
 
 neuron_map_seurat@meta.data = neuron_map_seurat@meta.data[,!colnames(neuron_map_seurat@meta.data) %in% c("Experiment","mean_expressed_cells","new_label_col")]
 neuron_map_seurat@meta.data = dplyr::left_join(neuron_map_seurat@meta.data,ish_quantification_summary, by=c("K169_named"="celltype"))
 rownames(neuron_map_seurat@meta.data) = neuron_map_seurat@meta.data$Cell_ID
 
-colorvec = RColorBrewer::brewer.pal(9, "Blues")
+
 #colorvec[1] =  "lightgrey"
 neuron_map_seurat@meta.data$new_label_col = NA
 neuron_map_seurat@meta.data$new_label_col[!is.na(neuron_map_seurat@meta.data$mean_expressed_cells)] = neuron_map_seurat@meta.data$K169_named[!is.na(neuron_map_seurat@meta.data$mean_expressed_cells)]
 Idents(neuron_map_seurat) = "new_label_col"
 ish_pct_umap_plot = FeaturePlot(neuron_map_seurat,features = "mean_expressed_cells",label = TRUE,label.size = 5,repel = TRUE)+NoAxes()+
-  scale_color_gradientn(colours = colorvec,na.value = "lightgrey",limits=c(0,100))+ggtitle("Pct of expressing cells in ISH")
+  scale_color_gradient(low = cols_for_feature_plot[1],high = cols_for_feature_plot[2],na.value = "#dedede",limits=c(0,100))+ggtitle("Pct of expressing cells in ISH")
+ish_pct_umap_plot = rasterize_ggplot(ish_pct_umap_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 ish_pct_umap_plot
 
 #save

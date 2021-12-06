@@ -6,11 +6,11 @@ require(tidyverse)
 require(data.table)
 require(ggplot2)
 
-results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_6/"
+results_path = "figure_outputs/figure_6/"
 system(paste0("mkdir -p ",results_path))
 
 # path with output files
-data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/paper_results/figure_input/"
+data_path = "data_inputs/"
 
 #### load ish results
 ish_quantification = data.table::fread(paste0(data_path,"ish_quantification_glp1r_updated.csv"))
