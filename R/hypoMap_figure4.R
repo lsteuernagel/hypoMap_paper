@@ -6,19 +6,16 @@
 results_path = "figure_outputs/figure_4/"
 system(paste0("mkdir -p ",results_path))
 
-# set path for additional data
-large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
-
-# load functions
+# load required functions
+require(mapscvi)
 source("R/utility_functions.R")
 source("R/plot_functions.R")
-library(mapscvi) # please install the mapscvi package that was used to project the nucseq data and provides additional visualization functions for the projected data
 
-# load everything required
-source("R/load_data.R")
+# where to find large data objects (need to change to local dir !)
+large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
 
-## load nucseq mapped object
-query_snseq_neurons = readRDS(paste0(large_data_path,"nucseq_neurons_map.rds"))
+# load seurat objects via large_data_path
+load_required_files(large_data_path = large_data_path)
 
 # colors
 reference_color = "#cc2118"

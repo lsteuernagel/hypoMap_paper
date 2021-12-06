@@ -6,10 +6,15 @@
 results_path = "figure_outputs/figure_2/"
 system(paste0("mkdir -p ",results_path))
 
-# load everything required
-source("R/load_data.R")
+# load required functions
+source("R/utility_functions.R")
 source("R/plot_functions.R")
+
+# where to find large data objects (need to change to local dir !)
 large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
+
+# load seurat objects via large_data_path
+load_required_files(large_data_path = large_data_path)
 
 ## plotting
 rasterize_point_size = 2.2

@@ -1,4 +1,35 @@
 ##########
+### load_required_files
+##########
+
+#' This function is a general helper that loads required objects via the large data paths (has to be set to local system directory)
+#' Currently loads the neuron and full hypoMap and the neuron version of the nuc-seq data.
+#' @param large_data_path large_data_path
+#' @param overwrite_existing which cells
+#' @param filenames genes
+
+# function 
+load_required_files <- function(large_data_path, overwrite_existing = FALSE, filenames = c("query_snseq_neurons" = "nucseq_neurons_map.rds",
+                                                                                           "neuron_map_seurat" = "hypothalamus_neurons_map.rds" ,
+                                                                                           "full_map_seurat" = "hypothalamus_full_map.rds")) {
+  # go through all files
+  for(i in 1:length(filenames)){
+    objectname = names(filenames)[i]
+    filename =  filenames[i]
+    if(!exists(objectname,envir = .GlobalEnv) | overwrite_existing){
+      message("Loading ", objectname," from ",large_data_path,filename)
+      if(file.exists(paste0(large_data_path,filename))){
+        assign(objectname, readRDS(paste0(large_data_path,filename)), envir = .GlobalEnv)
+      }else{
+        message("Warning: Cannot find file ",filename) 
+      }
+    }else{
+      message(objectname, " already exists in .GlobalEnv. Skipping.")
+    }
+  }
+}
+
+##########
 ### get_expression_stats
 ##########
 

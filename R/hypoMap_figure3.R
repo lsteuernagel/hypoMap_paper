@@ -7,12 +7,16 @@
 results_path = "figure_outputs/figure_3/"
 system(paste0("mkdir -p ",results_path))
 
-# load everything required
-source("load_data.R")
+# load required functions
 require(mapscvi)
+source("R/utility_functions.R")
+source("R/plot_functions.R")
 
-# subsample ids for plotting
-subsample_ids = data.table::fread(paste0(data_path,"_subsampled_Cell_IDs_neuronMap.txt"),data.table = F,header = F)[,1]
+# where to find large data objects (need to change to local dir !)
+large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
+
+# load seurat objects via large_data_path
+load_required_files(large_data_path = large_data_path)
 
 ######### TODO: 
 # TODO: discuss this with Paul regarding geo etc. and whether I am using all the right results

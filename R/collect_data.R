@@ -23,12 +23,18 @@ system(command = paste0("cp ","/beegfs/scratch/bruening_scratch/lsteuernagel/dat
 # nuc seq neurons
 system(command = paste0("cp ","/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/nucseq_neurons_map.rds ",large_data_path))
 
+# map full
+system(command = paste0("cp ","/beegfs/scratch/bruening_scratch/lsteuernagel/data/scHarmonize/hypothalamusMapFull_v4/harmonization_results/hypothalamus_full_map.rds ",large_data_path))
+
+# map neurons
+system(command = paste0("cp ","/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_objects/hypothalamus_neurons_reference.rds ",large_data_path))
+
 # temp
-system(command = paste0("cp ","/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/agrp_fasting_all.txt ","figure_outputs/figure_5/"))
-system(command = paste0("cp ","/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/agrp_fasting_all_campbell.txt ","figure_outputs/figure_5/"))
-system(command = paste0("cp ","/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/Sox14_fasting_all.txt ","figure_outputs/figure_5/"))
-system(command = paste0("cp ", "/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/hk2_fasting_all.txt ","figure_outputs/figure_5/"))
-system(command = paste0("cp ", "/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/global_fasting_all.txt ","figure_outputs/figure_5/"))
+# system(command = paste0("cp ","/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/agrp_fasting_all.txt ","figure_outputs/figure_5/"))
+# system(command = paste0("cp ","/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/agrp_fasting_all_campbell.txt ","figure_outputs/figure_5/"))
+# system(command = paste0("cp ","/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/Sox14_fasting_all.txt ","figure_outputs/figure_5/"))
+# system(command = paste0("cp ", "/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/hk2_fasting_all.txt ","figure_outputs/figure_5/"))
+# system(command = paste0("cp ", "/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/global_fasting_all.txt ","figure_outputs/figure_5/"))
 
 ##########
 ### move reductions

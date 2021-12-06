@@ -6,12 +6,18 @@
 #set path
 results_path = "figure_outputs/figure_supplementary_6/"
 system(paste0("mkdir -p ",results_path))
-# load everything required
-source("R/load_data.R")
+
+# load required functions
+require(mapscvi)
+source("R/utility_functions.R")
+source("R/plot_functions.R")
+
+# where to find large data objects (need to change to local dir !)
 large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
 
-## load mapped object
-query_snseq_neurons = readRDS(paste0(large_data_path,"nucseq_neurons_map.rds"))
+# load seurat objects via large_data_path
+load_required_files(large_data_path = large_data_path)
+
 ## load mapped object full
 query_snseq_all = readRDS(paste0(large_data_path,"nucseq_all_map.rds"))
 

@@ -6,9 +6,15 @@
 results_path = "figure_outputs/figure_1/"
 system(paste0("mkdir -p ",results_path))
 
-# load everything required
-source("R/load_data.R")
+# load required functions
+source("R/utility_functions.R")
 source("R/plot_functions.R")
+
+# where to find large data objects (need to change to local dir !)
+large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
+
+# load seurat objects via large_data_path
+load_required_files(large_data_path = large_data_path)
 
 # load comparison data
 neurons_metrics = data.table::fread("data_inputs/hypothalamusMapNeurons_v4_comparison_457fc60c3c4f1911bcbc6c5d46127037.txt",data.table = F)
