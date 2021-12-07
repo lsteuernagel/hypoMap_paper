@@ -8,6 +8,7 @@ system(paste0("mkdir -p ",results_path_figure4))
 
 # load required functions
 require(mapscvi)
+require(dplyr)
 source("R/utility_functions.R")
 source("R/plot_functions.R")
 
@@ -67,29 +68,38 @@ ggsave(filename = paste0(results_path_figure4,"mapping_prob_snseq.pdf"),
 overview_clustering = mapscvi::compare_clustering(query_snseq_neurons,"predicted_K98_named","Cluster_IDs",min_cells = 10,min_pct = 0.1,return_data=TRUE)
 data.table::fwrite(overview_clustering,paste0(results_path_figure4,"overview_clustering_nucSeq.txt"),sep="\t")
 
+
 #### SCN plots
-# sankey
+# select most relevant clusters:
 clustering_2_filter = c("C32-C1ql3/Rgs16","C40-Vip")
 clustering_1_filter = overview_clustering$clustering_1[overview_clustering$clustering_2 %in% clustering_2_filter]
-sankey_scn = mapscvi::plot_sankey_comparison(overview_clustering,clustering_1_filter = clustering_1_filter,clustering_2_filter = clustering_2_filter,
-                                             text_size=20, col1 = reference_color, col2 = query_sn_color)
-sankey_scn
-# get the numbers:
-sankey_scn_numbers = mapscvi::plot_sankey_comparison(overview_clustering,clustering_1_filter = clustering_1_filter,clustering_2_filter = clustering_2_filter,text_size=20, col1 = reference_color, col2 = query_sn_color,return_data = TRUE)
-sum(sankey_scn_numbers$edges$n) / ncol(query_snseq_neurons) # total number of SCN neurons in this analysis (with the sankey)
-length(query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K169_named %in% sankey_scn_numbers$edges$clustering_1]) # this is all cells mapped to the likely SCN clusters
-# are the clustering_1_filter really scn:
-table(neuron_map_seurat@meta.data$suggested_region_curated[neuron_map_seurat@meta.data$K169_named %in% clustering_1_filter],neuron_map_seurat@meta.data$K169_named[neuron_map_seurat@meta.data$K169_named %in% clustering_1_filter])
-unique(neuron_map_seurat@meta.data$other_likely_regions[neuron_map_seurat@meta.data$K169_named %in% clustering_1_filter])
 
+## which clusters are truly SCN (annoated)
+clustering_1_filter_SCN = unique(neuron_map_seurat@meta.data$K98_named[neuron_map_seurat@meta.data$K98_named %in% clustering_1_filter & neuron_map_seurat@meta.data$suggested_region == "Suprachiasmatic nucleus" ])
+clustering_1_filter_SCN
+# I add the Arx cluster manually
+unique(neuron_map_seurat@meta.data$other_likely_regions[neuron_map_seurat@meta.data$K98_named == "Arx.Six6.HY1"])
+unique(neuron_map_seurat@meta.data$other_likely_regions[neuron_map_seurat@meta.data$K98_named == "Nr5a2.Satb2.HY1"]) # but not the Satb2
+clustering_1_filter_SCN = c(clustering_1_filter_SCN,"Arx.Six6.HY1")
 
 # orientation umap:
-clustering_2_filter = c("C32-C1ql3/Rgs16","C40-Vip")
-cellsh = query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$Cluster_IDs %in% sankey_scn_numbers$edges$clustering_2 & 
-                                                 query_snseq_neurons@meta.data$predicted_K169_named %in% sankey_scn_numbers$edges$clustering_1]
+cellsh = query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K98_named %in% clustering_1_filter_SCN]
 scn_dimplot = DimPlot(query_snseq_neurons,cells.highlight = cellsh,sizes.highlight = 0.15)+NoLegend()+NoAxes()
 scn_dimplot = rasterize_ggplot(scn_dimplot,pixel_raster = 1024,pointsize = 1.1)
 scn_dimplot
+
+# sankey
+sankey_scn = mapscvi::plot_sankey_comparison(overview_clustering,clustering_1_filter = clustering_1_filter_SCN,clustering_2_filter = clustering_2_filter,
+                                             text_size=20, col1 = reference_color, col2 = query_sn_color)
+sankey_scn = plot_sankey_comparison2(overview_clustering,clustering_1_filter = clustering_1_filter_SCN,clustering_2_filter = clustering_2_filter,
+                                             text_size=20, col1 = reference_color, col2 = query_sn_color,use_and = FALSE,light_factor = 0.45)
+sankey_scn
+
+# get the numbers:
+n_scn_cells_nuc = length(query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K98_named %in% clustering_1_filter_SCN])
+pct_scn_cells_nuc = n_scn_cells_nuc / nrow(query_snseq_neurons@meta.data)
+n_scn_cells_sc = length(neuron_map_seurat@meta.data$Cell_ID[neuron_map_seurat@meta.data$K98_named %in% clustering_1_filter_SCN])
+pct_scn_cells_sc = n_scn_cells_sc / nrow(neuron_map_seurat@meta.data)
 
 # save sankeys
 library(webshot)
@@ -108,27 +118,33 @@ ggsave(filename = paste0(results_path_figure4,"scn_dimplot.pdf"),
 
 
 #### VMH plots
-# sankey
-clustering_1_filter = c("Gpr149.Cd40.Fezf1.HY2")
+# select most relevant clusters:
+clustering_1_filter = c("Gpr149.Cd40.Fezf1.HY2","Nr5a1.Cd40.Fezf1.HY2")
 clustering_2_filter = overview_clustering$clustering_2[overview_clustering$clustering_1=="Gpr149.Cd40.Fezf1.HY2"]
-sankey_vmh = mapscvi::plot_sankey_comparison(overview_clustering,clustering_1_filter = clustering_1_filter,clustering_2_filter = clustering_2_filter,text_size=20, col1 = reference_color, col2 = query_sn_color)
-sankey_vmh
 
-## if we would like to check on a lower level:
-# overview_clustering_2 = mapscvi::compare_clustering(query_snseq_neurons,"predicted_K329_named","Cluster_IDs",min_cells = 10,min_pct = 0.1,return_data=TRUE)
-# clustering_1_filter = c("Fam19a1.Gpc5.Fgf10.Gpr149.Cd40.Fezf1.HY2","Rbms2.Fgf10.Gpr149.Cd40.Fezf1.HY2","Tac1.Gpc5.Fgf10.Gpr149.Cd40.Fezf1.HY2")
-# clustering_2_filter = overview_clustering_2$clustering_2[overview_clustering_2$clustering_1 %in% clustering_1_filter]
-# sankey_vmh = mapscvi::plot_sankey_comparison(overview_clustering_2,clustering_1_filter = clustering_1_filter,clustering_2_filter = clustering_2_filter,text_size=20, col1 = reference_color, col2 = query_sn_color)
-# sankey_vmh
+# this is actually a VMH region !
+unique(neuron_map_seurat@meta.data$suggested_region_curated[neuron_map_seurat@meta.data$K98_named == "Gpr149.Cd40.Fezf1.HY2"])
+unique(neuron_map_seurat@meta.data$suggested_region_curated[neuron_map_seurat@meta.data$K98_named == "Nr5a1.Cd40.Fezf1.HY2"])
 
-length(query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K98_named %in% sankey_scn_numbers$edges$clustering_1]) # this is all cells mapped to the likely SCN clusters
 
 # orientation umap:
-clustering_2_filter = overview_clustering$clustering_2[overview_clustering$clustering_1=="Fgf10.Gpr149.Cd40.Fezf1.HY2"]
-cellsh = query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$Cluster_IDs %in% clustering_2_filter]
+cellsh = query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K98_named %in% clustering_1_filter]
 vmh_dimplot = DimPlot(query_snseq_neurons,cells.highlight = cellsh,sizes.highlight = 0.15)+NoLegend()+NoAxes()
 vmh_dimplot = rasterize_ggplot(vmh_dimplot,pixel_raster = 1024,pointsize = 1.1)
 vmh_dimplot
+
+# sankey
+sankey_vmh = mapscvi::plot_sankey_comparison(overview_clustering,clustering_1_filter = clustering_1_filter,clustering_2_filter = clustering_2_filter,
+                                             text_size=20, col1 = reference_color, col2 = query_sn_color)
+sankey_vmh = plot_sankey_comparison2(overview_clustering,clustering_1_filter = clustering_1_filter,clustering_2_filter = clustering_2_filter,
+                                     text_size=20, col1 = reference_color, col2 = query_sn_color,use_and = FALSE,light_factor = 0.45)
+sankey_vmh
+
+# get the numbers:
+n_vmh_cells_nuc = length(query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K98_named %in% clustering_1_filter])
+pct_vmh_cells_nuc = n_vmh_cells_nuc / nrow(query_snseq_neurons@meta.data)
+n_vmh_cells_sc = length(neuron_map_seurat@meta.data$Cell_ID[neuron_map_seurat@meta.data$K98_named %in% clustering_1_filter])
+pct_vmh_cells_sc = n_vmh_cells_sc / nrow(neuron_map_seurat@meta.data)
 
 # save sankeys
 networkD3::saveNetwork(sankey_vmh, paste0(results_path_figure4,"sankey_vmh_neurons.html"))

@@ -8,6 +8,9 @@ system(paste0("mkdir -p ",results_path_figure5))
 
 # load required functions
 require(mapscvi)
+require(dplyr)
+require(ggplot2)
+require(Seurat)
 source("R/utility_functions.R")
 source("R/plot_functions.R")
 
@@ -121,6 +124,8 @@ activation_per_cluster = do.call(rbind,all_activationGenes_list)
 # save table
 data.table::fwrite(activation_per_cluster,file = paste0(results_path_figure5,"activation_genes_per_cluster.txt"),sep="\t")
 
+#activation_per_cluster = data.table::fread(paste0(results_path_figure5,"activation_genes_per_cluster.txt"),data.table = FALSE)
+
 ## summarise:
 # define a column for pvalue aggregation
 activation_per_cluster$Identity = activation_per_cluster$current_cluster
@@ -159,7 +164,7 @@ activation_per_cluster_stat
 # make barplot for Figure
 activation_per_cluster_stat$Identity = factor(activation_per_cluster_stat$Identity,levels = rev(activation_per_cluster_stat$Identity))
 activation_celltype_barplot = ggplot(activation_per_cluster_stat,aes(x=Identity,y=n_down_sig,fill= -1*mean_fc_down))+geom_bar(stat="identity")+
-  geom_text(aes(x = Identity, y = max(n_down_sig)*1.1,label=n_cells_cluster), hjust =1,size=6)+ # add cell numbers
+  geom_text(aes(x = Identity, y = max(n_down_sig)*1.15,label=n_cells_cluster), hjust =1,size=6)+ # add cell numbers
   scale_fill_gradient(low="grey80",high=fasting_color,limits=c(0,max(abs(activation_per_cluster_stat$mean_fc_down))))+
   ylim(c(0,max(activation_per_cluster_stat$n_down_sig)*1.1)) + # extend the y axis a bit so that the n cell labels doN#t overlap with the highest plot!
   scale_y_continuous(breaks=c(2,4,6,8,10))+
@@ -179,7 +184,7 @@ ggsave(filename = paste0(results_path_figure5,"activation_celltype_barplot.pdf")
 ##########
 
 # activation_genes_plot_subset = ieg_set[ieg_set %in% c("Fos","Gem","Btg2","Noct","Nr4a1","Junb","1700016P03Rik")]
-a1=activation_per_cluster[activation_per_cluster$pvalue_for_calc<0.05 & activation_per_cluster$Identity %in% c("Gm8773.Agrp.Npy.Otp.HY1","Serpina3n.Agrp.Npy.Otp.HY1"),]
+# a1=activation_per_cluster[activation_per_cluster$pvalue_for_calc<0.05 & activation_per_cluster$Identity %in% c("Gm8773.Agrp.Npy.Otp.HY1","Serpina3n.Agrp.Npy.Otp.HY1"),]
 
 # top Agrp genes
 activation_genes_plot_subset = unique(activation_per_cluster$gene[activation_per_cluster$pvalue_for_calc<0.05 & 
@@ -223,6 +228,7 @@ ggsave(filename = paste0(results_path_figure5,"activation_genes_agrp_vlnPlot_ver
 conditionGenes_Agrp_file = paste0(results_path_figure5,"agrp_fasting_all.txt")
 if(!file.exists(conditionGenes_Agrp_file)){
   Idents(query_snseq_neurons) <- "predicted_K98_pruned"
+  # I am not filtering the genes here to get values for all genes (for comparison with other datasets etc.) This does not have a strong effect on the Bonferroni correction done by Seurat!
   conditionGenes_Agrp = Seurat::FindMarkers(query_snseq_neurons, ident.1 = "adlib",ident.2 = "fast" , group.by = "Diet", subset.ident = "K98-4",min.pct = 0,logfc.threshold = 0)
   conditionGenes_Agrp$gene = rownames(conditionGenes_Agrp) # add gene name 
   conditionGenes_Agrp$pct_diff = conditionGenes_Agrp$pct.1 - conditionGenes_Agrp$pct.2
@@ -252,7 +258,7 @@ down_regulated_genes = c(down_regulated_genes,"Agrp","Sst","Cartpt","Npy")
 volcano_df$label = NA
 volcano_df$label[volcano_df$gene %in% c(down_regulated_genes,up_regulated_genes)] = volcano_df$gene[volcano_df$gene %in% c(down_regulated_genes,up_regulated_genes)]
 
-agrp_fasting_volcano = ggplot(volcano_df,aes(-1*avg_log2FC,-log10(p_val_adj),label=label,color=color))+geom_point(size=0.3)+
+agrp_fasting_volcano = ggplot(volcano_df[volcano_df$avg_log2FC !=0,],aes(-1*avg_log2FC,-log10(p_val_adj),label=label,color=color))+geom_point(size=0.3)+
   ggrepel::geom_text_repel(max.overlaps=100,size=6)+
   scale_color_manual(values = c("up-regulated in fasting"=fasting_color,"down-regulated in fasting"=adlib_color,"not regulated"="grey"))+
   xlab("log2 foldchange")+ylab("-log10(adjusted pvalue)")+ggtitle("Changes in Agrp neurons")+
@@ -372,6 +378,12 @@ agrp_sn_vs_sc_plot$regulated[agrp_sn_vs_sc_plot$avg_log2FC_sn< (-1*min_fc) & agr
 
 agrp_sn_vs_sc_plot$regulated = factor(agrp_sn_vs_sc_plot$regulated,levels = c("not in both","down in fasting - one", "up in fasting - one","down in fasting - both","up in fasting - both"))
 
+## calculate cor for text:
+cor(agrp_sn_vs_sc_plot$avg_log2FC_sc[agrp_sn_vs_sc_plot$regulated != "not in both"],agrp_sn_vs_sc_plot$avg_log2FC_sn[agrp_sn_vs_sc_plot$regulated != "not in both"],use = "pairwise.complete.obs")
+cor.test(agrp_sn_vs_sc_plot$avg_log2FC_sc[agrp_sn_vs_sc_plot$regulated != "not in both"],agrp_sn_vs_sc_plot$avg_log2FC_sn[agrp_sn_vs_sc_plot$regulated != "not in both"],
+         use = "pairwise.complete.obs",method="pearson",alternative = "two.sided")
+
+# make plot for figure:
 agrp_Campvell_vs_sn_plot = ggplot(agrp_sn_vs_sc_plot,aes(x=avg_log2FC_sc,y=avg_log2FC_sn))+
   geom_point(alpha=0.6,aes(color=regulated))+geom_smooth(method="lm",color="grey60")+
   scale_color_manual(values = c("up in fasting - both" = fasting_color,"not in both" = "grey80","down in fasting - both" =adlib_color,

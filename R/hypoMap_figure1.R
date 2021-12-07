@@ -7,6 +7,7 @@ results_path_figure1 = "figure_outputs/figure_1/"
 system(paste0("mkdir -p ",results_path_figure1))
 
 # load required functions
+require(dplyr)
 source("R/utility_functions.R")
 source("R/plot_functions.R")
 
