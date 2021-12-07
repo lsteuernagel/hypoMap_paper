@@ -8,6 +8,8 @@ system(paste0("mkdir -p ",results_path_figure2))
 
 # load required functions
 require(dplyr)
+require(ggplot2)
+require(Seurat)
 source("R/utility_functions.R")
 source("R/plot_functions.R")
 

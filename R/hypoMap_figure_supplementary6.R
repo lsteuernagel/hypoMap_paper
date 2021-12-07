@@ -9,6 +9,9 @@ system(paste0("mkdir -p ",results_path_supplementary_figure6))
 
 # load required functions
 require(mapscvi)
+require(dplyr)
+require(ggplot2)
+require(Seurat)
 source("R/utility_functions.R")
 source("R/plot_functions.R")
 

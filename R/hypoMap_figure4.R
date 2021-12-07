@@ -9,6 +9,8 @@ system(paste0("mkdir -p ",results_path_figure4))
 # load required functions
 require(mapscvi)
 require(dplyr)
+require(ggplot2)
+require(Seurat)
 source("R/utility_functions.R")
 source("R/plot_functions.R")
 
@@ -90,8 +92,6 @@ scn_dimplot
 
 # sankey
 sankey_scn = mapscvi::plot_sankey_comparison(overview_clustering,clustering_1_filter = clustering_1_filter_SCN,clustering_2_filter = clustering_2_filter,
-                                             text_size=20, col1 = reference_color, col2 = query_sn_color)
-sankey_scn = plot_sankey_comparison2(overview_clustering,clustering_1_filter = clustering_1_filter_SCN,clustering_2_filter = clustering_2_filter,
                                              text_size=20, col1 = reference_color, col2 = query_sn_color,use_and = FALSE,light_factor = 0.45)
 sankey_scn
 
@@ -135,9 +135,7 @@ vmh_dimplot
 
 # sankey
 sankey_vmh = mapscvi::plot_sankey_comparison(overview_clustering,clustering_1_filter = clustering_1_filter,clustering_2_filter = clustering_2_filter,
-                                             text_size=20, col1 = reference_color, col2 = query_sn_color)
-sankey_vmh = plot_sankey_comparison2(overview_clustering,clustering_1_filter = clustering_1_filter,clustering_2_filter = clustering_2_filter,
-                                     text_size=20, col1 = reference_color, col2 = query_sn_color,use_and = FALSE,light_factor = 0.45)
+                                             text_size=20, col1 = reference_color, col2 = query_sn_color,use_and = FALSE,light_factor = 0.45)
 sankey_vmh
 
 # get the numbers:

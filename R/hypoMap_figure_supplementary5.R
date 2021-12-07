@@ -7,6 +7,9 @@ results_path_supplementary_figure5 = "figure_outputs/figure_supplementary_5/"
 system(paste0("mkdir -p ",results_path_supplementary_figure5))
 
 # load required functions
+require(dplyr)
+require(ggplot2)
+require(Seurat)
 source("R/utility_functions.R")
 source("R/plot_functions.R")
 
