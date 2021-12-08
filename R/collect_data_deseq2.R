@@ -38,11 +38,18 @@ nasim_deseq2_diff_bac_pomc_glp1r =  as.data.frame(readxl::read_xlsx(paste0(dataf
 data.table::fwrite(nasim_deseq2_diff_bac_pomc_glp1r,paste0(small_data_path,"bacTRAP_deseq2_pomc_glp1r.csv"))
 
 #kasia agrp:
-datafile = "/beegfs/scratch/bruening_scratch/pklemm/2020-05-kasia-bactrap/release/trapdiff/fasted_vs_control/de.rds"
-kasia_bac_agrp=  as.data.frame(readRDS(paste0(datafile)))
-kasia_bac_agrp = kasia_bac_agrp[kasia_bac_agrp$comparison == "ip_input_control",]
+# datafile = "/beegfs/scratch/bruening_scratch/pklemm/2020-05-kasia-bactrap/release/trapdiff/fasted_vs_control/de.rds"
+# kasia_bac_agrp=  as.data.frame(readRDS(paste0(datafile)))
+# kasia_bac_agrp = kasia_bac_agrp[kasia_bac_agrp$comparison == "ip_input_control",]
+# # save as agrp
+# data.table::fwrite(kasia_bac_agrp,paste0(small_data_path,"bacTRAP_deseq2_agrp.csv"))
+
+# almu agrp
+datafile = "/beegfs/scratch/bruening_scratch/pklemm/2021-08-almu-bactrap/release/trapdiff/fed_ko_control/de.rds"
+almu_bac_agrp=  as.data.frame(readRDS(paste0(datafile)))
+almu_bac_agrp = almu_bac_agrp[almu_bac_agrp$comparison == "ip_input_control_fed",]
 # save as agrp
-data.table::fwrite(kasia_bac_agrp,paste0(small_data_path,"bacTRAP_deseq2_agrp.csv"))
+data.table::fwrite(almu_bac_agrp,paste0(small_data_path,"bacTRAP_deseq2_agrp.csv"))
 
 #alai Pomc agrp:
 datafile = "/beegfs/scratch/bruening_scratch/pklemm/2021-05-alai-bactrap/release/trapdiff/dre_cre/de.rds"

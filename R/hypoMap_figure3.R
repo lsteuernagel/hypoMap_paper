@@ -236,7 +236,7 @@ for(i in 1:length(all_signature_names)){
 }
 
 names(all_signature_plots)
-all_signature_plots$pnoc
+all_signature_plots$agrp
 
 all_signature_plots_unlabelled$glp1r
 
