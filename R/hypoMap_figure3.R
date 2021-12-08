@@ -198,8 +198,8 @@ nudge_x_klabel=2.5
 current_p=0.98
 remove_grep_text = ""
 # raster
-rasterize_pixels = 1536
-rasterize_point_size = 1.5
+rasterize_point_size = 2.2
+rasterize_pixels = 2048
 
 all_signature_names =  unique(rbo_result_bacTRAP$signature_name)#c("bacTRAP_agrp_ctrl","bacTRAP_pomc" ,"bacTRAP_pomc_lepr","bacTRAP_pomc_glp1r","bacTRAP_pnoc_cd","bacTRAP_glp1r")# unique(rbo_result_bacTRAP$signature_name)
 all_signature_names
