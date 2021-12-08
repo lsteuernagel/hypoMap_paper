@@ -84,7 +84,7 @@ ieg_set = c(ieg_set,"1700016P03Rik")
 
 
 ##########
-### Immediate early genes quantification across celtypes
+### Immediate early genes quantification across celltypes
 ##########
 
 # how to best quantify the response: I use fisher summed pvalues fow now

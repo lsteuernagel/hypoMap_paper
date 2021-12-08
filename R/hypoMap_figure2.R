@@ -22,6 +22,7 @@ load_required_files(large_data_path = large_data_path)
 ## plotting
 rasterize_point_size = 2.2
 rasterize_pixels = 2048
+bg_col = "#dedede"
 
 ##########
 ### tree new
@@ -59,8 +60,8 @@ circular_tree_heat = plot_cluster_tree(edgelist = neuron_map_seurat@misc$mrtree_
                   label_size = 2, show_genes = TRUE, legend_title_1 = "Pct", legend_title_2 = "Region",
                   matrix_offset = 0.1, matrix_width =0.4,matrix_width_2 = 0.1,heatmap_colnames = TRUE,
                   manual_off_second = 2,legend_text_size = 8,heatmap_text_size = 2,colnames_angle=0,hjust_colnames=0.5,
-                  heatmap_colors =c("grey90","darkred")) +
-  scale_fill_brewer(palette = "Paired",na.value = "grey90")
+                  heatmap_colors =c(bg_col,"darkred")) +
+  scale_fill_brewer(palette = "Paired",na.value = bg_col)
 #circular_tree_heat
 require(ggtree)
 circular_tree_heat_rotated = rotate_tree(circular_tree_heat, -90)
@@ -87,7 +88,7 @@ neuron_map_seurat@meta.data$campbell_anno_col[! neuron_map_seurat@meta.data$camp
 neuron_map_seurat@meta.data$campbell_anno_col = gsub("_Neurons[0-9]","",neuron_map_seurat@meta.data$campbell_anno_col)
 
 # plot
-campbell_anno_plot=DimPlot(neuron_map_seurat,group.by = "campbell_anno_col",reduction = paste0("umap_","scvi"),label = TRUE,label.size = 5,repel = TRUE,order = TRUE,na.value = "lightgrey")+
+campbell_anno_plot=DimPlot(neuron_map_seurat,group.by = "campbell_anno_col",reduction = paste0("umap_","scvi"),label = TRUE,label.size = 5,repel = TRUE,order = TRUE,na.value = bg_col)+
   NoLegend()+NoAxes()+scale_color_discrete(na.value="lightgrey")+ggtitle("Campbell ARH celltypes")
 
 # change order
@@ -110,7 +111,7 @@ ggsave(filename = paste0(results_path_figure2,"campbell_annotations.pdf"),
 Idents(neuron_map_seurat) <- "K14_pruned"
 neuron_map_seurat_vip_subset = subset(neuron_map_seurat,subset = K14_pruned == "K14-4")
 neuron_map_seurat_vip_subset = subset(neuron_map_seurat_vip_subset,subset = umapscvi_1 > 1 & umapscvi_2 < -0.5)
-vip_small_plot=DimPlot(neuron_map_seurat_vip_subset,group.by = "K169_named",reduction = paste0("umap_","scvi"),label = TRUE,label.size = 6,repel = TRUE,order = TRUE,na.value = "lightgrey")+
+vip_small_plot=DimPlot(neuron_map_seurat_vip_subset,group.by = "K169_named",reduction = paste0("umap_","scvi"),label = TRUE,label.size = 6,repel = TRUE,order = TRUE,na.value = bg_col)+
   NoLegend()+NoAxes()+scale_color_discrete(na.value="lightgrey")+ggtitle("Vip neurons reference map")
 vip_small_plot = rasterize_ggplot(vip_small_plot,pixel_raster = 1536,pointsize = 1.8)
 vip_small_plot
@@ -133,7 +134,7 @@ data.table::fwrite(compare_clustering_romanov,paste0(results_path_figure2,"compa
 
 # make plot
 romanov_mapped_plot = mapscvi::plot_query_labels(query_seura_object=query_romanov_neurons,reference_seurat=neuron_map_seurat,label_col="K31_named",
-                                                 label_col_query = "predicted_K31_named",overlay = TRUE,bg_col = "lightgrey",
+                                                 label_col_query = "predicted_K31_named",overlay = TRUE,bg_col = bg_col,
                                                  query_pt_size = 0.6,labelonplot = TRUE,label.size=5,repel=TRUE)+ggtitle("Romanov et al. mapped on HypoMap")
 
 romanov_mapped_plot = rasterize_ggplot(romanov_mapped_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
