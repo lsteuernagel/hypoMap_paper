@@ -58,33 +58,29 @@ ggsave(filename = paste0(results_path_figure1,"neurons_metrics_scatter.pdf"),
 ### Figure 1c
 ##########
 
-full_celltype_plot = DimPlot(full_map_seurat,group.by = "Curated_Class",reduction = paste0("umap_","scvi"),label = TRUE,label.size = 6,raster = F,pt.size = 0.2)+NoAxes()+NoLegend()+
+full_celltype_plot = DimPlot(full_map_seurat,group.by = "Curated_Class",reduction = paste0("umap_","scvi"),label = TRUE,label.size = 6,raster = F,pt.size = 0.2,repel = TRUE)+NoAxes()+NoLegend()+
   theme(text = element_text(size=text_size))+ggtitle("Celltypes on hypothalamus reference map")
 full_celltype_plot = rasterize_ggplot(full_celltype_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 full_celltype_plot
 
 #save
-ggsave(filename = paste0(results_path_figure1,"full_map_celltypes.png"),
+ggsave(filename = paste0(results_path_figure1,"full_HypoMap_celltypes.png"),
        plot = full_celltype_plot, "png",dpi=600,width=300,height = 300,units="mm")
-ggsave(filename = paste0(results_path_figure1,"full_map_celltypes.pdf"),
+ggsave(filename = paste0(results_path_figure1,"full_HypoMap_celltypes.pdf"),
        plot = full_celltype_plot, "pdf",dpi=600,width=300,height = 300,units="mm")
 
 ##########
 ### Figure 1d
 ##########
 
-neuron_map_seurat@meta.data$new_name_col = neuron_map_seurat@meta.data$K31_named
-#DimPlot(neuron_map_seurat,group.by = "new_name_col",reduction = paste0("umap_","scvi"),label = TRUE,label.size = 5,repel = TRUE)+NoLegend() # ,cols = "polychrome"
-
-text_size = 20
-neurons_annotated_plot = DimPlot(neuron_map_seurat,group.by = "new_name_col",reduction = paste0("umap_","scvi"),label = TRUE,label.size = 6,raster = F,pt.size = 0.2)+NoAxes()+NoLegend()+
+neurons_annotated_plot = DimPlot(neuron_map_seurat,group.by = "K31_named",reduction = paste0("umap_","scvi"),label = TRUE,label.size = 6,raster = F,pt.size = 0.2,repel = TRUE)+NoAxes()+NoLegend()+
   theme(text = element_text(size=text_size))+ggtitle("Clusters on hypothalamus neuron reference map")
 neurons_annotated_plot = rasterize_ggplot(neurons_annotated_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 neurons_annotated_plot
 
-ggsave(filename = paste0(results_path_figure1,map_name,"_annotated_clusters.png"),
+ggsave(filename = paste0(results_path_figure1,"neuron_HypoMap_annotated_clusters.png"),
        plot = neurons_annotated_plot, "png",dpi=600,width=300,height = 300,units="mm")
-ggsave(filename = paste0(results_path_figure1,map_name,"_annotated_clusters.pdf"),
+ggsave(filename = paste0(results_path_figure1,"neuron_HypoMap_annotated_clusters.pdf"),
        plot = neurons_annotated_plot, "pdf",dpi=600,width=300,height = 300,units="mm")
 
 
