@@ -26,6 +26,7 @@ neurons_metrics = data.table::fread("data_inputs/hypothalamusMapNeurons_v4_compa
 rasterize_point_size = 2.2
 rasterize_pixels = 2048
 text_size = 20
+bg_col = "grey90"
 
 ##########
 ### Figure 1b

@@ -22,7 +22,7 @@ load_required_files(large_data_path = large_data_path)
 ## plotting
 rasterize_point_size = 2.2
 rasterize_pixels = 2048
-bg_col = "#dedede"
+bg_col = "grey90"
 
 ##########
 ### tree new
@@ -89,7 +89,8 @@ neuron_map_seurat@meta.data$campbell_anno_col = gsub("_Neurons[0-9]","",neuron_m
 
 # plot
 campbell_anno_plot=DimPlot(neuron_map_seurat,group.by = "campbell_anno_col",reduction = paste0("umap_","scvi"),label = TRUE,label.size = 5,repel = TRUE,order = TRUE,na.value = bg_col)+
-  NoLegend()+NoAxes()+scale_color_discrete(na.value="lightgrey")+ggtitle("Campbell ARH celltypes")
+  NoLegend()+NoAxes()+scale_color_discrete(na.value=bg_col)+ggtitle("Campbell ARH celltypes")
+
 
 # change order
 plot_data = campbell_anno_plot$data
@@ -112,7 +113,7 @@ Idents(neuron_map_seurat) <- "K14_pruned"
 neuron_map_seurat_vip_subset = subset(neuron_map_seurat,subset = K14_pruned == "K14-4")
 neuron_map_seurat_vip_subset = subset(neuron_map_seurat_vip_subset,subset = umapscvi_1 > 1 & umapscvi_2 < -0.5)
 vip_small_plot=DimPlot(neuron_map_seurat_vip_subset,group.by = "K169_named",reduction = paste0("umap_","scvi"),label = TRUE,label.size = 6,repel = TRUE,order = TRUE,na.value = bg_col)+
-  NoLegend()+NoAxes()+scale_color_discrete(na.value="lightgrey")+ggtitle("Vip neurons reference map")
+  NoLegend()+NoAxes()+scale_color_discrete(na.value=bg_col)+ggtitle("Vip neurons reference map")
 vip_small_plot = rasterize_ggplot(vip_small_plot,pixel_raster = 1536,pointsize = 1.8)
 vip_small_plot
 
