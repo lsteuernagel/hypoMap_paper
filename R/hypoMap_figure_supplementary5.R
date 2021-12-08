@@ -22,7 +22,8 @@ load_required_files(large_data_path = large_data_path)
 ## plotting
 rasterize_point_size = 1.5
 rasterize_pixels = 1536
-cols_for_feature_plot = c("#dedede","#0b3ebd") # "#0b3ebd"
+bg_col = "grey90"
+cols_for_feature_plot = c(bg_col,"#0b3ebd") # "#0b3ebd"
 
 ##########
 ### Figure 7: marker gene plots sn and sc ? side-by-side ?

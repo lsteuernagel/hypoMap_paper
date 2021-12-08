@@ -24,10 +24,8 @@ load_required_files(large_data_path = large_data_path)
 query_sn_color = "#302ac9"
 fasting_color = "#28a7c9"
 adlib_color = "#772ac9"
-bg_col = "#dedede"
-colorvec = RColorBrewer::brewer.pal(9, "Blues")
-colorvec[1] =  "#dedede"
-cols_for_feature_plot = c("#dedede","#0b3ebd") # "#0b3ebd"
+bg_col = "grey90"
+cols_for_feature_plot = c(bg_col,"#0b3ebd") # "#0b3ebd"
 text_size = 20
 
 rasterize_point_size = 2.2
@@ -165,7 +163,7 @@ activation_per_cluster_stat
 activation_per_cluster_stat$Identity = factor(activation_per_cluster_stat$Identity,levels = rev(activation_per_cluster_stat$Identity))
 activation_celltype_barplot = ggplot(activation_per_cluster_stat,aes(x=Identity,y=n_down_sig,fill= -1*mean_fc_down))+geom_bar(stat="identity")+
   geom_text(aes(x = Identity, y = max(n_down_sig)*1.15,label=n_cells_cluster), hjust =1,size=6)+ # add cell numbers
-  scale_fill_gradient(low="grey80",high=fasting_color,limits=c(0,max(abs(activation_per_cluster_stat$mean_fc_down))))+
+  scale_fill_gradient(low=bg_col,high=fasting_color,limits=c(0,max(abs(activation_per_cluster_stat$mean_fc_down))))+
   ylim(c(0,max(activation_per_cluster_stat$n_down_sig)*1.1)) + # extend the y axis a bit so that the n cell labels doN#t overlap with the highest plot!
   scale_y_continuous(breaks=c(2,4,6,8,10))+
   coord_flip()+ylab("Number of IEGs")+xlab(NULL)+  #"Summed adjusted p-value"
@@ -259,8 +257,9 @@ volcano_df$label = NA
 volcano_df$label[volcano_df$gene %in% c(down_regulated_genes,up_regulated_genes)] = volcano_df$gene[volcano_df$gene %in% c(down_regulated_genes,up_regulated_genes)]
 
 agrp_fasting_volcano = ggplot(volcano_df[volcano_df$avg_log2FC !=0,],aes(-1*avg_log2FC,-log10(p_val_adj),label=label,color=color))+geom_point(size=0.3)+
-  ggrepel::geom_text_repel(max.overlaps=100,size=6)+
-  scale_color_manual(values = c("up-regulated in fasting"=fasting_color,"down-regulated in fasting"=adlib_color,"not regulated"="grey"))+
+  ggrepel::geom_text_repel(max.overlaps=100,size=6,show.legend = FALSE)+
+  scale_color_manual(values = c("up-regulated in fasting"=fasting_color,"down-regulated in fasting"=adlib_color,"not regulated"=bg_col))+
+  guides(colour = guide_legend(override.aes = list(size=7)))+
   xlab("log2 foldchange")+ylab("-log10(adjusted pvalue)")+ggtitle("Changes in Agrp neurons")+
   xlim(c(-1*(max(volcano_df$avg_log2FC)+0.1),max(volcano_df$avg_log2FC)+0.1))+
   theme_bw()+
@@ -386,7 +385,7 @@ cor.test(agrp_sn_vs_sc_plot$avg_log2FC_sc[agrp_sn_vs_sc_plot$regulated != "not i
 # make plot for figure:
 agrp_Campvell_vs_sn_plot = ggplot(agrp_sn_vs_sc_plot,aes(x=avg_log2FC_sc,y=avg_log2FC_sn))+
   geom_point(alpha=0.6,aes(color=regulated))+geom_smooth(method="lm",color="grey60")+
-  scale_color_manual(values = c("up in fasting - both" = fasting_color,"not in both" = "grey80","down in fasting - both" =adlib_color,
+  scale_color_manual(values = c("up in fasting - both" = fasting_color,"not in both" = bg_col,"down in fasting - both" =adlib_color,
                                 "up in fasting - one" = "#a3bbc2", "down in fasting - one" = "#ae9bc2"))+
   xlab("log2FC sc-seq")+ylab("log2FC sn-seq")+
   theme_bw()+theme(text=element_text(size=text_size))

@@ -23,6 +23,8 @@ load_required_files(large_data_path = large_data_path)
 rasterize_point_size = 2.2
 rasterize_pixels = 2048
 text_size = 20
+bg_col = "grey90"
+cols_for_feature_plot = c(bg_col,"#0b3ebd") # "#0b3ebd"
 
 ##########
 ### Supplemental Figure 2: metric scatter for full map + Dataset UMAPS

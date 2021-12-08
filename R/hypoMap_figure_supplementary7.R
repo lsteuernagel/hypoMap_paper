@@ -22,13 +22,15 @@ load_required_files(large_data_path = large_data_path)
 ## plotting
 rasterize_point_size = 2.2
 rasterize_pixels = 2048
-cols_for_feature_plot = c("#dedede","#0b3ebd") # "#0b3ebd"
+bg_col = "grey90"
+cols_for_feature_plot = c(bg_col,"#0b3ebd") # "#0b3ebd"
 
 
 ##########
 ###  DEGs in all clusters
 ##########
 
+min_cells = 10 # ?
 Idents(query_snseq_neurons) = "predicted_K169_named"
 all_clusters = unique(query_snseq_neurons@meta.data$predicted_K169_named)
 all_conditionGenes_list = list()
@@ -59,7 +61,7 @@ data.table::fwrite(all_conditionGenes,conditionGenes_all_file,sep="\t")
 ### plot on UMAP
 ##########
 
-#all_conditionGenes = data.table::fread(conditionGenes_all_file,data.table = FALSE)
+all_conditionGenes = data.table::fread(conditionGenes_all_file,data.table = FALSE)
 
 all_conditionGenes_filtered = all_conditionGenes[all_conditionGenes$p_val_adj < 0.01,] # filter pval
 # how many express Fos:

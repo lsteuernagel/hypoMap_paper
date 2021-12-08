@@ -22,7 +22,8 @@ load_required_files(large_data_path = large_data_path)
 ## plotting
 rasterize_point_size = 2.2
 rasterize_pixels = 2048
-cols_for_feature_plot = c("#dedede","#0b3ebd") # "#0b3ebd"
+bg_col = "grey90"
+cols_for_feature_plot = c(bg_col,"#0b3ebd") # "#0b3ebd"
 
 ##########
 ### Figure 7: Glp1r
@@ -105,7 +106,7 @@ neuron_map_seurat@meta.data$new_label_col = NA
 neuron_map_seurat@meta.data$new_label_col[!is.na(neuron_map_seurat@meta.data$mean_expressed_cells)] = neuron_map_seurat@meta.data$K169_named[!is.na(neuron_map_seurat@meta.data$mean_expressed_cells)]
 Idents(neuron_map_seurat) = "new_label_col"
 ish_pct_umap_plot = FeaturePlot(neuron_map_seurat,features = "mean_expressed_cells",label = TRUE,label.size = 5,repel = TRUE)+NoAxes()+
-  scale_color_gradient(low = cols_for_feature_plot[1],high = cols_for_feature_plot[2],na.value = "#dedede",limits=c(0,100))+ggtitle("Pct of expressing cells in ISH")
+  scale_color_gradient(low = cols_for_feature_plot[1],high = cols_for_feature_plot[2],na.value = bg_col,limits=c(0,100))+ggtitle("Pct of expressing cells in ISH")
 ish_pct_umap_plot = rasterize_ggplot(ish_pct_umap_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 ish_pct_umap_plot
 

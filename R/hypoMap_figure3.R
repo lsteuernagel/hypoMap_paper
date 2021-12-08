@@ -185,10 +185,8 @@ anno_df = neuron_map_seurat@misc$annotations
 require(RColorBrewer)
 # graph params
 clusterlevel = "K169"
-colorvec = RColorBrewer::brewer.pal(9, "Blues")
-colorvec[1] =  "#dedede"
-cols_for_feature_plot = c("#dedede","#0b3ebd") # "#0b3ebd"
-na_color = "#dedede"
+cols_for_feature_plot = c("grey90","#0b3ebd") # "#0b3ebd"
+na_color = "grey90"
 text_color="black"
 text_size = 15
 label_size = 7

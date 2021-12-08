@@ -113,7 +113,7 @@ rasterize_ggplot = function(plot,pixel_raster = 1024,pixel_raster_y = NULL,inter
 plot_cluster_tree = function(edgelist,heatmap_matrix=NULL,heatmap_matrix2 = NULL,leaf_level=NULL,anno_df=NULL,metadata=NULL,level_pattern = "K[0-9]+",cluster_id_pattern = "_pruned",
                              cluster_name_pattern = "_named",label_size = 2, show_genes = TRUE,heatmap_colors=c("white","darkred"),heatmap_colnames =TRUE, legend_title_1 = "Legend1",legend_title_2="Legend2",
                              matrix_offset = 0.2,matrix_width =0.2,matrix_width_2=0.2,colnames_angle=0,legend_text_size = 4,hjust_colnames=0.5, returnData =FALSE,manual_off_second = 5,heatmap_text_size=4,
-                             annotate_reverse =TRUE){
+                             annotate_reverse =TRUE,na_color = "grey90"){
   
   # I am loading packages here instead of using them as part of a pachage and playing around with namespaces because for some reason the fucks up the ggtree package
   # for example geom_nodelab behaves different when called via ggtree::geom_nodelab, indicating taht is uses some other version?
@@ -228,13 +228,13 @@ plot_cluster_tree = function(edgelist,heatmap_matrix=NULL,heatmap_matrix2 = NULL
       scale_limits = c(min(heatmap_matrix),max(heatmap_matrix))
       circular_tree_heat <- gheatmap(circular_tree,data=heatmap_matrix,offset = matrix_offset , width = matrix_width,colnames = heatmap_colnames,
                                      colnames_angle=colnames_angle,font.size=heatmap_text_size,hjust = hjust_colnames)+
-        scale_fill_gradientn(colours = heatmap_colors,limits=scale_limits,oob=squish) +
+        scale_fill_gradientn(colours = heatmap_colors,limits=scale_limits,oob=squish,na.value = na_color) +
         theme(legend.text=element_text(size=legend_text_size)) +
         guides(fill=ggplot2::guide_colourbar(title=legend_title_1)) # guide_colourbar for continous
     }else{
       circular_tree_heat <- gheatmap(circular_tree_heat, heatmap_matrix, offset=matrix_offset, width=matrix_width,colnames = heatmap_colnames,
                                      colnames_angle=colnames_angle,font.size=heatmap_text_size,hjust = hjust_colnames)+
-        scale_fill_discrete() + 
+        scale_fill_discrete(na.value = na_color) + 
         theme(legend.text=element_text(size=legend_text_size))+
         guides(fill=ggplot2::guide_legend(title=legend_title_1))
     }
@@ -255,7 +255,7 @@ plot_cluster_tree = function(edgelist,heatmap_matrix=NULL,heatmap_matrix2 = NULL
         circular_tree_heat <- gheatmap(circular_tree_heat, heatmap_matrix2, offset=manual_off_second,
                                        width=matrix_width_2,colnames = heatmap_colnames,colnames_angle=colnames_angle,
                                        colnames_offset_y = matrix_offset*2,font.size=heatmap_text_size,hjust = hjust_colnames)+
-          scale_fill_discrete() +
+          scale_fill_discrete(na.value = na_color) +
           guides(fill=ggplot2::guide_legend(title=legend_title_2)) +
           theme(legend.text=element_text(size=legend_text_size))
       }

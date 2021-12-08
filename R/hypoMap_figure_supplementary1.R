@@ -23,6 +23,10 @@ load_required_files(large_data_path = large_data_path)
 rasterize_point_size = 1.1
 rasterize_pixels = 1024
 
+reference_color = "#cc2118"
+bg_col = "grey90"
+cols_for_feature_plot = c(bg_col,"#0b3ebd") # "#0b3ebd"
+
 ##########
 ### Supplemental Figure 1:  aucell mapped celltype cells mini umaps -- OPTIONAL
 ##########
@@ -33,7 +37,8 @@ mapped_celltypes = readRDS(paste0("data_inputs/mapped_celltypes_neuronMap.rds"))
 # plot
 p=list()
 for(i in 1:length(mapped_celltypes)) {
-  p[[i]] <- DimPlot(neuron_map_seurat,reduction = "umap_scvi",cells.highlight = mapped_celltypes[[i]], sizes.highlight = 0.05,pt.size = 0.05,raster = F) + NoLegend() + NoAxes() + ggtitle(names(mapped_celltypes)[i])
+  p[[i]] <- DimPlot(neuron_map_seurat,reduction = "umap_scvi",cells.highlight = mapped_celltypes[[i]], sizes.highlight = 0.05,pt.size = 0.05,raster = F) + 
+    scale_color_manual(values=c(bg_col,reference_color)) + NoLegend() + NoAxes() + ggtitle(names(mapped_celltypes)[i])
   p[[i]] = rasterize_ggplot(p[[i]],pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 }
 length(p)

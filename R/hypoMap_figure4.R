@@ -23,8 +23,8 @@ load_required_files(large_data_path = large_data_path)
 # colors
 reference_color = "#cc2118"
 query_sn_color = "#302ac9"
-cols_for_feature_plot = c("#dedede","#0b3ebd") # "#0b3ebd"
-bg_col = "#dedede"
+bg_col = "grey90"
+cols_for_feature_plot = c(bg_col,"#0b3ebd") # "#0b3ebd"
 
 rasterize_point_size = 2.2
 rasterize_pixels = 2048
@@ -86,7 +86,7 @@ clustering_1_filter_SCN = c(clustering_1_filter_SCN,"Arx.Six6.HY1")
 
 # orientation umap:
 cellsh = query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K98_named %in% clustering_1_filter_SCN]
-scn_dimplot = DimPlot(query_snseq_neurons,cells.highlight = cellsh,sizes.highlight = 0.15)+NoLegend()+NoAxes()
+scn_dimplot = DimPlot(query_snseq_neurons,cells.highlight = cellsh,sizes.highlight = 0.15)+NoLegend()+NoAxes()+scale_color_manual(values=c(bg_col,query_sn_color))
 scn_dimplot = rasterize_ggplot(scn_dimplot,pixel_raster = 1024,pointsize = 1.1)
 scn_dimplot
 
@@ -129,7 +129,7 @@ unique(neuron_map_seurat@meta.data$suggested_region_curated[neuron_map_seurat@me
 
 # orientation umap:
 cellsh = query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K98_named %in% clustering_1_filter]
-vmh_dimplot = DimPlot(query_snseq_neurons,cells.highlight = cellsh,sizes.highlight = 0.15)+NoLegend()+NoAxes()
+vmh_dimplot = DimPlot(query_snseq_neurons,cells.highlight = cellsh,sizes.highlight = 0.15)+NoLegend()+NoAxes()+scale_color_manual(values=c(bg_col,query_sn_color))
 vmh_dimplot = rasterize_ggplot(vmh_dimplot,pixel_raster = 1024,pointsize = 1.1)
 vmh_dimplot
 
@@ -362,7 +362,7 @@ require(scales)
 class_heatmap = ggplot2::ggplot(density_per_class_df_long[density_per_class_df_long$steps> (-0.3),], aes(x = class_ordered, y = steps , fill = density)) +
   geom_tile() +
   geom_text(aes(x = class, y = 1.11,label=n_genes), hjust =1,size=5)+ # add cell numbers
-  ggplot2::scale_fill_gradient(low="white",high="#ff1414",na.value = "grey80",
+  ggplot2::scale_fill_gradient(low="white",high="#ff1414",na.value = bg_col,
                                limits=c(0,max(density_per_class_df_long$density)), oob=squish) +
   xlab("Gene class")+ylab("Pearson correlation")+ guides(fill=guide_legend(title="Density"))+
   scale_fill_gradient(low = "white",high = reference_color)+
@@ -549,6 +549,8 @@ per_dataset_cor_df$K169_named = add_paired_annotation(input_annotation = per_dat
 per_dataset_cor_df_print = per_dataset_cor_df[,c(16,15,14,1:13)]
 data.table::fwrite(per_dataset_cor_df_print,paste0(results_path_figure4,"per_cluster_correlations.txt"),sep = "\t")
 
+#per_dataset_cor_df = data.table::fread(paste0(results_path_figure4,"per_cluster_correlations.txt"),data.table = FALSE)
+
 ##########
 ### Make heatmap - currently use treeplot below!
 ##########
@@ -576,6 +578,7 @@ data.table::fwrite(per_dataset_cor_df_print,paste0(results_path_figure4,"per_clu
 ##########
 
 # make data for first heatmap with correlations
+datasets = unique(neuron_map_seurat@meta.data$Dataset)
 heatmap_data = per_dataset_cor_df
 heatmap_matrix = as.matrix(heatmap_data[,"global_cor"]) # might want to change order
 colnames(heatmap_matrix) = "Cor"
@@ -589,8 +592,7 @@ circular_tree_cor = plot_cluster_tree(edgelist = neuron_map_seurat@misc$mrtree_e
                                       label_size = 2, show_genes = TRUE, legend_title_1 = "Cor",legend_title_2 = "Cor",
                                       matrix_offset = 0.2, matrix_width =0.15,matrix_width_2 = 0.5,heatmap_colnames = TRUE,
                                       manual_off_second = 1.5,legend_text_size = 8,heatmap_text_size = 2,colnames_angle=0,hjust_colnames=0.5,
-                                      heatmap_colors =c("#1a1a82","#ff1414")) + ggplot2::scale_fill_gradient(low="#1a1a82",high="#ff1414",na.value = "grey90",
-                                                                                                             limits=c(0,1), oob=squish)
+                                      heatmap_colors =c("#1a1a82","#ff1414"),na_color=bg_col) + ggplot2::scale_fill_gradient(low="#1a1a82",high="#ff1414",na.value = bg_col,limits=c(0,1), oob=squish)
 #circular_tree_cor
 require(ggtree)
 circular_tree_cor_rotated = rotate_tree(circular_tree_cor, -90)
