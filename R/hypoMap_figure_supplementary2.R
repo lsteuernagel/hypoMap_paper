@@ -65,7 +65,7 @@ ggsave(filename = paste0(results_path_supplementary_figure2,"full_metrics_scatte
 ##########
 
 # by Dataset
-full_datasets_plot = DimPlot(full_map_seurat,group.by = "Dataset",reduction = paste0("umap_","scvi"),label = F,raster = F,pt.size = 0.2)+NoAxes()+
+full_datasets_plot = DimPlot(full_map_seurat,group.by = "Dataset",reduction = paste0("umap_","scvi"),label = F,raster = F,pt.size = 0.2,shuffle = TRUE)+NoAxes()+
   theme(text = element_text(size=text_size))+ggtitle("Datasets on hypothalamus reference map")+guides(color=guide_legend(ncol=1,override.aes = list(size=5)))
 full_datasets_plot = rasterize_ggplot(full_datasets_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 full_datasets_plot
@@ -77,7 +77,7 @@ ggsave(filename = paste0(results_path_supplementary_figure2,"full_map_datasets.p
        plot = full_datasets_plot, "pdf",dpi=600,width=350,height = 300,units="mm")
 
 # by BatchID
-full_BatchID_plot = DimPlot(full_map_seurat,group.by = "Batch_ID",reduction = paste0("umap_","scvi"),label = F,raster = F,pt.size = 0.2)+NoAxes()+
+full_BatchID_plot = DimPlot(full_map_seurat,group.by = "Batch_ID",reduction = paste0("umap_","scvi"),label = F,raster = F,pt.size = 0.2,shuffle = TRUE)+NoAxes()+
   theme(text = element_text(size=text_size))+ggtitle("Batches on hypothalamus reference map")+guides(color=guide_legend(ncol=1,override.aes = list(size=5)))
 full_BatchID_plot = rasterize_ggplot(full_BatchID_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 full_BatchID_plot
@@ -90,19 +90,19 @@ full_BatchID_plot
 
 # neuronmap:
 # by Dataset
-neurons_datasets_plot = DimPlot(neuron_map_seurat,group.by = "Dataset",reduction = paste0("umap_","scvi"),label = F,raster = F,pt.size = 0.2)+NoAxes()+
+neurons_datasets_plot = DimPlot(neuron_map_seurat,group.by = "Dataset",reduction = paste0("umap_","scvi"),label = F,raster = F,pt.size = 0.2,shuffle = TRUE)+NoAxes()+
   theme(text = element_text(size=text_size))+ggtitle("Datasets on hypothalamus neuron reference map")+guides(color=guide_legend(ncol=1,override.aes = list(size=5)))
 neurons_datasets_plot = rasterize_ggplot(neurons_datasets_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 neurons_datasets_plot
 
 # save
-ggsave(filename = paste0(results_path_supplementary_figure2,map_name,"_datasets.png"),
+ggsave(filename = paste0(results_path_supplementary_figure2,"neuronmap_datasets.png"),
        plot = neurons_datasets_plot, "png",dpi=600,width=350,height = 300,units="mm")
-ggsave(filename = paste0(results_path_supplementary_figure2,map_name,"_datasets.pdf"),
+ggsave(filename = paste0(results_path_supplementary_figure2,"neuronmap_datasets.pdf"),
        plot = neurons_datasets_plot, "pdf",dpi=600,width=350,height = 300,units="mm")
 
 # by BatchID
-neurons_batch_plot = DimPlot(neuron_map_seurat,group.by = "Batch_ID",reduction = paste0("umap_","scvi"),label = F,raster = F,pt.size = 0.2)+NoAxes()+
+neurons_batch_plot = DimPlot(neuron_map_seurat,group.by = "Batch_ID",reduction = paste0("umap_","scvi"),label = F,raster = F,pt.size = 0.2,shuffle = TRUE)+NoAxes()+
   theme(text = element_text(size=text_size))+ggtitle("Batches on hypothalamus neuron reference map")+guides(color=guide_legend(ncol=1,override.aes = list(size=5)))
 neurons_batch_plot = rasterize_ggplot(neurons_batch_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 neurons_batch_plot
