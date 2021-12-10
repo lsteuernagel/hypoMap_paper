@@ -35,7 +35,7 @@ rasterize_pixels = 2048
 ### Plot fos and ieg
 ##########
 
-rasterize_point_size_inc = 4.4
+rasterize_point_size_inc = 5.4
 
 #  feature plot
 Idents(query_snseq_neurons) <- "predicted_K31_named"

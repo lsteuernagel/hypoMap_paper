@@ -144,7 +144,7 @@ for( i in 1:length(names_to_check)){
 # umap by Dataset or Batch_ID
 p <-list()
 for(i in 1:length(names_to_check)) {
-  p[[i]] <- DimPlot(neuron_map_seurat,group.by = "Dataset",reduction = paste0("umap_",names(names_to_check)[i]),label=F)+ NoAxes() + NoLegend()+ggtitle(names(names_to_check)[i])
+  p[[i]] <- DimPlot(neuron_map_seurat,group.by = "Dataset",reduction = paste0("umap_",names(names_to_check)[i]),label=FALSE,shuffle = TRUE)+ NoAxes() + NoLegend()+ggtitle(names(names_to_check)[i])
   p[[i]] <- rasterize_ggplot( p[[i]],pixel_raster = rasterize_pixels, pointsize =  rasterize_point_size)
 }
 compareMthods_cp_batch = cowplot::plot_grid(plotlist = p,ncol=4)
