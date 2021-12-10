@@ -35,16 +35,18 @@ rasterize_pixels = 2048
 ### Plot fos and ieg
 ##########
 
+rasterize_point_size_inc = 4.4
+
 #  feature plot
 Idents(query_snseq_neurons) <- "predicted_K31_named"
-fos_plot = Seurat::FeaturePlot(query_snseq_neurons,"Fos",split.by = "Diet",label = TRUE,label.size = 3.5,repel = TRUE,pt.size = 0.4,
+fos_plot = Seurat::FeaturePlot(query_snseq_neurons,"Fos",split.by = "Diet",label = TRUE,label.size = 3.5,repel = TRUE,pt.size = 1,
                                keep.scale="feature",order = TRUE,combine = FALSE,cols = cols_for_feature_plot)
 fos_plot_adlib = fos_plot[[1]]+NoAxes()+theme(panel.border = element_blank()) +ggplot2::ggtitle("adlib") #+ scale_color_gradientn(colours = colorvec) #+scale_color_gradient(low = "lightgrey",high = "#8c390a")
 fos_plot_fasting = fos_plot[[2]]+NoAxes()+theme(panel.border = element_blank()) +ggplot2::ggtitle("fasted")#+ scale_color_gradientn(colours = colorvec) #+scale_color_gradient(low = "lightgrey",high = "#8c390a")
 
-fos_plot_adlib = rasterize_ggplot(fos_plot_adlib,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
+fos_plot_adlib = rasterize_ggplot(fos_plot_adlib,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size_inc)
 fos_plot_adlib
-fos_plot_fasting = rasterize_ggplot(fos_plot_fasting,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
+fos_plot_fasting = rasterize_ggplot(fos_plot_fasting,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size_inc)
 fos_plot_fasting
 
 # save
@@ -335,6 +337,8 @@ ggsave(filename = paste0(results_path_figure5,"go_bp_agrp_enrich_dotplot.pdf"),
 ##########
 ### Transcriptional changes in Agrp of Campbell vs NucSeq
 ##########
+
+#load_required_files(large_data_path, overwrite_existing = TRUE, filenames = c("neuron_map_seurat" = "hypothalamus_neurons_map.rds" ))
 
 ### Comparison with Campbell Agrp changes:
 campbell_agrp_file = paste0(results_path_figure5,"agrp_fasting_all_campbell.txt")

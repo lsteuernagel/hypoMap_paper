@@ -104,7 +104,11 @@ ndeg_sn_seq
 ### Plot fos and ieg
 ##########
 
+rasterize_point_size_inc = 4.4
+
 # subset tto campbell
+rownames(neuron_map_seurat@meta.data) = neuron_map_seurat@meta.data$Cell_ID
+Idents(campbell_diet) <- "K31_named"
 campbell_diet = subset(neuron_map_seurat,subset = Dataset=="Campbell" & Diet %in% c("Normal","Fasted" ))
 
 #  feature plot
@@ -114,9 +118,9 @@ fos_plot = Seurat::FeaturePlot(campbell_diet,"Fos",split.by = "Diet",label = TRU
 fos_plot_fasting = fos_plot[[1]]+NoAxes()+theme(panel.border = element_blank())+ylab("") +ggplot2::ggtitle("fasted") #+ scale_color_gradientn(colours = colorvec) #+scale_color_gradient(low = "lightgrey",high = "#8c390a")
 fos_plot_adlib = fos_plot[[2]]+NoAxes()+theme(panel.border = element_blank())+ylab("") +ggplot2::ggtitle("adlib")#+ scale_color_gradientn(colours = colorvec) #+scale_color_gradient(low = "lightgrey",high = "#8c390a")
 
-fos_plot_adlib = rasterize_ggplot(fos_plot_adlib,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
+fos_plot_adlib = rasterize_ggplot(fos_plot_adlib,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size_inc)
 fos_plot_adlib
-fos_plot_fasting = rasterize_ggplot(fos_plot_fasting,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
+fos_plot_fasting = rasterize_ggplot(fos_plot_fasting,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size_inc)
 fos_plot_fasting
 
 # save

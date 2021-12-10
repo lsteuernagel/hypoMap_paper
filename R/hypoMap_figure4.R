@@ -87,6 +87,7 @@ clustering_1_filter_SCN = c(clustering_1_filter_SCN,"Arx.Six6.HY1")
 # orientation umap:
 cellsh = query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K98_named %in% clustering_1_filter_SCN]
 scn_dimplot = DimPlot(query_snseq_neurons,cells.highlight = cellsh,sizes.highlight = 0.15)+NoLegend()+NoAxes()+scale_color_manual(values=c(bg_col,query_sn_color))
+scn_dimplot = DimPlot(query_snseq_neurons,cells.highlight = cellsh,sizes.highlight = 0.15)+NoLegend()+NoAxes()+scale_color_manual(values=c("lightgrey","red"))
 scn_dimplot = rasterize_ggplot(scn_dimplot,pixel_raster = 1024,pointsize = 1.1)
 scn_dimplot
 
@@ -130,6 +131,7 @@ unique(neuron_map_seurat@meta.data$suggested_region_curated[neuron_map_seurat@me
 # orientation umap:
 cellsh = query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K98_named %in% clustering_1_filter]
 vmh_dimplot = DimPlot(query_snseq_neurons,cells.highlight = cellsh,sizes.highlight = 0.15)+NoLegend()+NoAxes()+scale_color_manual(values=c(bg_col,query_sn_color))
+vmh_dimplot = DimPlot(query_snseq_neurons,cells.highlight = cellsh,sizes.highlight = 0.15)+NoLegend()+NoAxes()+scale_color_manual(values=c("lightgrey","red"))
 vmh_dimplot = rasterize_ggplot(vmh_dimplot,pixel_raster = 1024,pointsize = 1.1)
 vmh_dimplot
 
@@ -247,6 +249,7 @@ all_genes_to_keep = base::union(sc_genes_to_keep,sn_genes_to_keep)
 # make a table that can be saved 
 all_clusterstats_both_summarized = dplyr::full_join(all_clusterstats_sc_df_summarized,all_clusterstats_sn_df_summarized, by =c("gene"="gene"),suffix=c("_sc","_sn"))
 # data.table::fwrite(all_clusterstats_both_summarized,paste0(results_path_figure4,"max_expression_in_any_cluster_per_gene.txt"),sep = "\t")
+#all_clusterstats_both_summarized = data.table::fread(paste0(results_path_figure4,"max_expression_in_any_cluster_per_gene.txt"))
 
 ##########
 ### Calculate per gene correlations
@@ -495,7 +498,7 @@ for(i in 1:length(clusters_to_check)){
   # get cluster markers
   sn_Seq_based_markers = sn_seq_markers_K169$gene[sn_seq_markers_K169$p_val_adj<padj_cut & sn_seq_markers_K169$avg_log2FC>fc_min & sn_seq_markers_K169$cluster==current_cluster & sn_seq_markers_K169$gene %in% per_gene_cor$gene]
   sc_Seq_based_markers = sc_seq_markers_K169$gene[sc_seq_markers_K169$p_val_adj<padj_cut & sc_seq_markers_K169$avg_logFC>fc_min & sc_seq_markers_K169$cluster==current_cluster & sc_seq_markers_K169$gene %in% per_gene_cor$gene]
-  union_markers = union(sn_Seq_based_markers,sc_Seq_based_markers)
+  #union_markers = union(sn_Seq_based_markers,sc_Seq_based_markers)
   union_markers = sn_Seq_based_markers
   
   ##### RSQ between sn-seq and sc-seq (split up by Dataset)
