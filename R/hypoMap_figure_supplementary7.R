@@ -104,7 +104,7 @@ ndeg_sn_seq
 ### Plot fos and ieg
 ##########
 
-rasterize_point_size_inc = 4.4
+rasterize_point_size_inc = 5.4
 
 # subset tto campbell
 rownames(neuron_map_seurat@meta.data) = neuron_map_seurat@meta.data$Cell_ID
@@ -113,7 +113,7 @@ campbell_diet = subset(neuron_map_seurat,subset = Dataset=="Campbell" & Diet %in
 
 #  feature plot
 Idents(campbell_diet) <- "K31_named"
-fos_plot = Seurat::FeaturePlot(campbell_diet,"Fos",split.by = "Diet",label = TRUE,label.size = 3.5,repel = TRUE,pt.size = 0.5,
+fos_plot = Seurat::FeaturePlot(campbell_diet,"Fos",split.by = "Diet",label = TRUE,label.size = 3.5,repel = TRUE,pt.size = 1,
                                keep.scale="feature",order = TRUE,combine = FALSE,cols = cols_for_feature_plot)
 fos_plot_fasting = fos_plot[[1]]+NoAxes()+theme(panel.border = element_blank())+ylab("") +ggplot2::ggtitle("fasted") #+ scale_color_gradientn(colours = colorvec) #+scale_color_gradient(low = "lightgrey",high = "#8c390a")
 fos_plot_adlib = fos_plot[[2]]+NoAxes()+theme(panel.border = element_blank())+ylab("") +ggplot2::ggtitle("adlib")#+ scale_color_gradientn(colours = colorvec) #+scale_color_gradient(low = "lightgrey",high = "#8c390a")
