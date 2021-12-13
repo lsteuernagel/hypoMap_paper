@@ -9,6 +9,7 @@ system(paste0("mkdir -p ",results_path_tables))
 require(dplyr)
 require(ggplot2)
 require(Seurat)
+require(openxlsx)
 source("R/utility_functions.R")
 source("R/plot_functions.R")
 
@@ -62,6 +63,21 @@ dataset_overview = data.table::fread(paste0(results_path_tables,"supplementary_t
 neuron_signatures = data.table::fread(paste0(results_path_tables,"supplementary_table_2_neuron_signatures.csv"))
 
 ##########
+### Metrics
+##########
+
+neurons_metrics_curated = data.table::fread(paste0(results_path_figure1,"neurons_metrics_curated.csv"),data.table = FALSE)
+neurons_metrics_curated = neurons_metrics_curated %>% dplyr::select(assay,method,mixing_score,purity_score,reduction,ndim,features_ngenes)
+# save:
+data.table::fwrite(neurons_metrics_curated,paste0(results_path_tables,"supplementary_table_3_integration_metrics_neurons_overview.csv"))
+
+full_metrics_curated = data.table::fread(paste0(results_path_supplementary_figure2,"full_metrics_curated.csv"),data.table = FALSE)
+full_metrics_curated = full_metrics_curated %>% dplyr::select(assay,method,mixing_score,purity_score,reduction,ndim,features_ngenes)
+# save:
+data.table::fwrite(full_metrics_curated,paste0(results_path_tables,"supplementary_table_4_integration_metrics_full_overview.csv"))
+
+
+##########
 ### Cluster overview tables
 ##########
 
@@ -71,12 +87,12 @@ region_anno =  neuron_map_seurat@meta.data %>% dplyr::distinct(suggested_region_
 hypo_map_cluster_overview = dplyr::left_join(neuron_map_seurat@misc$annotations,region_anno,by="cluster_id") %>% 
   dplyr::group_by(clusterlevel) %>% dplyr::mutate(pct_of_all = round(ncells / sum(ncells), 4) * 100) %>% dplyr::ungroup()
 # save:
-data.table::fwrite(hypo_map_cluster_overview,paste0(results_path_tables,"supplementary_table_3_hypomap_cluster_overview.csv"))
+data.table::fwrite(hypo_map_cluster_overview,paste0(results_path_tables,"supplementary_table_5_hypomap_cluster_overview.csv"))
 
 ## Table with mrtree edgelist for TREE
 edgelist_clusters_hypoMap = neuron_map_seurat@misc$mrtree_edgelist %>% dplyr::select(-isLeaf,-level,-totalCount,nchildren = count)
 # save:
-data.table::fwrite(edgelist_clusters_hypoMap,paste0(results_path_tables,"supplementary_table_4_hypomap_cluster_edgelist.csv"))
+data.table::fwrite(edgelist_clusters_hypoMap,paste0(results_path_tables,"supplementary_table_6_hypomap_cluster_edgelist.csv"))
 
 
 ## Table with all projected HypoMap clusters in nucSeq
@@ -98,7 +114,9 @@ all_clusters_fasting_DEG = data.table::fread("figure_outputs/figure_supplementar
 all_clusters_fasting_DEG_stat = all_clusters_fasting_DEG %>% dplyr::filter(p_val_adj < 0.01) %>% dplyr::group_by(current_cluster) %>% dplyr::count(name = "n_degs_fasting")
 nucseq_cluster_overview = nucseq_cluster_overview %>% dplyr::left_join(all_clusters_fasting_DEG_stat,by=c("projected_cluster_name"="current_cluster"))
 # save:
-data.table::fwrite(nucseq_cluster_overview,paste0(results_path_tables,"supplementary_table_5_nucseq_cluster_overview.csv"))
+data.table::fwrite(nucseq_cluster_overview,paste0(results_path_tables,"supplementary_table_7_nucseq_cluster_overview.csv"))
+
+
 
 ##########
 ### Markers & DEGs
@@ -111,7 +129,7 @@ hypomap_marker_genes = hypomap_marker_genes %>% dplyr::left_join(hypo_map_cluste
 hypomap_marker_genes = hypomap_marker_genes %>% dplyr::filter(specificity > 1 & p_val_adj < 0.001) %>% 
   dplyr::select(cluster_id = cluster_1,cluster_name, gene, specificity, p_val_adj, avg_log2FC =  avg_logFC, pct.1, pct.2)
 # save:
-data.table::fwrite(hypomap_marker_genes,paste0(results_path_tables,"supplementary_table_6_hypomap_marker_genes.csv"))
+data.table::fwrite(hypomap_marker_genes,paste0(results_path_tables,"supplementary_table_8_hypomap_marker_genes.csv"))
 
 
 ## table with nucseq cluster marker genes
@@ -124,7 +142,7 @@ nucseq_marker_genes = nucseq_marker_genes %>% dplyr::mutate(specificity = avg_lo
 nucseq_marker_genes$cluster_id = factor(nucseq_marker_genes$cluster_id,levels = unique(hypomap_marker_genes$cluster_id[hypomap_marker_genes$cluster_id %in% nucseq_marker_genes$cluster_id]))
 nucseq_marker_genes = nucseq_marker_genes %>% dplyr::arrange(cluster_id) # sort similar to hypoMap overview
 # save:
-data.table::fwrite(nucseq_marker_genes,paste0(results_path_tables,"supplementary_table_7_nucseq_marker_genes.csv"))
+data.table::fwrite(nucseq_marker_genes,paste0(results_path_tables,"supplementary_table_9_nucseq_marker_genes.csv"))
 
 
 ## table witH DEGs
@@ -133,11 +151,11 @@ all_clusters_fasting_DEG = all_clusters_fasting_DEG %>% dplyr::left_join(hypo_ma
 all_clusters_fasting_DEG = all_clusters_fasting_DEG %>% dplyr::filter(p_val_adj < 0.01) %>%
   dplyr::select(cluster_id,cluster_name = current_cluster, gene, avg_log2FC, p_val_adj, avg_log2FC, pct.1, pct.2,pct_diff)
 # save:
-data.table::fwrite(all_clusters_fasting_DEG,paste0(results_path_tables,"supplementary_table_8_nucseq_DEG_fasting.csv"))
+data.table::fwrite(all_clusters_fasting_DEG,paste0(results_path_tables,"supplementary_table_10_nucseq_DEG_fasting.csv"))
 
 ## table with go enrichment results for Agrp ?
 agrp_fasting_go_enrichment_simplified = data.table::fread("figure_outputs/figure_5/agrp_fasting_go_enrichment_simplified.txt")
-data.table::fwrite(agrp_fasting_go_enrichment_simplified,paste0(results_path_tables,"supplementary_table_9_nucseq_gobp_Agrp_fasting.csv"))
+data.table::fwrite(agrp_fasting_go_enrichment_simplified,paste0(results_path_tables,"supplementary_table_11_nucseq_gobp_Agrp_fasting.csv"))
 
 ##########
 ### bacTRAp results
@@ -145,7 +163,7 @@ data.table::fwrite(agrp_fasting_go_enrichment_simplified,paste0(results_path_tab
 
 # This is basically a prettified version of the input DEseq2 tables for Figure 3. 
 # run on all files:
-start_idx_for_supplemental_file = 10
+start_idx_for_supplemental_file = 12
 bacTRAP_files = list.files("data_inputs/",pattern = "bacTRAP_deseq2")
 for(i in 1:length(bacTRAP_files)){
   current_res = data.table::fread(paste0("data_inputs/",bacTRAP_files[i]),data.table = FALSE) 
@@ -163,12 +181,34 @@ for(i in 1:length(bacTRAP_files)){
 
 # This is the input table for Figure 6 which is based on the manual counting of images.
 pct_expressed_cells_clusters_ISH = data.table::fread("figure_outputs/figure_6/pct_expressed_cells_clusters_ISH.txt")
-data.table::fwrite(pct_expressed_cells_clusters_ISH,paste0(results_path_tables,"supplementary_table_X_rnascope_glp1r_result.csv"))
+data.table::fwrite(pct_expressed_cells_clusters_ISH,paste0(results_path_tables,"supplementary_table_18_rnascope_glp1r_result.csv"))
 
 ##########
 ### join in xlsx
 ##########
 
+supplementary_files = list.files("table_outputs/",pattern = ".csv")
+supp_table_list = list()
+dictionary_list = list()
+supp_table_list[["0_dictionary"]] = data.frame()# dummy to fill in later
+for(i in 1:length(supplementary_files)){
+  current_table = data.table::fread(paste0("table_outputs/",supplementary_files[i]),data.table = FALSE) 
+  current_name = gsub("supplementary_table_|\\.csv","",supplementary_files[i])
+  current_colnames = colnames(current_table)
+  df_for_dictionary = data.frame(table = c(current_name,current_colnames), explanation = NA)
+  df_for_dictionary = rbind(df_for_dictionary,data.frame(table =NA,explanation =NA))
+  dictionary_list[[current_name]] = df_for_dictionary
+  supp_table_list[[current_name]] = current_table
+}
+# make dictionary 
+dictionary_list = dictionary_list[base::order(as.numeric(stringr::str_extract(names(dictionary_list),pattern = "[0-9]+")))]
+dictionary_df = do.call("rbind",dictionary_list)
+supp_table_list[["0_dictionary"]] = dictionary_df
+# order numerically
+supp_table_list = supp_table_list[base::order(as.numeric(stringr::str_extract(names(supp_table_list),pattern = "[0-9]+")))]
+names(supp_table_list)
+# write to one file
+openxlsx::write.xlsx(x = supp_table_list,file = "table_outputs/supplementary_tables_preliminary.xlsx",colNames=TRUE,rowNames=FALSE,keepNA=FALSE)
 
 
 

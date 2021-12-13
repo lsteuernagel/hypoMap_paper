@@ -40,6 +40,7 @@ neurons_metrics$method = stringr::str_extract(neurons_metrics$reduction,pattern=
 neurons_metrics$features_ngenes = stringr::str_extract(neurons_metrics$reduction,pattern="features\\.[0-9]+") %>% stringr::str_replace(pattern = "features\\.",replacement = "") %>% as.numeric()
 # filter
 neurons_metrics  =  neurons_metrics %>% dplyr::filter(ndim %in% c(30,50,60,80,90,NA))
+data.table::fwrite(neurons_metrics,paste0(results_path_figure1,"neurons_metrics_curated.csv"))
 
 #plot
 metrics_plot = ggplot2::ggplot(neurons_metrics,aes(x=mixing_score,y=purity_score,color=method))+geom_point(size=1.5)+

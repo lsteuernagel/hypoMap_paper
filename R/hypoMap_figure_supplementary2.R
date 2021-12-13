@@ -44,6 +44,7 @@ full_metrics$method = stringr::str_extract(full_metrics$reduction,pattern="[a-zA
 full_metrics$features_ngenes = stringr::str_extract(full_metrics$reduction,pattern="features\\.[0-9]+") %>% stringr::str_replace(pattern = "features\\.",replacement = "") %>% as.numeric()
 # filter
 full_metrics  =  full_metrics %>% dplyr::filter(ndim %in% c(30,50,60,80,90,NA))
+data.table::fwrite(full_metrics,paste0(results_path_supplementary_figure2,"full_metrics_curated.csv"))
 
 #plot
 full_metrics_plot = ggplot2::ggplot(full_metrics,aes(x=mixing_score,y=purity_score,color=method))+geom_point(size=1.5)+
