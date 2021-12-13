@@ -100,4 +100,80 @@ nucseq_cluster_overview = nucseq_cluster_overview %>% dplyr::left_join(all_clust
 # save:
 data.table::fwrite(nucseq_cluster_overview,paste0(results_path_tables,"supplementary_table_5_nucseq_cluster_overview.csv"))
 
+##########
+### Markers & DEGs
+##########
+
+## table with hypomap cluster marker genes
+hypomap_marker_genes = neuron_map_seurat@misc$markers_comparisons_all
+hypomap_marker_genes = hypomap_marker_genes %>% dplyr::left_join(hypo_map_cluster_overview %>% dplyr::select(cluster_name,cluster_id),by=c("cluster_1"="cluster_id"))
+# maybe restrict to high specificity to cut down size ?
+hypomap_marker_genes = hypomap_marker_genes %>% dplyr::filter(specificity > 1 & p_val_adj < 0.001) %>% 
+  dplyr::select(cluster_id = cluster_1,cluster_name, gene, specificity, p_val_adj, avg_log2FC =  avg_logFC, pct.1, pct.2)
+# save:
+data.table::fwrite(hypomap_marker_genes,paste0(results_path_tables,"supplementary_table_6_hypomap_marker_genes.csv"))
+
+
+## table with nucseq cluster marker genes
+nucseq_marker_genes = data.table::fread("data_inputs/sn_seq_mapped_neurons_K169_markers_2_sampleID.txt")
+nucseq_marker_genes = nucseq_marker_genes %>% dplyr::left_join(hypo_map_cluster_overview %>% dplyr::select(cluster_name,cluster_id),by=c("cluster"="cluster_id"))
+# maybe restrict to high specificity to cut down size ?
+nucseq_marker_genes = nucseq_marker_genes %>% dplyr::mutate(specificity = avg_logFC* (pct.1/pct.2)) %>% dplyr::filter(specificity > 1 & p_val_adj < 0.001) %>% 
+  dplyr::select(cluster_id = cluster,cluster_name, gene, specificity, p_val_adj, avg_log2FC = avg_logFC, pct.1, pct.2) %>%
+  dplyr::filter(!is.na(cluster_id)) 
+nucseq_marker_genes$cluster_id = factor(nucseq_marker_genes$cluster_id,levels = unique(hypomap_marker_genes$cluster_id[hypomap_marker_genes$cluster_id %in% nucseq_marker_genes$cluster_id]))
+nucseq_marker_genes = nucseq_marker_genes %>% dplyr::arrange(cluster_id) # sort similar to hypoMap overview
+# save:
+data.table::fwrite(nucseq_marker_genes,paste0(results_path_tables,"supplementary_table_7_nucseq_marker_genes.csv"))
+
+
+## table witH DEGs
+all_clusters_fasting_DEG = data.table::fread("figure_outputs/figure_supplementary_7/all_clusters_fasting_DEG.txt")
+all_clusters_fasting_DEG = all_clusters_fasting_DEG %>% dplyr::left_join(hypo_map_cluster_overview %>% dplyr::select(cluster_name,cluster_id),by=c("current_cluster"="cluster_name"))
+all_clusters_fasting_DEG = all_clusters_fasting_DEG %>% dplyr::filter(p_val_adj < 0.01) %>%
+  dplyr::select(cluster_id,cluster_name = current_cluster, gene, avg_log2FC, p_val_adj, avg_log2FC, pct.1, pct.2,pct_diff)
+# save:
+data.table::fwrite(all_clusters_fasting_DEG,paste0(results_path_tables,"supplementary_table_8_nucseq_DEG_fasting.csv"))
+
+## table with go enrichment results for Agrp ?
+agrp_fasting_go_enrichment_simplified = data.table::fread("figure_outputs/figure_5/agrp_fasting_go_enrichment_simplified.txt")
+data.table::fwrite(agrp_fasting_go_enrichment_simplified,paste0(results_path_tables,"supplementary_table_9_nucseq_gobp_Agrp_fasting.csv"))
+
+##########
+### bacTRAp results
+##########
+
+# This is basically a prettified version of the input DEseq2 tables for Figure 3. 
+# run on all files:
+start_idx_for_supplemental_file = 10
+bacTRAP_files = list.files("data_inputs/",pattern = "bacTRAP_deseq2")
+for(i in 1:length(bacTRAP_files)){
+  current_res = data.table::fread(paste0("data_inputs/",bacTRAP_files[i]),data.table = FALSE) 
+  colnames(current_res)[colnames(current_res)=="row"] = "ensembl_gene_id"
+  current_res =  current_res %>%dplyr::select(gene = external_gene_name,ensembl_gene_id,log2FoldChange,padj)
+  current_name = stringr::str_to_title(gsub("bacTRAP_deseq2_|\\.csv","",bacTRAP_files[i]))
+  assign(x = paste0("result_bacTRAP_",current_name),value = current_res)
+  message(paste0(results_path_tables,"supplementary_table_",(start_idx_for_supplemental_file+i-1),"_bacTRAP_",current_name,".csv"))
+  data.table::fwrite(current_res,paste0(results_path_tables,"supplementary_table_",(start_idx_for_supplemental_file+i-1),"_bacTRAP_",current_name,".csv"))
+}
+
+##########
+### ISH results
+##########
+
+# This is the input table for Figure 6 which is based on the manual counting of images.
+pct_expressed_cells_clusters_ISH = data.table::fread("figure_outputs/figure_6/pct_expressed_cells_clusters_ISH.txt")
+data.table::fwrite(pct_expressed_cells_clusters_ISH,paste0(results_path_tables,"supplementary_table_X_rnascope_glp1r_result.csv"))
+
+##########
+### join in xlsx
+##########
+
+
+
+
+
+
+
+
 
