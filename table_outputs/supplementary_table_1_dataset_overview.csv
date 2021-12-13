@@ -1,0 +1,14 @@
+Name,Acc,Link,paper,year,n_cells,n_samples,n_batches,Technology,Subregion
+RomanovDev,GSE132730,https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE132730,https://www.nature.com/articles/s41586-020-2266-0?proof=trueIn%EF%BB%BF,2020,2393,1,1,10x v2,Hypothalamus
+Lee_Idol,GSE119960,https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE119960,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7028310/,2019,3645,6,1,Drop-seq,Hypothalamus
+wen10x,GSE132608,https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE132608,https://www.ncbi.nlm.nih.gov/pubmed/32066983,2019,8868,1,1,10x v2,Suprachiasmatic nucleus
+wenDropSeq,GSE117295,https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE117295,https://www.ncbi.nlm.nih.gov/pubmed/32066983,2019,18406,12,1,Drop-seq,Suprachiasmatic nucleus
+Rossi,GSE130597,https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE130597,https://www.ncbi.nlm.nih.gov/pubmed/31249056,2019,9511,12,3,Drop-seq,Lateral hypothalamus
+Mickelsen,GSE125065,https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE125065,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7043322/,2019,3980,2,1,10x v2,Lateral hypothalamus
+Moffit,GSE113576,https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE113576,https://www.ncbi.nlm.nih.gov/pubmed/30385464,2018,26364,6,4,10x v2,Preoptic region
+Chen,GSE87544,https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE87544,https://www.ncbi.nlm.nih.gov/pubmed/28355573,2017,12221,17,2,Drop-seq,Hypothalamus
+Campbell,GSE93374,https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE93374,https://www.ncbi.nlm.nih.gov/pubmed/28166221,2017,19831,11,3,Drop-seq,Arcuate Nucleus/Median Eminence
+kimDev,GSE132355,https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE132355,https://www.biorxiv.org/content/10.1101/657148v3,2020,6004,2,1,10x v2,Hypothalamus
+Kim,10.17632/ypx3sw2f7c.3,https://data.mendeley.com/datasets/ypx3sw2f7c/3,https://www.ncbi.nlm.nih.gov/pubmed/31626771,2019,38829,25,2,10x v2,Ventromedial hypothalamus
+Mousebrainorg,SRP135960,http://mousebrain.org/loomfiles_level_L1.html,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6086934/,2018,4349,9,3,10x v2,Hypothalamus
+Flynn,GSE146692,https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE146692,https://elifesciences.org/articles/58901,2020,11429,4,2,10x v2,Ventroposterior hypothalamus

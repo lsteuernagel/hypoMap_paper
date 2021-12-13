@@ -36,6 +36,33 @@ system(command = paste0("cp ","/beegfs/scratch/bruening_scratch/lsteuernagel/dat
 # system(command = paste0("cp ", "/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/hk2_fasting_all.txt ","figure_outputs/figure_5/"))
 # system(command = paste0("cp ", "/beegfs/scratch/bruening_scratch/lsteuernagel/data/yeo_data/hypothalamus_nucSeq/mapdata/global_fasting_all.txt ","figure_outputs/figure_5/"))
 
+
+##########
+### Existing Supplementary tables
+##########
+
+results_path_tables = "table_outputs/"
+system(paste0("mkdir -p ",results_path_tables))
+
+##### Move to collect data:
+# load the manually created supplementary table
+results_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/scHarmonize/hypothalamusMapNeurons_v4/harmonization_results/hypothalamus_neurons_reference/paper_results/"
+dataset_overview = data.table::fread(paste0(results_path,"Supplementary_Tables/supplementalTable_1_dataset_overview.csv"))
+dataset_overview = dataset_overview %>% dplyr::select(-Age)
+# save in supplement
+data.table::fwrite(dataset_overview,paste0(results_path_tables,"supplementary_table_1_dataset_overview.csv"))
+
+# curated neuron signatures
+curated_neuron_celltypes = data.table::fread(paste0(results_path,"Supplementary_Tables/supplementalTable_2_purity_neuron_signatures.csv"))
+# restrict to selected ones and remove col
+curated_neuron_celltypes_restrict = curated_neuron_celltypes %>% dplyr::filter(selected_for_purity) %>% dplyr::select(-selected_for_purity)
+# save in supplement
+data.table::fwrite(curated_neuron_celltypes_restrict,paste0(results_path_tables,"supplementary_table_2_neuron_signatures.csv"))
+
+## regions:
+# all_target_regions_result =  data.table::fread(paste0("/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_objects/region_prediction_results_suggested_hypothalamus_neurons_reference.txt"))
+# data.table::fwrite(sn_seq_markers_K169,paste0(small_data_path,"sn_seq_mapped_neurons_K169_markers_2_sampleID.txt"),sep="\t")
+
 ##########
 ### move reductions
 ##########
