@@ -2,6 +2,10 @@
 ### Load & Prepare
 ##########
 
+# I don't want to have excel screw up numbers in scientifc notation:
+#options(scipen = 999)
+fwrite_scipen = 999 # I'll leave it one for some sc-seq tables because they are difficult to read else
+
 results_path_tables = "table_outputs/"
 system(paste0("mkdir -p ",results_path_tables))
 
@@ -69,12 +73,12 @@ neuron_signatures = data.table::fread(paste0(results_path_tables,"supplementary_
 neurons_metrics_curated = data.table::fread(paste0(results_path_figure1,"neurons_metrics_curated.csv"),data.table = FALSE)
 neurons_metrics_curated = neurons_metrics_curated %>% dplyr::select(assay,method,mixing_score,purity_score,reduction,ndim,features_ngenes)
 # save:
-data.table::fwrite(neurons_metrics_curated,paste0(results_path_tables,"supplementary_table_3_integration_metrics_neurons_overview.csv"))
+data.table::fwrite(neurons_metrics_curated,paste0(results_path_tables,"supplementary_table_3_integration_metrics_neurons_overview.csv"),scipen = fwrite_scipen)
 
 full_metrics_curated = data.table::fread(paste0(results_path_supplementary_figure2,"full_metrics_curated.csv"),data.table = FALSE)
 full_metrics_curated = full_metrics_curated %>% dplyr::select(assay,method,mixing_score,purity_score,reduction,ndim,features_ngenes)
 # save:
-data.table::fwrite(full_metrics_curated,paste0(results_path_tables,"supplementary_table_4_integration_metrics_full_overview.csv"))
+data.table::fwrite(full_metrics_curated,paste0(results_path_tables,"supplementary_table_4_integration_metrics_full_overview.csv"),scipen = fwrite_scipen)
 
 
 ##########
@@ -92,7 +96,7 @@ data.table::fwrite(hypo_map_cluster_overview,paste0(results_path_tables,"supplem
 ## Table with mrtree edgelist for TREE
 edgelist_clusters_hypoMap = neuron_map_seurat@misc$mrtree_edgelist %>% dplyr::select(-isLeaf,-level,-totalCount,nchildren = count)
 # save:
-data.table::fwrite(edgelist_clusters_hypoMap,paste0(results_path_tables,"supplementary_table_6_hypomap_cluster_edgelist.csv"))
+data.table::fwrite(edgelist_clusters_hypoMap,paste0(results_path_tables,"supplementary_table_6_hypomap_cluster_edgelist.csv"),scipen = fwrite_scipen)
 
 
 ## Table with all projected HypoMap clusters in nucSeq
@@ -155,6 +159,7 @@ data.table::fwrite(all_clusters_fasting_DEG,paste0(results_path_tables,"suppleme
 
 ## table with go enrichment results for Agrp ?
 agrp_fasting_go_enrichment_simplified = data.table::fread("figure_outputs/figure_5/agrp_fasting_go_enrichment_simplified.txt")
+#agrp_fasting_go_enrichment_simplified = agrp_fasting_go_enrichment_simplified %>% dplyr::select(ID)
 data.table::fwrite(agrp_fasting_go_enrichment_simplified,paste0(results_path_tables,"supplementary_table_11_nucseq_gobp_Agrp_fasting.csv"))
 
 ##########
@@ -169,10 +174,12 @@ for(i in 1:length(bacTRAP_files)){
   current_res = data.table::fread(paste0("data_inputs/",bacTRAP_files[i]),data.table = FALSE) 
   colnames(current_res)[colnames(current_res)=="row"] = "ensembl_gene_id"
   current_res =  current_res %>%dplyr::select(gene = external_gene_name,ensembl_gene_id,log2FoldChange,padj)
+  current_res$log2FoldChange = round(current_res$log2FoldChange,5)
+  current_res$padj = round(current_res$padj,7)
   current_name = stringr::str_to_title(gsub("bacTRAP_deseq2_|\\.csv","",bacTRAP_files[i]))
   assign(x = paste0("result_bacTRAP_",current_name),value = current_res)
   message(paste0(results_path_tables,"supplementary_table_",(start_idx_for_supplemental_file+i-1),"_bacTRAP_",current_name,".csv"))
-  data.table::fwrite(current_res,paste0(results_path_tables,"supplementary_table_",(start_idx_for_supplemental_file+i-1),"_bacTRAP_",current_name,".csv"))
+  data.table::fwrite(current_res,paste0(results_path_tables,"supplementary_table_",(start_idx_for_supplemental_file+i-1),"_bacTRAP_",current_name,".csv"),scipen = fwrite_scipen)
 }
 
 ##########
@@ -181,7 +188,7 @@ for(i in 1:length(bacTRAP_files)){
 
 # This is the input table for Figure 6 which is based on the manual counting of images.
 pct_expressed_cells_clusters_ISH = data.table::fread("figure_outputs/figure_6/pct_expressed_cells_clusters_ISH.txt")
-data.table::fwrite(pct_expressed_cells_clusters_ISH,paste0(results_path_tables,"supplementary_table_18_rnascope_glp1r_result.csv"))
+data.table::fwrite(pct_expressed_cells_clusters_ISH,paste0(results_path_tables,"supplementary_table_18_rnascope_glp1r_result.csv"),scipen = fwrite_scipen)
 
 ##########
 ### join in xlsx
@@ -210,6 +217,7 @@ names(supp_table_list)
 # write to one file
 openxlsx::write.xlsx(x = supp_table_list,file = "table_outputs/supplementary_tables_preliminary.xlsx",colNames=TRUE,rowNames=FALSE,keepNA=FALSE)
 
+###### I manually created the file "supplementary_tables.xlsx" that includes the full column descriptions (not only skeleton) !!
 
 
 
