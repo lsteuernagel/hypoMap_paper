@@ -99,6 +99,11 @@ ndeg_sn_seq = FeaturePlot(query_snseq_neurons,features = "n_DEG_per_cluster_zsco
 ndeg_sn_seq = rasterize_ggplot(ndeg_sn_seq,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
 ndeg_sn_seq
 
+##########
+### Creb1 anaylsis
+##########
+
+# please see the additional script "tfbs_analysis.R"
 
 ##########
 ### Plot fos and ieg
