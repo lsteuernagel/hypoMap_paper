@@ -21,4 +21,4 @@ R/ contains all scripts for Figure creation.
 
 figure_outputs/ contains some of the generated tables within the Figure scripts that are useful for analysis, as well as all pdf and png files of the plots used in the figures of the paper.
 
-![HypoMap UMAP (from Figure 1)](figure_outputs/figure_1/hypothalamus_neurons_reference_annotated_clusters.png)
+![HypoMap UMAP (from Figure 1)](figure_outputs/figure_1/neuron_HypoMap_annotated_clusters.pdf.png)

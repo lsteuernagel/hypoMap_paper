@@ -82,7 +82,7 @@ data.table::fwrite(full_metrics_curated,paste0(results_path_tables,"supplementar
 
 
 ##########
-### Cluster overview tables
+### HypoMap Cluster overview tables
 ##########
 
 ## Table with all clusters in HypoMap
@@ -98,6 +98,32 @@ edgelist_clusters_hypoMap = neuron_map_seurat@misc$mrtree_edgelist %>% dplyr::se
 # save:
 data.table::fwrite(edgelist_clusters_hypoMap,paste0(results_path_tables,"supplementary_table_6_hypomap_cluster_edgelist.csv"),scipen = fwrite_scipen)
 
+##########
+### bacTRAp results
+##########
+
+# This is basically a prettified version of the input DEseq2 tables for Figure 3. 
+# run on all files:
+start_idx_for_supplemental_file = 7
+bacTRAP_files = list.files("data_inputs/",pattern = "bacTRAP_deseq2")
+for(i in 1:length(bacTRAP_files)){
+  current_res = data.table::fread(paste0("data_inputs/",bacTRAP_files[i]),data.table = FALSE) 
+  colnames(current_res)[colnames(current_res)=="row"] = "ensembl_gene_id"
+  current_res =  current_res %>%dplyr::select(gene = external_gene_name,ensembl_gene_id,log2FoldChange,padj)
+  current_res = current_res[!is.na(current_res$log2FoldChange),]
+  current_res$padj[is.na(current_res$padj)] = 1
+  current_res$log2FoldChange = round(current_res$log2FoldChange,5)
+  current_res$padj = round(current_res$padj,7)
+  current_name = stringr::str_to_title(gsub("bacTRAP_deseq2_|\\.csv","",bacTRAP_files[i]))
+  assign(x = paste0("result_bacTRAP_",current_name),value = current_res)
+  message(paste0(results_path_tables,"supplementary_table_",(start_idx_for_supplemental_file+i-1),"_bacTRAP_",current_name,".csv"))
+  data.table::fwrite(current_res,paste0(results_path_tables,"supplementary_table_",(start_idx_for_supplemental_file+i-1),"_bacTRAP_",current_name,".csv"),scipen = fwrite_scipen)
+}
+print(start_idx_for_supplemental_file+i-1)
+
+##########
+### nucseq Cluster overview tables
+##########
 
 ## Table with all projected HypoMap clusters in nucSeq
 # name, id, n_cells projected, region, N-deg fasting, correlation with HypoMap
@@ -118,9 +144,7 @@ all_clusters_fasting_DEG = data.table::fread("figure_outputs/figure_supplementar
 all_clusters_fasting_DEG_stat = all_clusters_fasting_DEG %>% dplyr::filter(p_val_adj < 0.01) %>% dplyr::group_by(current_cluster) %>% dplyr::count(name = "n_degs_fasting")
 nucseq_cluster_overview = nucseq_cluster_overview %>% dplyr::left_join(all_clusters_fasting_DEG_stat,by=c("projected_cluster_name"="current_cluster"))
 # save:
-data.table::fwrite(nucseq_cluster_overview,paste0(results_path_tables,"supplementary_table_7_nucseq_cluster_overview.csv"))
-
-
+data.table::fwrite(nucseq_cluster_overview,paste0(results_path_tables,"supplementary_table_13_nucseq_cluster_overview.csv"))
 
 ##########
 ### Markers & DEGs
@@ -133,7 +157,7 @@ hypomap_marker_genes = hypomap_marker_genes %>% dplyr::left_join(hypo_map_cluste
 hypomap_marker_genes = hypomap_marker_genes %>% dplyr::filter(specificity > 1 & p_val_adj < 0.001) %>% 
   dplyr::select(cluster_id = cluster_1,cluster_name, gene, specificity, p_val_adj, avg_log2FC =  avg_logFC, pct.1, pct.2)
 # save:
-data.table::fwrite(hypomap_marker_genes,paste0(results_path_tables,"supplementary_table_8_hypomap_marker_genes.csv"))
+data.table::fwrite(hypomap_marker_genes,paste0(results_path_tables,"supplementary_table_14_hypomap_marker_genes.csv"))
 
 
 ## table with nucseq cluster marker genes
@@ -146,7 +170,7 @@ nucseq_marker_genes = nucseq_marker_genes %>% dplyr::mutate(specificity = avg_lo
 nucseq_marker_genes$cluster_id = factor(nucseq_marker_genes$cluster_id,levels = unique(hypomap_marker_genes$cluster_id[hypomap_marker_genes$cluster_id %in% nucseq_marker_genes$cluster_id]))
 nucseq_marker_genes = nucseq_marker_genes %>% dplyr::arrange(cluster_id) # sort similar to hypoMap overview
 # save:
-data.table::fwrite(nucseq_marker_genes,paste0(results_path_tables,"supplementary_table_9_nucseq_marker_genes.csv"))
+data.table::fwrite(nucseq_marker_genes,paste0(results_path_tables,"supplementary_table_15_nucseq_marker_genes.csv"))
 
 
 ## table witH DEGs
@@ -155,32 +179,13 @@ all_clusters_fasting_DEG = all_clusters_fasting_DEG %>% dplyr::left_join(hypo_ma
 all_clusters_fasting_DEG = all_clusters_fasting_DEG %>% dplyr::filter(p_val_adj < 0.01) %>%
   dplyr::select(cluster_id,cluster_name = current_cluster, gene, avg_log2FC, p_val_adj, avg_log2FC, pct.1, pct.2,pct_diff)
 # save:
-data.table::fwrite(all_clusters_fasting_DEG,paste0(results_path_tables,"supplementary_table_10_nucseq_DEG_fasting.csv"))
+data.table::fwrite(all_clusters_fasting_DEG,paste0(results_path_tables,"supplementary_table_16_nucseq_DEG_fasting.csv"))
 
 ## table with go enrichment results for Agrp ?
 agrp_fasting_go_enrichment_simplified = data.table::fread("figure_outputs/figure_5/agrp_fasting_go_enrichment_simplified.txt")
 #agrp_fasting_go_enrichment_simplified = agrp_fasting_go_enrichment_simplified %>% dplyr::select(ID)
-data.table::fwrite(agrp_fasting_go_enrichment_simplified,paste0(results_path_tables,"supplementary_table_11_nucseq_gobp_Agrp_fasting.csv"))
+data.table::fwrite(agrp_fasting_go_enrichment_simplified,paste0(results_path_tables,"supplementary_table_17_nucseq_gobp_Agrp_fasting.csv"))
 
-##########
-### bacTRAp results
-##########
-
-# This is basically a prettified version of the input DEseq2 tables for Figure 3. 
-# run on all files:
-start_idx_for_supplemental_file = 12
-bacTRAP_files = list.files("data_inputs/",pattern = "bacTRAP_deseq2")
-for(i in 1:length(bacTRAP_files)){
-  current_res = data.table::fread(paste0("data_inputs/",bacTRAP_files[i]),data.table = FALSE) 
-  colnames(current_res)[colnames(current_res)=="row"] = "ensembl_gene_id"
-  current_res =  current_res %>%dplyr::select(gene = external_gene_name,ensembl_gene_id,log2FoldChange,padj)
-  current_res$log2FoldChange = round(current_res$log2FoldChange,5)
-  current_res$padj = round(current_res$padj,7)
-  current_name = stringr::str_to_title(gsub("bacTRAP_deseq2_|\\.csv","",bacTRAP_files[i]))
-  assign(x = paste0("result_bacTRAP_",current_name),value = current_res)
-  message(paste0(results_path_tables,"supplementary_table_",(start_idx_for_supplemental_file+i-1),"_bacTRAP_",current_name,".csv"))
-  data.table::fwrite(current_res,paste0(results_path_tables,"supplementary_table_",(start_idx_for_supplemental_file+i-1),"_bacTRAP_",current_name,".csv"),scipen = fwrite_scipen)
-}
 
 ##########
 ### ISH results
