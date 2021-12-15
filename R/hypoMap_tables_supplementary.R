@@ -136,7 +136,8 @@ nucseq_cluster_overview = cell_cluster_map %>% dplyr::group_by(cluster_id) %>% d
   dplyr::arrange(cluster_id) %>% # sort similar to hypoMap overview
   dplyr::select(projected_cluster_id = cluster_id, projected_cluster_name = cluster_name, clusterlevel, ncells_nuc, pct_of_all_nuc, pct_of_all_ref, likely_region) # reorder and name columns 
 # add correlations
-per_cluster_correlations = data.table::fread("figure_outputs/figure_4/per_cluster_correlations.txt")[,2:ncol(per_cluster_correlations)]
+per_cluster_correlations = data.table::fread("figure_outputs/figure_4/per_cluster_correlations.txt",data.table = FALSE)
+per_cluster_correlations = per_cluster_correlations[,2:ncol(per_cluster_correlations)]
 colnames(per_cluster_correlations)[3:length(colnames(per_cluster_correlations))] = paste0(colnames(per_cluster_correlations)[3:length(colnames(per_cluster_correlations))],"_cor")
 nucseq_cluster_overview = nucseq_cluster_overview %>% dplyr::left_join(per_cluster_correlations,by=c("projected_cluster_id"="K169_pruned"))
 # add N degs in fasting
