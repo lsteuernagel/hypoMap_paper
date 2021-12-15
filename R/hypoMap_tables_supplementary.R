@@ -113,7 +113,7 @@ for(i in 1:length(bacTRAP_files)){
   current_res = current_res[!is.na(current_res$log2FoldChange),]
   current_res$padj[is.na(current_res$padj)] = 1
   current_res$log2FoldChange = round(current_res$log2FoldChange,5)
-  current_res$padj = round(current_res$padj,7)
+  #current_res$padj = round(current_res$padj,7)
   current_name = stringr::str_to_title(gsub("bacTRAP_deseq2_|\\.csv","",bacTRAP_files[i]))
   assign(x = paste0("result_bacTRAP_",current_name),value = current_res)
   message(paste0(results_path_tables,"supplementary_table_",(start_idx_for_supplemental_file+i-1),"_bacTRAP_",current_name,".csv"))
