@@ -9,9 +9,7 @@
 #' @param filenames genes
 
 # function 
-load_required_files <- function(large_data_path, overwrite_existing = FALSE, filenames = c("query_snseq_neurons" = "nucseq_neurons_map.rds",
-                                                                                           "neuron_map_seurat" = "hypothalamus_neurons_map.rds" ,
-                                                                                           "full_map_seurat" = "hypothalamus_full_map.rds")) {
+load_required_files <- function(large_data_path, overwrite_existing = FALSE, filenames = c("hypoMap_v2_seurat" = "hypoMap_v2.rds")) {
   # go through all files
   for(i in 1:length(filenames)){
     objectname = names(filenames)[i]
@@ -27,6 +25,82 @@ load_required_files <- function(large_data_path, overwrite_existing = FALSE, fil
       message(objectname, " already exists in .GlobalEnv. Skipping.")
     }
   }
+}
+
+##########
+### load_plot_params
+##########
+
+#' Load color palettes and background colors into global environment.
+
+# function 
+load_plot_params <- function() {
+  
+  # general backgorund color (mostly for UMAPs etc)
+  rasterize_px = 2048
+  assign(x = "rasterize_px",rasterize_px, envir = .GlobalEnv)
+  seurat_pt_size = 2
+  assign(x = "seurat_pt_size",seurat_pt_size, envir = .GlobalEnv)
+  rasterize_pixels = 2048
+  assign(x = "rasterize_pixels",rasterize_pixels, envir = .GlobalEnv)
+  rasterize_point_size = 2
+  assign(x = "rasterize_point_size",rasterize_point_size, envir = .GlobalEnv)
+  text_size = 20
+  assign(x = "text_size",text_size, envir = .GlobalEnv)
+}
+
+##########
+### load_colors
+##########
+
+#' Load color palettes and background colors into global environment.
+
+# function 
+load_colors <- function() {
+  
+  # general backgorund color (mostly for UMAPs etc)
+  bg_col = "grey90"
+  assign(x = "bg_col",bg_col, envir = .GlobalEnv)
+  cols_for_feature_plot = c(bg_col,"#0b3ebd") # "#0b3ebd"
+  assign(x = "cols_for_feature_plot",cols_for_feature_plot, envir = .GlobalEnv)
+  
+  fasting_color = "#28a7c9"
+  assign(x = "fasting_color",fasting_color, envir = .GlobalEnv)
+  adlib_color = "#772ac9"
+  assign(x = "adlib_color",adlib_color, envir = .GlobalEnv)
+  
+  reference_sc_color = "#cc2118"
+  assign(x = "reference_sc_color",reference_sc_color, envir = .GlobalEnv)
+  query_sn_color = "#302ac9"
+  assign(x = "query_sn_color",query_sn_color, envir = .GlobalEnv)
+  # color-blind friendly color palettes:
+  # see: https://stackoverflow.com/questions/9563711/r-color-palettes-for-many-data-classes
+  # deleted greens!
+  long_palette <- c(
+    "dodgerblue2", "#E31A1C", # red
+    "#6A3D9A", # purple
+    "#FF7F00", # orange
+    "black", "gold1", "skyblue2", "#FB9A99", # lt pink
+    "#CAB2D6", # lt purple
+    "#FDBF6F", # lt orange
+    "khaki2","maroon", "orchid1", "deeppink1", "blue1", "steelblue4","darkturquoise", "yellow4", "yellow3","darkorange4", "brown"
+  )
+  assign(x = "long_palette",long_palette, envir = .GlobalEnv)
+  long_palette_strong <- c(
+    "dodgerblue2", "#E31A1C", # red
+    "#6A3D9A", # purple
+    "#FF7F00", # orange
+    "black", "gold1" ,"maroon", "deeppink1", "blue1", "steelblue4","darkturquoise", "yellow4", "yellow3","darkorange4", "brown"
+  )
+  assign(x = "long_palette_strong",long_palette_strong, envir = .GlobalEnv)
+  
+  alphabet_palette = as.character(palette.colors(palette = "Alphabet")[!names(palette.colors(palette = "Alphabet")) %in% c("forest","green","iron","jade","quagmire","ultraviolet","violet","wine","xanthin","yellow","zinnia") ])
+  assign(x = "alphabet_palette",alphabet_palette, envir = .GlobalEnv)
+  
+  # see: https://stackoverflow.com/questions/57153428/r-plot-color-combinations-that-are-colorblind-accessible
+  short_palette = as.character(palette.colors(palette = "Okabe-Ito"))
+  short_palette = short_palette[!short_palette %in% c("#999999","#000000")]
+  assign(x = "short_palette",short_palette, envir = .GlobalEnv)
 }
 
 ##########
@@ -159,6 +233,46 @@ read_embedding = function(filename_withpath,seurat_object=NULL,seurat_object_met
   return(current_embedding)
   
 }
+
+
+##########
+### extend_sibling_markers
+##########
+
+## to add missing sibling markers
+
+extend_sibling_markers = function(sibling_markers,edgelist,annotation){
+  
+  updated_sibling_markers = sibling_markers
+  # for eah cluster find parent in edgelist
+  for(i in 1:nrow(edgelist)){
+    current_cluster = edgelist$to[i]
+    current_cluster_name = annotation$cluster_name[annotation$cluster_id == current_cluster]
+    # if parent has count==1 and sibling_markers does not contain id:
+    if(!edgelist$from[i] %in% edgelist$to){next}
+    if(edgelist$count[edgelist$to == edgelist$from[i]] == 1 & nrow(updated_sibling_markers[updated_sibling_markers$cluster_id==current_cluster,])==0){
+      # extract parent sibling markers 
+      parent_id = edgelist$from[i]
+      new_sibling_markers = updated_sibling_markers[updated_sibling_markers$cluster_id == parent_id,]
+      
+      # oervwrite with current node id
+      if(nrow(new_sibling_markers) > 0){
+        new_sibling_markers$cluster_id = current_cluster
+        new_sibling_markers$cluster_name = current_cluster_name
+      }
+      # add rows to all marker df
+      updated_sibling_markers = dplyr::bind_rows(updated_sibling_markers,new_sibling_markers)
+      
+    }
+    
+    # order by edgelist
+    updated_sibling_markers$cluster_id = factor(updated_sibling_markers$cluster_id,levels = edgelist$to)
+    updated_sibling_markers = updated_sibling_markers %>% dplyr::arrange(cluster_id)
+    updated_sibling_markers$cluster_id = as.character( updated_sibling_markers$cluster_id )
+  }
+  return(updated_sibling_markers)
+}
+
 
 ##########
 ### RBO functions

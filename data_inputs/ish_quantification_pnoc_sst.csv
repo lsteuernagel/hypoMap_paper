@@ -1,0 +1,13 @@
+section,Pnoc,Sst,Nts,Unc13c,Pnoc/Sst,Pnoc/Sst-,Pnoc/Sst/Nts,Pnoc/Sst/Unc13c,Pnoc/Sst/Nts/Unc13
+Figure1 wt1_posta,77,59,13,26,23,36,4,6,1
+Figure2 wt1_postb,82,51,6,40,31,20,0,15,0
+Figure3 wt1_middle 2a,98,63,8,41,43,23,2,18,2
+Figure4 wt1_middle 2b,78,72,4,30,44,28,0,20,0
+Figure5 wt1_middle 1a,76,60,5,23,37,24,0,11,0
+Figure6 wt1_middle 1b,80,52,6,42,23,29,0,23,0
+Figure7 wt2_ant,82,24,10,25,15,9,2,4,1
+Figure8  wt2_ middle1a,71,30,6,22,21,9,0,12,0
+Figure9 wt2_ middle1a,72,32,10,19,21,12,0,10,0
+Figure10,76,33,5,24,26,8,0,16,0
+Figure11 wt2_ middle1a,71,36,4,18,21,15,1,9,0
+Figure12 wt3_ middle1a,72,35,20,44,17,18,7,17,2

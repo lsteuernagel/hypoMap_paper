@@ -14,136 +14,266 @@ source("R/utility_functions.R")
 source("R/plot_functions.R")
 
 # where to find large data objects (need to change to local dir !)
-large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
+large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap_v2c_final/"
 
 # load seurat objects via large_data_path
 load_required_files(large_data_path = large_data_path)
+#hypoMap_v2_seurat@meta.data$Author_Class_Curated[hypoMap_v2_seurat@meta.data$Author_Class_Curated=="Differentiating"] = "Dividing"
+
+# load colors 
+load_colors()
+getLongPalette = colorRampPalette(long_palette_strong)
+getOkabeItoPalette = colorRampPalette(short_palette)
+color_value_vector =unlist(jsonlite::read_json("/beegfs/scratch/bruening_scratch/lsteuernagel/projects/scHarmonization/data/region_prediction_mapping_colors.json"))
+
 
 ## plotting
-rasterize_point_size = 2.2
-rasterize_pixels = 2048
-bg_col = "grey90"
+load_plot_params()
 
 ##########
 ### tree new
 ##########
 
+leaf_level_column = "C185"
+leaf_level = 6
 
 # http://yulab-smu.top/treedata-book/chapter2.html
 
 # make data for first heatmap with percentages per dataset
-heatmap_data = neuron_map_seurat@meta.data %>% dplyr::select(Cell_ID,Dataset,K169_pruned) %>% dplyr::group_by(K169_pruned,Dataset) %>% #dplyr::filter(predicted_Campbell!="NA") 
-  dplyr::count(name = "presence")  %>% dplyr::group_by(K169_pruned) %>% dplyr::mutate(presence = presence / sum(presence)*100) %>% dplyr::ungroup() %>% #%>%  dplyr::left_join(tree_data_tibble[,c("label","node")],by=c("K169"="label")) 
-  tidyr::spread(key = Dataset,value=presence) 
+heatmap_data = hypoMap_v2_seurat@meta.data %>% dplyr::select(Cell_ID,Dataset,!!sym(leaf_level_column)) %>% dplyr::group_by(!!sym(leaf_level_column),Dataset) %>% #dplyr::filter(predicted_Campbell!="NA") 
+  dplyr::count(name = "presence")  %>% dplyr::group_by(!!sym(leaf_level_column)) %>% dplyr::mutate(presence = presence / sum(presence)*100) %>% dplyr::ungroup() %>% #%>%  dplyr::left_join(tree_data_tibble[,c("label","node")],by=c("K169"="label")) 
+  tidyr::spread(key = Dataset,value=presence) %>% as.data.frame()
 heatmap_matrix = as.matrix(heatmap_data[,2:ncol(heatmap_data)])
-rownames(heatmap_matrix) = heatmap_data$K169_pruned
+rownames(heatmap_matrix) = heatmap_data[,leaf_level_column]
 heatmap_matrix[is.na(heatmap_matrix)] = 0
 
-# make data for second heatmap with regions
-heatmap_data2 = neuron_map_seurat@meta.data %>% dplyr::select(Cell_ID,suggested_region_curated,K169_pruned) %>% 
-  dplyr::distinct(K169_pruned,suggested_region_curated,.keep_all=TRUE)
-heatmap_data2$suggested_region_curated[heatmap_data2$suggested_region_curated=="NA"]=NA
-heatmap_data2$suggested_region_curated[heatmap_data2$suggested_region_curated=="Paraventricular hypothalamic nucleus descending division"]="Paraventricular hypothalamic nucleus"
-heatmap_matrix2 = as.matrix(heatmap_data2[,"suggested_region_curated"])
-rownames(heatmap_matrix2) = heatmap_data2$K169_pruned
-colnames(heatmap_matrix2) = "Region"
+colnames_overview = data.frame(number = 1:length(colnames(heatmap_matrix)),Dataset = colnames(heatmap_matrix))
+data.table::fwrite(colnames_overview,paste0(results_path_figure2,"circular_tree_colnames.txt"),sep="\t")
+colnames(heatmap_matrix) = colnames_overview$number
 
-require(RColorBrewer)
-## expand palette size
-colourCount <- length(unique(heatmap_data2$suggested_region_curated)) # number of levels
-getPalette <- colorRampPalette(brewer.pal(12, "Set3"))
+# make data for second heatmap with n cells
+heatmap_data2 = hypoMap_v2_seurat@meta.data %>% dplyr::select(Cell_ID,!!sym(leaf_level_column)) %>% dplyr::group_by(!!sym(leaf_level_column)) %>% #dplyr::filter(predicted_Campbell!="NA") 
+  dplyr::count(name = "ncells")  %>% dplyr::ungroup()  %>% dplyr::mutate(ncells_pct = ncells / sum(ncells)*100)  %>% as.data.frame()
+heatmap_matrix2 = as.matrix(heatmap_data2[,"ncells_pct",drop=FALSE])
+colnames(heatmap_matrix2) = "%"
+rownames(heatmap_matrix2) = heatmap_data2[,leaf_level_column]
+heatmap_matrix2[is.na(heatmap_matrix2)] = 0
+
+# make data for third heatmap with regions
+heatmap_data3 = hypoMap_v2_seurat@meta.data %>% dplyr::select(Cell_ID,Region_summarized,!!sym(leaf_level_column)) %>%
+  dplyr::group_by(!!sym(leaf_level_column),Region_summarized) %>% dplyr::count() %>% dplyr::group_by(!!sym(leaf_level_column)) %>%
+  dplyr::top_n(n = 1,wt = n) %>% ungroup() %>%
+  dplyr::distinct(!!sym(leaf_level_column),Region_summarized,.keep_all=TRUE) %>% as.data.frame()
+heatmap_matrix3 = as.matrix(heatmap_data3[,"Region_summarized",drop=F])
+rownames(heatmap_matrix3) = heatmap_data3[,leaf_level_column]
+colnames(heatmap_matrix3) = "R"
+
+## make annotation data frame
+anno_df = hypoMap_v2_seurat@misc$annotation_result %>% dplyr::select(cluster_id,clusterlevel,cluster_name = clean_names)
+anno_df$first_cluster_name = sapply(anno_df$cluster_name,function(x){strsplit(x,"\\.")[[1]][1]})
+
+# plot cluster tree:
+tree_color = "grey70"
+circular_tree = plot_cluster_tree(edgelist = hypoMap_v2_seurat@misc$clustering_edgelist,
+                                  leaf_level=leaf_level,
+                                  anno_df = anno_df ,
+                                  metadata=hypoMap_v2_seurat@meta.data,
+                                  label_size = 2.5, 
+                                  show_genes = TRUE,
+                                  vjust_label = -0.25,
+                                  edge_color = tree_color, 
+                                  node_color = tree_color)
+circular_tree = rotate_tree(circular_tree, -90)
+circular_tree
+
+# plot tree with heatmap 1
+circular_tree_heat = add_heatmap(circular_tree=circular_tree,
+                                 heatmap_matrix = heatmap_matrix,
+                                 heatmap_colors=c(bg_col,"darkred"),
+                                 scale_limits = c(0,100),
+                                 heatmap_colnames =TRUE, 
+                                 legend_title = "Pct Dataset",
+                                 matrix_offset = 0.2,
+                                 matrix_width =0.4,
+                                 colnames_angle=0,
+                                 legend_text_size = 5,
+                                 hjust_colnames=1,
+                                 na_color = "white",
+                                 heatmap_text_size=2)
 # plot tree with heatmaps
-circular_tree_heat = plot_cluster_tree(edgelist = neuron_map_seurat@misc$mrtree_edgelist,
-                  heatmap_matrix=heatmap_matrix,
-                  heatmap_matrix2 = heatmap_matrix2,
-                  leaf_level=6,metadata=neuron_map_seurat@meta.data,
-                  label_size = 2, show_genes = TRUE, legend_title_1 = "Pct", legend_title_2 = "Region",
-                  matrix_offset = 0.1, matrix_width =0.4,matrix_width_2 = 0.1,heatmap_colnames = TRUE,
-                  manual_off_second = 2,legend_text_size = 8,heatmap_text_size = 2,colnames_angle=0,hjust_colnames=0.5,
-                  heatmap_colors =c(bg_col,"darkred")) +
-  scale_fill_brewer(palette = "Paired",na.value = bg_col)
+circular_tree_heat = add_heatmap(circular_tree=circular_tree_heat,
+                                 heatmap_matrix = heatmap_matrix2,
+                                 heatmap_colors=c(bg_col,"#17056e"),
+                                 scale_limits = c(0,2),
+                                 heatmap_colnames =TRUE, 
+                                 legend_title = "Cells",
+                                 matrix_offset = 2.2,
+                                 matrix_width =0.05,
+                                 colnames_angle=0,
+                                 legend_text_size = 8,
+                                 hjust_colnames=3, 
+                                 na_color = "white",
+                                 heatmap_text_size=3)
 #circular_tree_heat
-require(ggtree)
-circular_tree_heat_rotated = rotate_tree(circular_tree_heat, -90)
-circular_tree_heat_rotated
+
+# plot tree with heatmap2
+circular_tree_heat = add_heatmap(circular_tree=circular_tree_heat,
+                                 heatmap_matrix = heatmap_matrix3,
+                                 heatmap_colors=c(bg_col,"darkred"),
+                                 heatmap_colnames =TRUE, 
+                                 legend_title = "Pct Dataset",
+                                 matrix_offset = 2.5,
+                                 matrix_width =0.05,
+                                 colnames_angle=0,
+                                 legend_text_size = 8,
+                                 hjust_colnames=4, 
+                                 na_color = "grey80",
+                                 heatmap_text_size=3)
+# change colors for regions:
+circular_tree_heat = circular_tree_heat + ggplot2::scale_fill_manual(values = color_value_vector,na.value = "grey80")
+
+# show
+circular_tree_heat
 
 #store:
-ggsave(filename = paste0(results_path_figure2,"circular_tree_heat_label2.png"),
-       plot = circular_tree_heat_rotated, "png",dpi=600,width=400,height = 400,units="mm")
+ggsave(filename = paste0(results_path_figure2,"circular_tree_heat_label.png"),
+       plot = circular_tree_heat, "png",dpi=600,width=400,height = 400,units="mm")
 
-ggsave(filename = paste0(results_path_figure2,"circular_tree_heat_label2.pdf"),
-       plot = circular_tree_heat_rotated, "pdf",dpi=600,width=400,height = 400,units="mm")
+ggsave(filename = paste0(results_path_figure2,"circular_tree_heat_label.pdf"),
+       plot = circular_tree_heat, "pdf",dpi=600,width=400,height = 400,units="mm")
+
+#### source data tree
+
+figure2_tree_heatmap_sourcedata = heatmap_data %>% bind_cols(heatmap_data2 %>% dplyr::select(-C185))  %>% bind_cols(heatmap_data3 %>% dplyr::select(-C185,-n))
+data.table::fwrite(figure2_tree_heatmap_sourcedata,paste0(results_path_figure2,"source_figure2_a_tree_heatmap.txt"),sep="\t")
+
+data.table::fwrite(hypoMap_v2_seurat@misc$clustering_edgelist,paste0(results_path_figure2,"source_figure2_a_tree_edgelist.txt"),sep="\t")
+
+data.table::fwrite(anno_df,paste0(results_path_figure2,"source_figure2_a_tree_annotations.txt"),sep="\t")
+
 
 ##########
-### campbell anno
+### dotplot
 ##########
 
-# prepare column for campbell cluster names (with others NA)
-campbell_names= names(table(neuron_map_seurat@meta.data$Author_CellType[neuron_map_seurat@meta.data$Dataset=="Campbell"]))[table(neuron_map_seurat@meta.data$Author_CellType[neuron_map_seurat@meta.data$Dataset=="Campbell"]) > 5]
-campbell_names = campbell_names[!grepl("NA_",campbell_names)]
+## make annotation data frame
+anno_df = hypoMap_v2_seurat@misc$annotation_result %>% dplyr::select(cluster_id,clusterlevel,cluster_name = clean_names)
+anno_df$first_cluster_name = sapply(anno_df$cluster_name,function(x){strsplit(x,"\\.")[[1]][1]})
 
-neuron_map_seurat@meta.data$campbell_anno_col=NA
-neuron_map_seurat@meta.data$campbell_anno_col[neuron_map_seurat@meta.data$Dataset=="Campbell"] = neuron_map_seurat@meta.data$Author_CellType[neuron_map_seurat@meta.data$Dataset=="Campbell"]
-neuron_map_seurat@meta.data$campbell_anno_col[! neuron_map_seurat@meta.data$campbell_anno_col %in% campbell_names] =NA
-neuron_map_seurat@meta.data$campbell_anno_col = gsub("_Neurons[0-9]","",neuron_map_seurat@meta.data$campbell_anno_col)
+anno_df_dotplot = anno_df
+
+target_col="C66_named"
+cluster_to_include = as.character(unique(hypoMap_v2_seurat@meta.data[hypoMap_v2_seurat@meta.data$C2_named=="C2-1: Neurons",target_col]))
+#cluster_to_include = cluster_to_include[1:10]
+cluster_to_include_wo = stringr::str_extract(cluster_to_include,"C66-[0-9]+")
+
+# use just the top feature ?
+# features_dotplot = hypoMap_v2_seurat@misc$marker_genes_all %>% dplyr::filter(specificity > 5 & cluster_id %in% cluster_to_include_wo) %>%
+#   dplyr::filter(!grepl("Rik|Gm",gene)) %>%
+#   dplyr::arrange(desc(specificity)) %>% dplyr::group_by(cluster_id) %>% dplyr::top_n(n = 1,wt = specificity)
+
+anno_df_dotplot = anno_df[anno_df$cluster_id %in% cluster_to_include_wo,]
+anno_df_dotplot$gene_dotplot = anno_df_dotplot$first_cluster_name
+# use names:
+anno_df_dotplot$gene_dotplot[! anno_df_dotplot$gene_dotplot %in% rownames(hypoMap_v2_seurat@assays$RNA@counts)] = NA
+
+# need to reorder factor level in seurat
+# order by number --> then it also is ordered by tree
+unordered = unique(hypoMap_v2_seurat@meta.data[,target_col])
+unordered = as.numeric(stringr::str_remove(stringr::str_extract(unordered,"-[0-9]+"),"-"))
+names(unordered) = unique(hypoMap_v2_seurat@meta.data[,target_col])
+hypoMap_v2_seurat@meta.data[,target_col] = factor(as.character(hypoMap_v2_seurat@meta.data[,target_col]),levels = names(sort(unordered)))
+# also reorder anno_df_dotplot
+rownames(anno_df_dotplot) = anno_df_dotplot$cluster_id
+anno_df_dotplot = anno_df_dotplot[match(stringr::str_extract(names(sort(unordered)),"C66-[0-9]+"),rownames(anno_df_dotplot)),] %>% na.omit()
 
 # plot
-campbell_anno_plot=DimPlot(neuron_map_seurat,group.by = "campbell_anno_col",reduction = paste0("umap_","scvi"),label = TRUE,label.size = 5,repel = TRUE,order = TRUE,na.value = bg_col)+
-  NoLegend()+NoAxes()+scale_color_discrete(na.value=bg_col)+ggtitle("Campbell ARH celltypes")
+Idents(hypoMap_v2_seurat) = target_col
+dotplot_neurons = Seurat::DotPlot(object = hypoMap_v2_seurat,
+                                  features = unique(anno_df_dotplot$gene_dotplot[!is.na(anno_df_dotplot$gene_dotplot)]),
+                                  idents= as.character(cluster_to_include),
+                                  scale = FALSE,
+                                  cluster.idents = F)
+dotplot_neurons2 = dotplot_neurons + guides(color=guide_colourbar('Avg. Exp.'),size = guide_legend("Pct. Exp.")) +
+  theme(text = element_text(size = 25),
+        axis.text.x = element_text(size = 22,angle = 90, vjust = 0.35, hjust=0.75),
+        axis.text.y = element_text(size = 18),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank()) +
+  scale_color_gradient(low = cols_for_feature_plot[1],high = cols_for_feature_plot[2],limits = c(0,4), oob = scales::squish)
+dotplot_neurons2
 
+# save
+ggsave(filename = paste0(results_path_figure2,"dotplot_neurons.png"),
+       plot = dotplot_neurons2, "png",dpi=400,width=400,height = 300,units="mm")
+ggsave(filename = paste0(results_path_figure2,"dotplot_neurons.pdf"),
+       plot = dotplot_neurons2, "pdf",dpi=400,width=400,height =300,units="mm")
+ggsave(filename = paste0(results_path_figure2,"dotplot_neurons_500.pdf"),
+       plot = dotplot_neurons2, "pdf",dpi=400,width=500,height =300,units="mm")
+##source data
+source_data_dotplot_neurons = dotplot_neurons$data
+data.table::fwrite(source_data_dotplot_neurons,paste0(results_path_figure2,"source_figure2_b_dotplot_neurons.txt"),sep="\t")
 
-# change order
-plot_data = campbell_anno_plot$data
-campbell_anno_plot$data = plot_data[order(plot_data$campbell_anno_col,na.last = FALSE),]
-#rasterize
-campbell_anno_plot = rasterize_ggplot(campbell_anno_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
-campbell_anno_plot
-
-ggsave(filename = paste0(results_path_figure2,"campbell_annotations.png"),
-       plot = campbell_anno_plot, "png",dpi=600,width=300,height = 300,units="mm")
-ggsave(filename = paste0(results_path_figure2,"campbell_annotations.pdf"),
-       plot = campbell_anno_plot, "pdf",dpi=600,width=300,height = 300,units="mm")
 
 ##########
-### VIP inlay plot
+### dotplot
 ##########
+
+## make annotation data frame
+anno_df = hypoMap_v2_seurat@misc$annotation_result %>% dplyr::select(cluster_id,clusterlevel,cluster_name = clean_names)
+anno_df$first_cluster_name = sapply(anno_df$cluster_name,function(x){strsplit(x,"\\.")[[1]][1]})
+
+anno_df_dotplot = anno_df
+
+target_col="C66_named"
+cluster_to_include = unique(hypoMap_v2_seurat@meta.data[hypoMap_v2_seurat@meta.data$C2_named=="C2-2: Non-Neurons",target_col])
+#cluster_to_include = cluster_to_include[1:10]
+cluster_to_include_wo = stringr::str_extract(cluster_to_include,"C66-[0-9]+")
+
+#use just the top feature ?
+features_dotplot = hypoMap_v2_seurat@misc$marker_genes_all %>% dplyr::filter(specificity > 5 & cluster_id %in% cluster_to_include_wo) %>%
+  dplyr::filter(!grepl("Rik|Gm",gene)) %>%
+  dplyr::arrange(desc(specificity)) %>% dplyr::group_by(cluster_id) %>% dplyr::top_n(n = 1,wt = specificity)
+
+anno_df_dotplot = anno_df[anno_df$cluster_id %in% cluster_to_include_wo,]
+anno_df_dotplot$gene_dotplot = anno_df_dotplot$first_cluster_name
+
+anno_df_dotplot = dplyr::left_join(anno_df_dotplot,features_dotplot[,1:2],by=c("cluster_id"="cluster_id"))
+anno_df_dotplot$gene_dotplot[anno_df_dotplot$cluster_id %in% c("C66-51","C66-52","C66-57","C66-61","C66-62","C66-63","C66-64")] = anno_df_dotplot$gene[anno_df_dotplot$cluster_id %in% c("C66-51","C66-52","C66-57","C66-61","C66-62","C66-63","C66-64")] 
+anno_df_dotplot$gene_dotplot[anno_df_dotplot$cluster_id %in% c("C66-51")] = "Col23a1"
+# need to reorder factor level in seurat
+# order by number --> then it also is ordered by tree
+unordered = unique(hypoMap_v2_seurat@meta.data[,target_col])
+unordered = as.numeric(stringr::str_remove(stringr::str_extract(unordered,"-[0-9]+"),"-"))
+names(unordered) = unique(hypoMap_v2_seurat@meta.data[,target_col])
+hypoMap_v2_seurat@meta.data[,target_col] = factor(as.character(hypoMap_v2_seurat@meta.data[,target_col]),levels = names(sort(unordered)))
+# also reorder anno_df_dotplot
+rownames(anno_df_dotplot) = anno_df_dotplot$cluster_id
+anno_df_dotplot = anno_df_dotplot[match(stringr::str_extract(names(sort(unordered)),"C66-[0-9]+"),rownames(anno_df_dotplot)),] %>% na.omit()
 
 # plot
-Idents(neuron_map_seurat) <- "K14_pruned"
-neuron_map_seurat_vip_subset = subset(neuron_map_seurat,subset = K14_pruned == "K14-4")
-neuron_map_seurat_vip_subset = subset(neuron_map_seurat_vip_subset,subset = umapscvi_1 > 1 & umapscvi_2 < -0.5)
-vip_small_plot=DimPlot(neuron_map_seurat_vip_subset,group.by = "K169_named",reduction = paste0("umap_","scvi"),label = TRUE,label.size = 6,repel = TRUE,order = TRUE,na.value = bg_col)+
-  NoLegend()+NoAxes()+scale_color_discrete(na.value=bg_col)+ggtitle("Vip neurons reference map")
-vip_small_plot = rasterize_ggplot(vip_small_plot,pixel_raster = 1536,pointsize = 1.8)
-vip_small_plot
+Idents(hypoMap_v2_seurat) = target_col
+dotplot_non_neuron = Seurat::DotPlot(object = hypoMap_v2_seurat,
+                                     features = anno_df_dotplot$gene_dotplot[!is.na(anno_df_dotplot$gene_dotplot)],
+                                     idents= cluster_to_include,
+                                     scale = FALSE,
+                                     cluster.idents = F)#+facet_grid( ~ C23_named)
+dotplot_non_neuron2 = dotplot_non_neuron + guides(color=guide_colourbar('Avg. Exp.'),size = guide_legend("Pct. Exp.")) +
+  theme(text = element_text(size = 25),
+        axis.text.x = element_text(size = 25,angle = 90, vjust = 0.35, hjust=0.75),
+        axis.text.y = element_text(size = 20),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank()) +
+  scale_color_gradient(low = cols_for_feature_plot[1],high = cols_for_feature_plot[2],limits = c(0,4), oob = scales::squish)
 
-ggsave(filename = paste0(results_path_figure2,"vip_small_plot.png"),
-       plot = vip_small_plot, "png",dpi=450,width=200,height = 200,units="mm")
-ggsave(filename = paste0(results_path_figure2,"vip_small_plot.pdf"),
-       plot = vip_small_plot, "pdf",dpi=450,width=200,height = 200,units="mm")
+dotplot_non_neuron2
 
+# save
+ggsave(filename = paste0(results_path_figure2,"dotplot_non_neurons.png"),
+       plot = dotplot_non_neuron2, "png",dpi=400,width=400,height = 300,units="mm")
+ggsave(filename = paste0(results_path_figure2,"dotplot_non_neurons.pdf"),
+       plot = dotplot_non_neuron2, "pdf",dpi=400,width=400,height =300,units="mm")
 
-##########
-### Romanov 
-##########
-
-query_romanov_neurons = readRDS(paste0(large_data_path,"query_romanov_neurons.rds"))
-
-compare_clustering_romanov =mapscvi::compare_clustering(query_romanov_neurons,clustering_1 = "Author_CellType",clustering_2 = "predicted_K169_named" ,
-                                                        min_cells = 0,min_pct = 0,return_data = TRUE)
-data.table::fwrite(compare_clustering_romanov,paste0(results_path_figure2,"compare_clustering_romanov.txt"),sep="\t")
-
-# make plot
-romanov_mapped_plot = mapscvi::plot_query_labels(query_seura_object=query_romanov_neurons,reference_seurat=neuron_map_seurat,label_col="K31_named",
-                                                 label_col_query = "predicted_K31_named",overlay = TRUE,bg_col = bg_col,
-                                                 query_pt_size = 0.6,labelonplot = TRUE,label.size=5,repel=TRUE)+ggtitle("Romanov et al. mapped on HypoMap")
-
-romanov_mapped_plot = rasterize_ggplot(romanov_mapped_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
-romanov_mapped_plot
-
-ggsave(filename = paste0(results_path_figure2,"romanov_neurons_mapped.png"),
-       plot = romanov_mapped_plot, "png",dpi=600,width=300,height = 300,units="mm")
-ggsave(filename = paste0(results_path_figure2,"romanov_neurons_mapped.pdf"),
-       plot = romanov_mapped_plot, "pdf",dpi=600,width=300,height = 300,units="mm")
-
-
+##source data
+source_data_dotplot_nonneurons = dotplot_non_neuron$data
+data.table::fwrite(source_data_dotplot_nonneurons,paste0(results_path_figure2,"source_figure2_c_dotplot_nonneurons.txt"),sep="\t")

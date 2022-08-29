@@ -1,0 +1,35 @@
+name,description,description_link,signature_length,genes
+Vip_Nov,Wen et al. SCN,https://www.nature.com/articles/s41593-020-0586-x,15,Vip;Nms;Npy6r;Sod3;Nov;Cebpa;Ctla2a;Creb3l1;Insl6;Rhpn2;Dusp4;D7Ertd443e;Itgb8;Flt3;Iqsec3
+Vip_Grp,Wen et al. SCN,https://www.nature.com/articles/s41593-020-0586-x,5,Vip;Grp;Dsg2;Emp1;Pvrl3
+Omp_Sim2,Possibly: olfactory?,"",8,Trh;Omp;Sall3;Ghrh;Mab21l2;Sim2;Gstm2;Traf3ip2
+Fst_Fezf2,Not excatly in : Moffit et al.,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6482113/,7,Fezf2;Il31ra;Fst;Samd3;Mab21l1;Tnfaip8;Gpsm3
+Ttn_Foxb1,Not excatly in : Mickelsen et al. VPH,https://elifesciences.org/articles/58901,20,Foxb1;Ttn;Sall3;Asb2;Car7;Col19a1;Ccdc121;Ifit2;Tmem196;Tnc;Mapk12;Tcap;Mamdc2;Pygm;Hcn4;Rasgef1c;Glis2;Usp28;Myadml2;Robo2
+Shox2_Gbx2,Moffit et al.,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6482113/,14,Shox2;Tcf7l2;Gbx2;Nbl1;Ramp3;Gpr4;Slitrk6;Fbln1;Synpo2;Arsj;Nkd1;Edaradd;Hrk;Clmn
+Gnrh1_Gng8,Moffit et al.,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6482113/,20,A930003A15Rik;Arg1;Epcam;Fgd2;Gng8;Gnrh1;Rab25;Six1;Tstd1;Wfdc1;Tmem45b;Tmprss6;Pirt;Smim22;Fam92b;Lect1;Clic1;Meis1;Pde11a;Acbd7
+Prph_Hdc,Mickelsen et al. VPH,https://elifesciences.org/articles/58901,20,Hdc;Prph;Barhl2;Tmem114;Otop3;Wnt2;Wif1;Slc35d3;Avil;Wnt9b;Tspan12;Gm8773;Slc26a4;Oas1d;Kremen1;Syk;Matn2;Lix1;Ism1;Cwh43
+Pmch_Parpbp,Mickelsen et al. LHA,https://www.nature.com/articles/s41593-019-0349-8,11,Parpbp;Otx1;Mup6;Pmch;Fkbp11;Enpp2;Cd302;Tnfaip8;Nucb2;Cpxm2;Rcn1
+Hcrt_Rfx4,Mickelsen et al. LHA,https://www.nature.com/articles/s41593-019-0349-8,20,Rfx4;Pter;Gm867;Pdyn;Car12;Hcrt;Vim;Mns1;Vgll2;Hspb3;Psmb8;Tmem106a;Kif26a;Igfbp3;Prrg4;Gast;Cdkl4;Tead1;Dtx3l;Gnb4
+Npw_Nkx24,Mickelsen et al. LHA,https://www.nature.com/articles/s41593-019-0349-8,12,Npw;Ebf1;Npy;Omp;9130206I24Rik;Nkx2-4;Rbp1;Foxd2;Mbnl3;4933403O08Rik;Esyt3;Lnx2
+Oxt_Avp,Madrigal & Jurado,https://www.nature.com/articles/s42003-021-02110-4,20,Ebf3;Avp;Oxt;Sfrp1;Nog;H2-DMb2;Caprin2;Fkbp11;Bmp4;Chil1;Cdh9;Grm3;Plekha2;Tns1;Maml3;Racgap1;Ern1;Dact1;Adam23;Vstm2a
+Ntrk1_Chat,Locations in: Tago et al.,https://www.sciencedirect.com/science/article/pii/000689938790268X?via%3Dihub,20,Slc18a3;Ngfr;Chat;Sln;Slc5a7;Ntrk1;Insrr;Ptgds;Chrnb3;Prima1;Npr1;Thsd4;Tpbgl;Gpx2;Xaf1;S100a4;Kctd6;Ahnak2;Zap70;Vwa7
+Qrfp_Car8,Cook thesis,https://www.research.manchester.ac.uk/portal/files/60768465/FULL_TEXT.PDF,10,Qrfp;Tm4sf4;Slc25a48;Rfx4;Fibcd1;Car8;Galnt15;Fam181a;Nek7;Ptpro
+Pomc_Anxa2,Campbell et al. ARH,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5323293/,8,Pomc;Cd44;Anxa2;Prdm12;Sox3;Dpys;Pon3;Myo3b
+Pomc_Ttr,Campbell et al. ARH,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5323293/,5,Pomc;Ttr;Tbx3os1;Kcne1l;Tmem8c
+Agrp_Acvr1c,Campbell et al. ARH,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5323293/,13,Agrp;Npy;Acvr1c;Gm8773;Krtap17-1;Atf3;Nr5a2;Psmb8;Timp1;Serpina3c;Gm10714;C1qtnf7;Ccdc160
+Ghrh_Mbnl3,Campbell et al. ARH,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5323293/,10,Ghrh;Slc18a3;Slc10a4;Chat;Scgn;Gsx1;Gm2990;Mbnl3;Colec12;Neb
+Tac2_Kiss1,Campbell et al. ARH,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5323293/,20,Tac2;Kiss1;Lhfpl1;Rxfp1;Nr5a2;Inhbb;Nr4a2;Col24a1;Col2a1;Rd3;Npr3;Lrrc38;Slc38a3;Nxf3;Lipg;Aebp1;Sdc2;Laptm4b;Rap2c;Rara
+Slc6a3_Rxfp2,Campbell et al. ARH,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5323293/,16,Slc6a3;Sln;Th;Rxfp2;Coch;9130024F11Rik;Satb2;Aox3;Cgnl1;Scn7a;Trpm1;Tnfrsf11b;Sntg2;Glis3;Homer2;Man1a
+Pirt_Tbx19,Campbell et al. ARH,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5323293/,5,Pirt;Tbx19;Anxa2;Cd1d1;Crhr2
+Gpr50_Pgr15l,Campbell et al. ARH,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5323293/,4,Gpr50;Tac2;Nup62cl;Renbp
+Lef1_Wif1,Campbell et al. ARH,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5323293/,10,Sox14;Unc13c;Lef1;Krt73;Wif1;Bmp2;Kl;Rspo2;Bsx;Opcml
+Sln_Ctxn3,?,"",20,Sln;Ebf3;Ctxn3;Ebf2;Postn;Adgrd1;Eomes;Fam129a;Rbp7;Cxcl13;Pdlim3;Tmem182;Clec1a;Adprhl1;Zfp114;Col9a1;Wdfy2;Tank;Bhlhe40;Crispld2
+Astrocytes,,,21,Abhd3;Paqr8;Paqr6;Htra1;Nrarp;Arhgef26;Dbx2;Lfng;Gm3764;Tlcd1;Slc6a11;Phkg1;Lrig1;Pla2g7;Cyp2j9;Slc39a12;Cd38;Itih3;Fgfr3;Agt;Slc7a10
+Ependymal,,,50,Ccdc41;2900006K08Rik;Ddo;Cfap46;Fhad1;Spata24;Stk33;Nin;Ccpg1os;4933434E20Rik;Efcab1;Ccdc30;2610015P09Rik;Lrrc6;Dnah7b;Ipo11;Fam188b;Hipk1;Drc1;D930014E17Rik;Galk2;Lyrm1;Ccdc173;Acss3;Cdk5rap2;Wdr78;Cep128;Cfap74;Plekha7;Armc2;Ccdc164;Rsph10b;Cetn4;Erich3;Nr2f1;Dnah1;Spag16;Plch1;Fam179a;Vwa5b1;1700003M02Rik;Cfap69;Lrrc9;Ulk4;Fank1;4932438H23Rik;Iqck;Gm5918;Ccdc65;A330021E22Rik
+Fibroblasts,,,50,Clmp;Shc1;Flrt2;Fkbp9;Tnfsf12;Fhl2;Tnfrsf1a;Fam43a;Cmbl;Efemp2;Tgfbr3;Matn2;Medag;Eln;Mmp14;Copz2;Igfbp4;Wnt5a;Selenbp1;Lamb1;Serpine1;Col5a2;Col26a1;Abca8a;Cpxm1;Fkbp7;Bmp4;Fbln5;Htra3;Slc1a5;Tfpi;Mrc2;Zic4;Ogn;Bmp7;Enpp1;Lama1;Islr;Col6a1;Col4a5;Fgl2;Aldh1a1;Fbln7;Emp3;Gpr182;Zic1;Sod3;Ccl7;Serpinf1;Fbln2
+Immune,,,50,Rgs10;Grn;Ifngr1;Plekho1;Kctd12;Ctsz;Nfkbiz;Fam105a;Lpcat2;F11r;Lyn;Tgfbr1;Fyb;Hexb;Alox5ap;Vsir;Lst1;Tgfb1;Pycard;Ptpn18;Hpgd;Hk2;Arhgdib;Unc93b1;Apbb1ip;Hpgds;Lcp1;Lair1;Cmtm7;Plek;Bcl2a1b;Cd68;Cyth4;Fermt3;Ctsc;Ncf1;Ptgs1;Gngt2;Ccr5;Cd52;Inpp5d;Crybb1;Slc15a3;Irf8;Tyrobp;Ltc4s;Aif1;Abi3;Selplg;Ccl4
+Mural,,,44,Lpp;Tns2;Tgfb1i1;Wtip;Ecm2;Ntn4;Tbx3os1;Igfbp3;Perp;S1pr3;Pde3a;1810011O10Rik;Rasl12;4930523C07Rik;P2ry14;Cox4i2;Clec14a;Asb2;Pdlim3;Pde5a;Filip1l;Hspb2;Mylk;Mndal;Lrrc32;Slc38a11;Gja4;Tpm2;Sema3g;Mrvi1;Gm13861;Rbpms2;Mustn1;Gper1;Mir143hg;Gpr20;Map3k7cl;Aspn;Tagln;Pln;Des;Myh11;Olfr558;Lmod1
+NG/OPC,,,13,G0s2;Gpt2;Cdo1;Ppp1r14b;Car8;Traf4;Rlbp1;Snx22;Matn4;3110035E14Rik;Emid1;Neu4;C1ql1
+Oligodendrocytes,,,48,Cd82;Dock10;Carhsp1;Mbp;Tmbim1;Psat1;Etv1;Arhgef10;Csrp1;Frmd8;Litaf;Slc44a1;Slain1;Gal3st1;Ppp1r16b;Tmem63a;Prr5l;Ttyh2;Gltp;Rhog;Creb5;Mobp;Elovl1;Gamt;Tspan2;Grb14;Gpr37;Trim59;Tprn;1700047M11Rik;Ugt8a;Myrf;Mag;Car14;Pdlim2;Tnfaip6;Hapln2;Fa2h;Tmem88b;Ppp1r14a;Gjc2;Cldn11;Gjb1;Ermn;Aspa;Opalin;Mog;Tmem125
+ParsTuber,,,19,Kcnk3;Dnase2a;Smim22;Ccdc68;Krt18;Apoc3;Timeless;Cck;Cga;Ces1d;Cldn9;Figf;Dsp;Epcam;Pitx2;Tshb;Six1;Cldn7;Pitx1
+Tanycytes,,,10,Slit2;Deptor;Nkx2-4;Lhx2;Fzd5;Gpr50;Col23a1;Kctd14;Frzb;Rax
+Vascular,,,37,Cav2;Afap1l1;Ltbp4;Itga6;Eogt;Rasgrp3;Wwtr1;Sema7a;Slc7a5;Palmd;Ccdc141;Sema3c;Rasip1;Kank3;Cgnl1;9430020K01Rik;Ocln;Apold1;Grap;Hmcn1;Lsr;Prom1;Wfdc1;Ctla2a;Lef1;Car4;Paqr5;Foxq1;Nostrin;Pglyrp1;Fn1;Tie1;Cyyr1;Cldn5;Slco1a4;Sox17;Adgrl4

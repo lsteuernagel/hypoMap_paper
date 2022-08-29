@@ -1,0 +1,1569 @@
+steps	class	density	group	n_genes	max_pearson	class_ordered	.group
+-0.3	translation regulators	0.0819783803315101	gene classes	89	0.473333333333333	translation regulators	7
+-0.293333333333333	translation regulators	0.0850410237560216	gene classes	89	0.473333333333333	translation regulators	7
+-0.286666666666667	translation regulators	0.0884864560225522	gene classes	89	0.473333333333333	translation regulators	7
+-0.28	translation regulators	0.0922997487214248	gene classes	89	0.473333333333333	translation regulators	7
+-0.273333333333333	translation regulators	0.0965011915486828	gene classes	89	0.473333333333333	translation regulators	7
+-0.266666666666667	translation regulators	0.101127819170567	gene classes	89	0.473333333333333	translation regulators	7
+-0.26	translation regulators	0.106235965969648	gene classes	89	0.473333333333333	translation regulators	7
+-0.253333333333333	translation regulators	0.111791118543601	gene classes	89	0.473333333333333	translation regulators	7
+-0.246666666666667	translation regulators	0.117807836602628	gene classes	89	0.473333333333333	translation regulators	7
+-0.24	translation regulators	0.124312617746091	gene classes	89	0.473333333333333	translation regulators	7
+-0.233333333333333	translation regulators	0.131368457022441	gene classes	89	0.473333333333333	translation regulators	7
+-0.226666666666667	translation regulators	0.13891675261892	gene classes	89	0.473333333333333	translation regulators	7
+-0.22	translation regulators	0.14696039864487	gene classes	89	0.473333333333333	translation regulators	7
+-0.213333333333333	translation regulators	0.155506892167658	gene classes	89	0.473333333333333	translation regulators	7
+-0.206666666666667	translation regulators	0.164614946592225	gene classes	89	0.473333333333333	translation regulators	7
+-0.2	translation regulators	0.174201738162191	gene classes	89	0.473333333333333	translation regulators	7
+-0.193333333333333	translation regulators	0.184253708817977	gene classes	89	0.473333333333333	translation regulators	7
+-0.186666666666667	translation regulators	0.194755281872775	gene classes	89	0.473333333333333	translation regulators	7
+-0.18	translation regulators	0.205748162260183	gene classes	89	0.473333333333333	translation regulators	7
+-0.173333333333333	translation regulators	0.217136084595422	gene classes	89	0.473333333333333	translation regulators	7
+-0.166666666666667	translation regulators	0.2288912046982	gene classes	89	0.473333333333333	translation regulators	7
+-0.16	translation regulators	0.240983703041251	gene classes	89	0.473333333333333	translation regulators	7
+-0.153333333333333	translation regulators	0.253425395816304	gene classes	89	0.473333333333333	translation regulators	7
+-0.146666666666667	translation regulators	0.266135278514231	gene classes	89	0.473333333333333	translation regulators	7
+-0.14	translation regulators	0.279079874465344	gene classes	89	0.473333333333333	translation regulators	7
+-0.133333333333333	translation regulators	0.292229578269883	gene classes	89	0.473333333333333	translation regulators	7
+-0.126666666666667	translation regulators	0.305578991493821	gene classes	89	0.473333333333333	translation regulators	7
+-0.12	translation regulators	0.319079208368058	gene classes	89	0.473333333333333	translation regulators	7
+-0.113333333333333	translation regulators	0.332707263267443	gene classes	89	0.473333333333333	translation regulators	7
+-0.106666666666667	translation regulators	0.346448033288306	gene classes	89	0.473333333333333	translation regulators	7
+-0.1	translation regulators	0.360303712094254	gene classes	89	0.473333333333333	translation regulators	7
+-0.0933333333333333	translation regulators	0.374258878649202	gene classes	89	0.473333333333333	translation regulators	7
+-0.0866666666666666	translation regulators	0.388311081726297	gene classes	89	0.473333333333333	translation regulators	7
+-0.08	translation regulators	0.402465710758568	gene classes	89	0.473333333333333	translation regulators	7
+-0.0733333333333333	translation regulators	0.416747288663224	gene classes	89	0.473333333333333	translation regulators	7
+-0.0666666666666667	translation regulators	0.431163562311473	gene classes	89	0.473333333333333	translation regulators	7
+-0.06	translation regulators	0.44572623813177	gene classes	89	0.473333333333333	translation regulators	7
+-0.0533333333333332	translation regulators	0.460453932836446	gene classes	89	0.473333333333333	translation regulators	7
+-0.0466666666666666	translation regulators	0.4753880581796	gene classes	89	0.473333333333333	translation regulators	7
+-0.0399999999999999	translation regulators	0.490542198524493	gene classes	89	0.473333333333333	translation regulators	7
+-0.0333333333333333	translation regulators	0.505923260132598	gene classes	89	0.473333333333333	translation regulators	7
+-0.0266666666666666	translation regulators	0.521546712063523	gene classes	89	0.473333333333333	translation regulators	7
+-0.0199999999999999	translation regulators	0.537449905224547	gene classes	89	0.473333333333333	translation regulators	7
+-0.0133333333333333	translation regulators	0.55363576043577	gene classes	89	0.473333333333333	translation regulators	7
+-0.0066666666666666	translation regulators	0.570088650447366	gene classes	89	0.473333333333333	translation regulators	7
+0	translation regulators	0.586805889565573	gene classes	89	0.473333333333333	translation regulators	7
+0.00666666666666682	translation regulators	0.603799404213715	gene classes	89	0.473333333333333	translation regulators	7
+0.0133333333333334	translation regulators	0.621051735040758	gene classes	89	0.473333333333333	translation regulators	7
+0.02	translation regulators	0.638521203658554	gene classes	89	0.473333333333333	translation regulators	7
+0.0266666666666668	translation regulators	0.6561819487099	gene classes	89	0.473333333333333	translation regulators	7
+0.0333333333333334	translation regulators	0.674011912952554	gene classes	89	0.473333333333333	translation regulators	7
+0.04	translation regulators	0.691971264729764	gene classes	89	0.473333333333333	translation regulators	7
+0.0466666666666666	translation regulators	0.710005408753374	gene classes	89	0.473333333333333	translation regulators	7
+0.0533333333333335	translation regulators	0.728071281948665	gene classes	89	0.473333333333333	translation regulators	7
+0.0600000000000001	translation regulators	0.746119696748584	gene classes	89	0.473333333333333	translation regulators	7
+0.0666666666666667	translation regulators	0.764091058945128	gene classes	89	0.473333333333333	translation regulators	7
+0.0733333333333335	translation regulators	0.781939571284541	gene classes	89	0.473333333333333	translation regulators	7
+0.0800000000000001	translation regulators	0.799616668342492	gene classes	89	0.473333333333333	translation regulators	7
+0.0866666666666667	translation regulators	0.817061982642215	gene classes	89	0.473333333333333	translation regulators	7
+0.0933333333333335	translation regulators	0.834200223621	gene classes	89	0.473333333333333	translation regulators	7
+0.1	translation regulators	0.851014407696159	gene classes	89	0.473333333333333	translation regulators	7
+0.106666666666667	translation regulators	0.867462406100442	gene classes	89	0.473333333333333	translation regulators	7
+0.113333333333334	translation regulators	0.883490458472389	gene classes	89	0.473333333333333	translation regulators	7
+0.12	translation regulators	0.899013685422822	gene classes	89	0.473333333333333	translation regulators	7
+0.126666666666667	translation regulators	0.914056857790341	gene classes	89	0.473333333333333	translation regulators	7
+0.133333333333333	translation regulators	0.928594874340652	gene classes	89	0.473333333333333	translation regulators	7
+0.14	translation regulators	0.942596862984144	gene classes	89	0.473333333333333	translation regulators	7
+0.146666666666667	translation regulators	0.955980974933269	gene classes	89	0.473333333333333	translation regulators	7
+0.153333333333333	translation regulators	0.968818402763666	gene classes	89	0.473333333333333	translation regulators	7
+0.16	translation regulators	0.981111025719544	gene classes	89	0.473333333333333	translation regulators	7
+0.166666666666667	translation regulators	0.99286394945587	gene classes	89	0.473333333333333	translation regulators	7
+0.173333333333333	translation regulators	1.00402167837758	gene classes	89	0.473333333333333	translation regulators	7
+0.18	translation regulators	1.0146957584769	gene classes	89	0.473333333333333	translation regulators	7
+0.186666666666667	translation regulators	1.02492283155162	gene classes	89	0.473333333333333	translation regulators	7
+0.193333333333333	translation regulators	1.03474792295201	gene classes	89	0.473333333333333	translation regulators	7
+0.2	translation regulators	1.04417827354014	gene classes	89	0.473333333333333	translation regulators	7
+0.206666666666667	translation regulators	1.05333927846486	gene classes	89	0.473333333333333	translation regulators	7
+0.213333333333333	translation regulators	1.06230384564613	gene classes	89	0.473333333333333	translation regulators	7
+0.22	translation regulators	1.07115006308282	gene classes	89	0.473333333333333	translation regulators	7
+0.226666666666667	translation regulators	1.07996990599971	gene classes	89	0.473333333333333	translation regulators	7
+0.233333333333333	translation regulators	1.08886923225208	gene classes	89	0.473333333333333	translation regulators	7
+0.24	translation regulators	1.09794096299775	gene classes	89	0.473333333333333	translation regulators	7
+0.246666666666667	translation regulators	1.10727893090558	gene classes	89	0.473333333333333	translation regulators	7
+0.253333333333333	translation regulators	1.11703809866814	gene classes	89	0.473333333333333	translation regulators	7
+0.26	translation regulators	1.12728390337739	gene classes	89	0.473333333333333	translation regulators	7
+0.266666666666667	translation regulators	1.13809071350417	gene classes	89	0.473333333333333	translation regulators	7
+0.273333333333333	translation regulators	1.14953706581543	gene classes	89	0.473333333333333	translation regulators	7
+0.28	translation regulators	1.16178804259997	gene classes	89	0.473333333333333	translation regulators	7
+0.286666666666667	translation regulators	1.17485159441345	gene classes	89	0.473333333333333	translation regulators	7
+0.293333333333333	translation regulators	1.18874034120756	gene classes	89	0.473333333333333	translation regulators	7
+0.3	translation regulators	1.20348234273565	gene classes	89	0.473333333333333	translation regulators	7
+0.306666666666667	translation regulators	1.21918557267559	gene classes	89	0.473333333333333	translation regulators	7
+0.313333333333333	translation regulators	1.2357910589019	gene classes	89	0.473333333333333	translation regulators	7
+0.32	translation regulators	1.25322386409649	gene classes	89	0.473333333333333	translation regulators	7
+0.326666666666667	translation regulators	1.27143752897142	gene classes	89	0.473333333333333	translation regulators	7
+0.333333333333334	translation regulators	1.29042966956235	gene classes	89	0.473333333333333	translation regulators	7
+0.34	translation regulators	1.31007511609711	gene classes	89	0.473333333333333	translation regulators	7
+0.346666666666667	translation regulators	1.33022265222933	gene classes	89	0.473333333333333	translation regulators	7
+0.353333333333334	translation regulators	1.35075227522284	gene classes	89	0.473333333333333	translation regulators	7
+0.36	translation regulators	1.37153849066968	gene classes	89	0.473333333333333	translation regulators	7
+0.366666666666667	translation regulators	1.39240192839536	gene classes	89	0.473333333333333	translation regulators	7
+0.373333333333334	translation regulators	1.41316798350556	gene classes	89	0.473333333333333	translation regulators	7
+0.38	translation regulators	1.43367332856901	gene classes	89	0.473333333333333	translation regulators	7
+0.386666666666667	translation regulators	1.4537064094813	gene classes	89	0.473333333333333	translation regulators	7
+0.393333333333333	translation regulators	1.47305595457534	gene classes	89	0.473333333333333	translation regulators	7
+0.4	translation regulators	1.49160055803504	gene classes	89	0.473333333333333	translation regulators	7
+0.406666666666667	translation regulators	1.50918260728016	gene classes	89	0.473333333333333	translation regulators	7
+0.413333333333333	translation regulators	1.5255751225892	gene classes	89	0.473333333333333	translation regulators	7
+0.42	translation regulators	1.54056264133066	gene classes	89	0.473333333333333	translation regulators	7
+0.426666666666667	translation regulators	1.55414218780556	gene classes	89	0.473333333333333	translation regulators	7
+0.433333333333333	translation regulators	1.56620740353695	gene classes	89	0.473333333333333	translation regulators	7
+0.44	translation regulators	1.57658470055307	gene classes	89	0.473333333333333	translation regulators	7
+0.446666666666667	translation regulators	1.58507769449326	gene classes	89	0.473333333333333	translation regulators	7
+0.453333333333333	translation regulators	1.59182224214587	gene classes	89	0.473333333333333	translation regulators	7
+0.46	translation regulators	1.59678256336965	gene classes	89	0.473333333333333	translation regulators	7
+0.466666666666667	translation regulators	1.59987128049485	gene classes	89	0.473333333333333	translation regulators	7
+0.473333333333333	translation regulators	1.60091800804349	gene classes	89	0.473333333333333	translation regulators	7
+0.48	translation regulators	1.60016353945571	gene classes	89	0.473333333333333	translation regulators	7
+0.486666666666667	translation regulators	1.59762724690558	gene classes	89	0.473333333333333	translation regulators	7
+0.493333333333333	translation regulators	1.59329413048353	gene classes	89	0.473333333333333	translation regulators	7
+0.5	translation regulators	1.58700392266559	gene classes	89	0.473333333333333	translation regulators	7
+0.506666666666667	translation regulators	1.57903810574841	gene classes	89	0.473333333333333	translation regulators	7
+0.513333333333334	translation regulators	1.56943388181899	gene classes	89	0.473333333333333	translation regulators	7
+0.52	translation regulators	1.55820829503836	gene classes	89	0.473333333333333	translation regulators	7
+0.526666666666667	translation regulators	1.54517930933051	gene classes	89	0.473333333333333	translation regulators	7
+0.533333333333333	translation regulators	1.53061747264152	gene classes	89	0.473333333333333	translation regulators	7
+0.54	translation regulators	1.51454546233501	gene classes	89	0.473333333333333	translation regulators	7
+0.546666666666667	translation regulators	1.49698072953831	gene classes	89	0.473333333333333	translation regulators	7
+0.553333333333334	translation regulators	1.4776936198683	gene classes	89	0.473333333333333	translation regulators	7
+0.56	translation regulators	1.45693478089204	gene classes	89	0.473333333333333	translation regulators	7
+0.566666666666667	translation regulators	1.43470784408178	gene classes	89	0.473333333333333	translation regulators	7
+0.573333333333333	translation regulators	1.4110143077644	gene classes	89	0.473333333333333	translation regulators	7
+0.58	translation regulators	1.38563326097446	gene classes	89	0.473333333333333	translation regulators	7
+0.586666666666667	translation regulators	1.35877330236277	gene classes	89	0.473333333333333	translation regulators	7
+0.593333333333334	translation regulators	1.33046146839533	gene classes	89	0.473333333333333	translation regulators	7
+0.6	translation regulators	1.30071265320313	gene classes	89	0.473333333333333	translation regulators	7
+0.606666666666667	translation regulators	1.26935719028823	gene classes	89	0.473333333333333	translation regulators	7
+0.613333333333334	translation regulators	1.23659793548658	gene classes	89	0.473333333333333	translation regulators	7
+0.62	translation regulators	1.20251905140502	gene classes	89	0.473333333333333	translation regulators	7
+0.626666666666667	translation regulators	1.16718248070628	gene classes	89	0.473333333333333	translation regulators	7
+0.633333333333334	translation regulators	1.13052520595973	gene classes	89	0.473333333333333	translation regulators	7
+0.64	translation regulators	1.09276103829172	gene classes	89	0.473333333333333	translation regulators	7
+0.646666666666667	translation regulators	1.05404241096369	gene classes	89	0.473333333333333	translation regulators	7
+0.653333333333334	translation regulators	1.01449146448759	gene classes	89	0.473333333333333	translation regulators	7
+0.66	translation regulators	0.974179962474639	gene classes	89	0.473333333333333	translation regulators	7
+0.666666666666667	translation regulators	0.933326425400982	gene classes	89	0.473333333333333	translation regulators	7
+0.673333333333333	translation regulators	0.892122251383766	gene classes	89	0.473333333333333	translation regulators	7
+0.68	translation regulators	0.850732216145252	gene classes	89	0.473333333333333	translation regulators	7
+0.686666666666667	translation regulators	0.80934266494391	gene classes	89	0.473333333333333	translation regulators	7
+0.693333333333333	translation regulators	0.768158309697812	gene classes	89	0.473333333333333	translation regulators	7
+0.7	translation regulators	0.727349464662914	gene classes	89	0.473333333333333	translation regulators	7
+0.706666666666667	translation regulators	0.687084383136114	gene classes	89	0.473333333333333	translation regulators	7
+0.713333333333333	translation regulators	0.647604704639711	gene classes	89	0.473333333333333	translation regulators	7
+0.72	translation regulators	0.60908414384271	gene classes	89	0.473333333333333	translation regulators	7
+0.726666666666667	translation regulators	0.571609983339474	gene classes	89	0.473333333333333	translation regulators	7
+0.733333333333333	translation regulators	0.535312922604183	gene classes	89	0.473333333333333	translation regulators	7
+0.74	translation regulators	0.500420140272118	gene classes	89	0.473333333333333	translation regulators	7
+0.746666666666667	translation regulators	0.467066060111157	gene classes	89	0.473333333333333	translation regulators	7
+0.753333333333333	translation regulators	0.435219199449818	gene classes	89	0.473333333333333	translation regulators	7
+0.76	translation regulators	0.404946884190161	gene classes	89	0.473333333333333	translation regulators	7
+0.766666666666667	translation regulators	0.376409609819733	gene classes	89	0.473333333333333	translation regulators	7
+0.773333333333333	translation regulators	0.349702784470281	gene classes	89	0.473333333333333	translation regulators	7
+0.78	translation regulators	0.324678773538084	gene classes	89	0.473333333333333	translation regulators	7
+0.786666666666667	translation regulators	0.301337403614211	gene classes	89	0.473333333333333	translation regulators	7
+0.793333333333333	translation regulators	0.279751567565699	gene classes	89	0.473333333333333	translation regulators	7
+0.8	translation regulators	0.259982055721971	gene classes	89	0.473333333333333	translation regulators	7
+0.806666666666667	translation regulators	0.241799944489624	gene classes	89	0.473333333333333	translation regulators	7
+0.813333333333334	translation regulators	0.225151392588903	gene classes	89	0.473333333333333	translation regulators	7
+0.82	translation regulators	0.210030128989485	gene classes	89	0.473333333333333	translation regulators	7
+0.826666666666667	translation regulators	0.196467015333514	gene classes	89	0.473333333333333	translation regulators	7
+0.833333333333334	translation regulators	0.184202338114019	gene classes	89	0.473333333333333	translation regulators	7
+0.84	translation regulators	0.173151659780815	gene classes	89	0.473333333333333	translation regulators	7
+0.846666666666667	translation regulators	0.163256126811477	gene classes	89	0.473333333333333	translation regulators	7
+0.853333333333334	translation regulators	0.154520698632336	gene classes	89	0.473333333333333	translation regulators	7
+0.86	translation regulators	0.146703543767157	gene classes	89	0.473333333333333	translation regulators	7
+0.866666666666667	translation regulators	0.139713397267117	gene classes	89	0.473333333333333	translation regulators	7
+0.873333333333333	translation regulators	0.133470568827244	gene classes	89	0.473333333333333	translation regulators	7
+0.88	translation regulators	0.127958801167593	gene classes	89	0.473333333333333	translation regulators	7
+0.886666666666667	translation regulators	0.122988806718524	gene classes	89	0.473333333333333	translation regulators	7
+0.893333333333334	translation regulators	0.118481224316452	gene classes	89	0.473333333333333	translation regulators	7
+0.9	translation regulators	0.114362412819194	gene classes	89	0.473333333333333	translation regulators	7
+0.906666666666667	translation regulators	0.110601938453443	gene classes	89	0.473333333333333	translation regulators	7
+0.913333333333334	translation regulators	0.107078541302638	gene classes	89	0.473333333333333	translation regulators	7
+0.92	translation regulators	0.103735882269601	gene classes	89	0.473333333333333	translation regulators	7
+0.926666666666667	translation regulators	0.100523620807147	gene classes	89	0.473333333333333	translation regulators	7
+0.933333333333333	translation regulators	0.0974049341467878	gene classes	89	0.473333333333333	translation regulators	7
+0.94	translation regulators	0.0943257828713845	gene classes	89	0.473333333333333	translation regulators	7
+0.946666666666667	translation regulators	0.0912555014032023	gene classes	89	0.473333333333333	translation regulators	7
+0.953333333333333	translation regulators	0.0881699029127444	gene classes	89	0.473333333333333	translation regulators	7
+0.96	translation regulators	0.085043533639508	gene classes	89	0.473333333333333	translation regulators	7
+0.966666666666667	translation regulators	0.0818666581448108	gene classes	89	0.473333333333333	translation regulators	7
+0.973333333333333	translation regulators	0.0786333330402362	gene classes	89	0.473333333333333	translation regulators	7
+0.98	translation regulators	0.0753412312193665	gene classes	89	0.473333333333333	translation regulators	7
+0.986666666666667	translation regulators	0.0719851890912331	gene classes	89	0.473333333333333	translation regulators	7
+0.993333333333333	translation regulators	0.0685775375468329	gene classes	89	0.473333333333333	translation regulators	7
+1	translation regulators	0.06512934189861	gene classes	89	0.473333333333333	translation regulators	7
+-0.3	ion channels	2.85639851408661e-08	gene classes	230	0.873333333333333	ion channels	3
+-0.293333333333333	ion channels	5.67640280585791e-08	gene classes	230	0.873333333333333	ion channels	3
+-0.286666666666667	ion channels	1.07797527165994e-07	gene classes	230	0.873333333333333	ion channels	3
+-0.28	ion channels	2.10884965178068e-07	gene classes	230	0.873333333333333	ion channels	3
+-0.273333333333333	ion channels	3.91711582702327e-07	gene classes	230	0.873333333333333	ion channels	3
+-0.266666666666667	ion channels	7.30211985109857e-07	gene classes	230	0.873333333333333	ion channels	3
+-0.26	ion channels	1.33033652471313e-06	gene classes	230	0.873333333333333	ion channels	3
+-0.253333333333333	ion channels	2.35941170725801e-06	gene classes	230	0.873333333333333	ion channels	3
+-0.246666666666667	ion channels	4.21268786063263e-06	gene classes	230	0.873333333333333	ion channels	3
+-0.24	ion channels	7.21807305314274e-06	gene classes	230	0.873333333333333	ion channels	3
+-0.233333333333333	ion channels	1.24517417685808e-05	gene classes	230	0.873333333333333	ion channels	3
+-0.226666666666667	ion channels	2.08612074522836e-05	gene classes	230	0.873333333333333	ion channels	3
+-0.22	ion channels	3.43959344936397e-05	gene classes	230	0.873333333333333	ion channels	3
+-0.213333333333333	ion channels	5.62884987620716e-05	gene classes	230	0.873333333333333	ion channels	3
+-0.206666666666667	ion channels	8.91214668329236e-05	gene classes	230	0.873333333333333	ion channels	3
+-0.2	ion channels	0.0001419562555069	gene classes	230	0.873333333333333	ion channels	3
+-0.193333333333333	ion channels	0.000219242386277473	gene classes	230	0.873333333333333	ion channels	3
+-0.186666666666667	ion channels	0.000335027806083788	gene classes	230	0.873333333333333	ion channels	3
+-0.18	ion channels	0.000504201672330751	gene classes	230	0.873333333333333	ion channels	3
+-0.173333333333333	ion channels	0.000740910390259973	gene classes	230	0.873333333333333	ion channels	3
+-0.166666666666667	ion channels	0.00108528947424109	gene classes	230	0.873333333333333	ion channels	3
+-0.16	ion channels	0.00154845417301285	gene classes	230	0.873333333333333	ion channels	3
+-0.153333333333333	ion channels	0.00218931607805946	gene classes	230	0.873333333333333	ion channels	3
+-0.146666666666667	ion channels	0.00303888966759848	gene classes	230	0.873333333333333	ion channels	3
+-0.14	ion channels	0.00414455658632245	gene classes	230	0.873333333333333	ion channels	3
+-0.133333333333333	ion channels	0.00559193880808259	gene classes	230	0.873333333333333	ion channels	3
+-0.126666666666667	ion channels	0.00738690927249305	gene classes	230	0.873333333333333	ion channels	3
+-0.12	ion channels	0.00966250588044411	gene classes	230	0.873333333333333	ion channels	3
+-0.113333333333333	ion channels	0.0124089903360564	gene classes	230	0.873333333333333	ion channels	3
+-0.106666666666667	ion channels	0.0157035735232075	gene classes	230	0.873333333333333	ion channels	3
+-0.1	ion channels	0.0195990959790091	gene classes	230	0.873333333333333	ion channels	3
+-0.0933333333333333	ion channels	0.0240466272882139	gene classes	230	0.873333333333333	ion channels	3
+-0.0866666666666666	ion channels	0.0291646149135029	gene classes	230	0.873333333333333	ion channels	3
+-0.08	ion channels	0.0348058806179968	gene classes	230	0.873333333333333	ion channels	3
+-0.0733333333333333	ion channels	0.040985787606672	gene classes	230	0.873333333333333	ion channels	3
+-0.0666666666666667	ion channels	0.0476059246346241	gene classes	230	0.873333333333333	ion channels	3
+-0.06	ion channels	0.0545500972409479	gene classes	230	0.873333333333333	ion channels	3
+-0.0533333333333332	ion channels	0.0617326122150469	gene classes	230	0.873333333333333	ion channels	3
+-0.0466666666666666	ion channels	0.0689949945300198	gene classes	230	0.873333333333333	ion channels	3
+-0.0399999999999999	ion channels	0.0762068649086317	gene classes	230	0.873333333333333	ion channels	3
+-0.0333333333333333	ion channels	0.0832485567469888	gene classes	230	0.873333333333333	ion channels	3
+-0.0266666666666666	ion channels	0.0900056834040684	gene classes	230	0.873333333333333	ion channels	3
+-0.0199999999999999	ion channels	0.0963621219770389	gene classes	230	0.873333333333333	ion channels	3
+-0.0133333333333333	ion channels	0.102310522209478	gene classes	230	0.873333333333333	ion channels	3
+-0.0066666666666666	ion channels	0.107728240868291	gene classes	230	0.873333333333333	ion channels	3
+0	ion channels	0.112694532931839	gene classes	230	0.873333333333333	ion channels	3
+0.00666666666666682	ion channels	0.117191866147611	gene classes	230	0.873333333333333	ion channels	3
+0.0133333333333334	ion channels	0.121266578426208	gene classes	230	0.873333333333333	ion channels	3
+0.02	ion channels	0.125009901034196	gene classes	230	0.873333333333333	ion channels	3
+0.0266666666666668	ion channels	0.128436234546655	gene classes	230	0.873333333333333	ion channels	3
+0.0333333333333334	ion channels	0.131662181664606	gene classes	230	0.873333333333333	ion channels	3
+0.04	ion channels	0.13471757452524	gene classes	230	0.873333333333333	ion channels	3
+0.0466666666666666	ion channels	0.1376568816874	gene classes	230	0.873333333333333	ion channels	3
+0.0533333333333335	ion channels	0.140508343392991	gene classes	230	0.873333333333333	ion channels	3
+0.0600000000000001	ion channels	0.143271633381033	gene classes	230	0.873333333333333	ion channels	3
+0.0666666666666667	ion channels	0.145952466754053	gene classes	230	0.873333333333333	ion channels	3
+0.0733333333333335	ion channels	0.148510013560339	gene classes	230	0.873333333333333	ion channels	3
+0.0800000000000001	ion channels	0.150927636905478	gene classes	230	0.873333333333333	ion channels	3
+0.0866666666666667	ion channels	0.153159305036633	gene classes	230	0.873333333333333	ion channels	3
+0.0933333333333335	ion channels	0.15515483385071	gene classes	230	0.873333333333333	ion channels	3
+0.1	ion channels	0.156906062042947	gene classes	230	0.873333333333333	ion channels	3
+0.106666666666667	ion channels	0.158316211444408	gene classes	230	0.873333333333333	ion channels	3
+0.113333333333334	ion channels	0.159416192456072	gene classes	230	0.873333333333333	ion channels	3
+0.12	ion channels	0.160138809208749	gene classes	230	0.873333333333333	ion channels	3
+0.126666666666667	ion channels	0.16046940038796	gene classes	230	0.873333333333333	ion channels	3
+0.133333333333333	ion channels	0.16040925004198	gene classes	230	0.873333333333333	ion channels	3
+0.14	ion channels	0.15987419235963	gene classes	230	0.873333333333333	ion channels	3
+0.146666666666667	ion channels	0.158921358154611	gene classes	230	0.873333333333333	ion channels	3
+0.153333333333333	ion channels	0.15746159468479	gene classes	230	0.873333333333333	ion channels	3
+0.16	ion channels	0.155526324720636	gene classes	230	0.873333333333333	ion channels	3
+0.166666666666667	ion channels	0.153105519973795	gene classes	230	0.873333333333333	ion channels	3
+0.173333333333333	ion channels	0.150168647577201	gene classes	230	0.873333333333333	ion channels	3
+0.18	ion channels	0.146808338200659	gene classes	230	0.873333333333333	ion channels	3
+0.186666666666667	ion channels	0.142996283888593	gene classes	230	0.873333333333333	ion channels	3
+0.193333333333333	ion channels	0.138874328701037	gene classes	230	0.873333333333333	ion channels	3
+0.2	ion channels	0.134528208592794	gene classes	230	0.873333333333333	ion channels	3
+0.206666666666667	ion channels	0.130100187507571	gene classes	230	0.873333333333333	ion channels	3
+0.213333333333333	ion channels	0.125752501470463	gene classes	230	0.873333333333333	ion channels	3
+0.22	ion channels	0.121722034305291	gene classes	230	0.873333333333333	ion channels	3
+0.226666666666667	ion channels	0.118148981896228	gene classes	230	0.873333333333333	ion channels	3
+0.233333333333333	ion channels	0.115319905190556	gene classes	230	0.873333333333333	ion channels	3
+0.24	ion channels	0.113397697175074	gene classes	230	0.873333333333333	ion channels	3
+0.246666666666667	ion channels	0.112529247139957	gene classes	230	0.873333333333333	ion channels	3
+0.253333333333333	ion channels	0.11300250365445	gene classes	230	0.873333333333333	ion channels	3
+0.26	ion channels	0.114709507822982	gene classes	230	0.873333333333333	ion channels	3
+0.266666666666667	ion channels	0.117918177339151	gene classes	230	0.873333333333333	ion channels	3
+0.273333333333333	ion channels	0.122437796865753	gene classes	230	0.873333333333333	ion channels	3
+0.28	ion channels	0.128236276577161	gene classes	230	0.873333333333333	ion channels	3
+0.286666666666667	ion channels	0.13522719703617	gene classes	230	0.873333333333333	ion channels	3
+0.293333333333333	ion channels	0.143089883337651	gene classes	230	0.873333333333333	ion channels	3
+0.3	ion channels	0.151746753297747	gene classes	230	0.873333333333333	ion channels	3
+0.306666666666667	ion channels	0.160821510634757	gene classes	230	0.873333333333333	ion channels	3
+0.313333333333333	ion channels	0.170105342899554	gene classes	230	0.873333333333333	ion channels	3
+0.32	ion channels	0.179359314020732	gene classes	230	0.873333333333333	ion channels	3
+0.326666666666667	ion channels	0.188405450550093	gene classes	230	0.873333333333333	ion channels	3
+0.333333333333334	ion channels	0.197061609818017	gene classes	230	0.873333333333333	ion channels	3
+0.34	ion channels	0.205334267332529	gene classes	230	0.873333333333333	ion channels	3
+0.346666666666667	ion channels	0.213188209060558	gene classes	230	0.873333333333333	ion channels	3
+0.353333333333334	ion channels	0.220759081989085	gene classes	230	0.873333333333333	ion channels	3
+0.36	ion channels	0.228224202728559	gene classes	230	0.873333333333333	ion channels	3
+0.366666666666667	ion channels	0.235840788490903	gene classes	230	0.873333333333333	ion channels	3
+0.373333333333334	ion channels	0.243859295516136	gene classes	230	0.873333333333333	ion channels	3
+0.38	ion channels	0.252721916554812	gene classes	230	0.873333333333333	ion channels	3
+0.386666666666667	ion channels	0.262625815323941	gene classes	230	0.873333333333333	ion channels	3
+0.393333333333333	ion channels	0.273947767078334	gene classes	230	0.873333333333333	ion channels	3
+0.4	ion channels	0.28698621609159	gene classes	230	0.873333333333333	ion channels	3
+0.406666666666667	ion channels	0.301743323013528	gene classes	230	0.873333333333333	ion channels	3
+0.413333333333333	ion channels	0.318720925044138	gene classes	230	0.873333333333333	ion channels	3
+0.42	ion channels	0.337558729984949	gene classes	230	0.873333333333333	ion channels	3
+0.426666666666667	ion channels	0.358469027882788	gene classes	230	0.873333333333333	ion channels	3
+0.433333333333333	ion channels	0.381247421013529	gene classes	230	0.873333333333333	ion channels	3
+0.44	ion channels	0.405654328734791	gene classes	230	0.873333333333333	ion channels	3
+0.446666666666667	ion channels	0.431668680682472	gene classes	230	0.873333333333333	ion channels	3
+0.453333333333333	ion channels	0.458817096421923	gene classes	230	0.873333333333333	ion channels	3
+0.46	ion channels	0.487023094782627	gene classes	230	0.873333333333333	ion channels	3
+0.466666666666667	ion channels	0.515932030337626	gene classes	230	0.873333333333333	ion channels	3
+0.473333333333333	ion channels	0.545330817162759	gene classes	230	0.873333333333333	ion channels	3
+0.48	ion channels	0.575019179469454	gene classes	230	0.873333333333333	ion channels	3
+0.486666666666667	ion channels	0.604778523943387	gene classes	230	0.873333333333333	ion channels	3
+0.493333333333333	ion channels	0.634415861779762	gene classes	230	0.873333333333333	ion channels	3
+0.5	ion channels	0.663788495220983	gene classes	230	0.873333333333333	ion channels	3
+0.506666666666667	ion channels	0.692706198185086	gene classes	230	0.873333333333333	ion channels	3
+0.513333333333334	ion channels	0.721013562157328	gene classes	230	0.873333333333333	ion channels	3
+0.52	ion channels	0.748620674622889	gene classes	230	0.873333333333333	ion channels	3
+0.526666666666667	ion channels	0.775251148381918	gene classes	230	0.873333333333333	ion channels	3
+0.533333333333333	ion channels	0.800965550964024	gene classes	230	0.873333333333333	ion channels	3
+0.54	ion channels	0.82554846395099	gene classes	230	0.873333333333333	ion channels	3
+0.546666666666667	ion channels	0.849062686501076	gene classes	230	0.873333333333333	ion channels	3
+0.553333333333334	ion channels	0.871575749046816	gene classes	230	0.873333333333333	ion channels	3
+0.56	ion channels	0.893143345238308	gene classes	230	0.873333333333333	ion channels	3
+0.566666666666667	ion channels	0.914124122214966	gene classes	230	0.873333333333333	ion channels	3
+0.573333333333333	ion channels	0.934800062279378	gene classes	230	0.873333333333333	ion channels	3
+0.58	ion channels	0.955647368359805	gene classes	230	0.873333333333333	ion channels	3
+0.586666666666667	ion channels	0.977217006324003	gene classes	230	0.873333333333333	ion channels	3
+0.593333333333334	ion channels	1.00016119445661	gene classes	230	0.873333333333333	ion channels	3
+0.6	ion channels	1.02489860484744	gene classes	230	0.873333333333333	ion channels	3
+0.606666666666667	ion channels	1.05256642612887	gene classes	230	0.873333333333333	ion channels	3
+0.613333333333334	ion channels	1.08318255043784	gene classes	230	0.873333333333333	ion channels	3
+0.62	ion channels	1.11763845273681	gene classes	230	0.873333333333333	ion channels	3
+0.626666666666667	ion channels	1.15616912587006	gene classes	230	0.873333333333333	ion channels	3
+0.633333333333334	ion channels	1.1987584176845	gene classes	230	0.873333333333333	ion channels	3
+0.64	ion channels	1.24600632453909	gene classes	230	0.873333333333333	ion channels	3
+0.646666666666667	ion channels	1.29700302232406	gene classes	230	0.873333333333333	ion channels	3
+0.653333333333334	ion channels	1.35195524722638	gene classes	230	0.873333333333333	ion channels	3
+0.66	ion channels	1.40992109400496	gene classes	230	0.873333333333333	ion channels	3
+0.666666666666667	ion channels	1.47023052371569	gene classes	230	0.873333333333333	ion channels	3
+0.673333333333333	ion channels	1.53214463651656	gene classes	230	0.873333333333333	ion channels	3
+0.68	ion channels	1.59460645912101	gene classes	230	0.873333333333333	ion channels	3
+0.686666666666667	ion channels	1.65665039608574	gene classes	230	0.873333333333333	ion channels	3
+0.693333333333333	ion channels	1.71745673234243	gene classes	230	0.873333333333333	ion channels	3
+0.7	ion channels	1.77606684427831	gene classes	230	0.873333333333333	ion channels	3
+0.706666666666667	ion channels	1.83173237952319	gene classes	230	0.873333333333333	ion channels	3
+0.713333333333333	ion channels	1.88418356440649	gene classes	230	0.873333333333333	ion channels	3
+0.72	ion channels	1.93236532502657	gene classes	230	0.873333333333333	ion channels	3
+0.726666666666667	ion channels	1.97682002529145	gene classes	230	0.873333333333333	ion channels	3
+0.733333333333333	ion channels	2.01698036347022	gene classes	230	0.873333333333333	ion channels	3
+0.74	ion channels	2.05325176293678	gene classes	230	0.873333333333333	ion channels	3
+0.746666666666667	ion channels	2.08600092568785	gene classes	230	0.873333333333333	ion channels	3
+0.753333333333333	ion channels	2.11526187990951	gene classes	230	0.873333333333333	ion channels	3
+0.76	ion channels	2.14198236046123	gene classes	230	0.873333333333333	ion channels	3
+0.766666666666667	ion channels	2.1662463471515	gene classes	230	0.873333333333333	ion channels	3
+0.773333333333333	ion channels	2.18883034271809	gene classes	230	0.873333333333333	ion channels	3
+0.78	ion channels	2.21010474362484	gene classes	230	0.873333333333333	ion channels	3
+0.786666666666667	ion channels	2.23041489620613	gene classes	230	0.873333333333333	ion channels	3
+0.793333333333333	ion channels	2.25014800927383	gene classes	230	0.873333333333333	ion channels	3
+0.8	ion channels	2.26940361332321	gene classes	230	0.873333333333333	ion channels	3
+0.806666666666667	ion channels	2.28836223568653	gene classes	230	0.873333333333333	ion channels	3
+0.813333333333334	ion channels	2.30698950872986	gene classes	230	0.873333333333333	ion channels	3
+0.82	ion channels	2.32521432629076	gene classes	230	0.873333333333333	ion channels	3
+0.826666666666667	ion channels	2.34292023421033	gene classes	230	0.873333333333333	ion channels	3
+0.833333333333334	ion channels	2.35978286239051	gene classes	230	0.873333333333333	ion channels	3
+0.84	ion channels	2.37568104474992	gene classes	230	0.873333333333333	ion channels	3
+0.846666666666667	ion channels	2.39008846045167	gene classes	230	0.873333333333333	ion channels	3
+0.853333333333334	ion channels	2.40272695990655	gene classes	230	0.873333333333333	ion channels	3
+0.86	ion channels	2.41309654617167	gene classes	230	0.873333333333333	ion channels	3
+0.866666666666667	ion channels	2.4203610301735	gene classes	230	0.873333333333333	ion channels	3
+0.873333333333333	ion channels	2.42428541058774	gene classes	230	0.873333333333333	ion channels	3
+0.88	ion channels	2.42324419484542	gene classes	230	0.873333333333333	ion channels	3
+0.886666666666667	ion channels	2.41703216086358	gene classes	230	0.873333333333333	ion channels	3
+0.893333333333334	ion channels	2.40417951868767	gene classes	230	0.873333333333333	ion channels	3
+0.9	ion channels	2.38344244807725	gene classes	230	0.873333333333333	ion channels	3
+0.906666666666667	ion channels	2.35457079865776	gene classes	230	0.873333333333333	ion channels	3
+0.913333333333334	ion channels	2.31472003002382	gene classes	230	0.873333333333333	ion channels	3
+0.92	ion channels	2.26499377375579	gene classes	230	0.873333333333333	ion channels	3
+0.926666666666667	ion channels	2.2033272336787	gene classes	230	0.873333333333333	ion channels	3
+0.933333333333333	ion channels	2.12999904773238	gene classes	230	0.873333333333333	ion channels	3
+0.94	ion channels	2.04544644038163	gene classes	230	0.873333333333333	ion channels	3
+0.946666666666667	ion channels	1.94878467664341	gene classes	230	0.873333333333333	ion channels	3
+0.953333333333333	ion channels	1.84267886883618	gene classes	230	0.873333333333333	ion channels	3
+0.96	ion channels	1.72690058627985	gene classes	230	0.873333333333333	ion channels	3
+0.966666666666667	ion channels	1.60417368895806	gene classes	230	0.873333333333333	ion channels	3
+0.973333333333333	ion channels	1.47621743480439	gene classes	230	0.873333333333333	ion channels	3
+0.98	ion channels	1.34504646752755	gene classes	230	0.873333333333333	ion channels	3
+0.986666666666667	ion channels	1.21311983907405	gene classes	230	0.873333333333333	ion channels	3
+0.993333333333333	ion channels	1.08285383664164	gene classes	230	0.873333333333333	ion channels	3
+1	ion channels	0.955991224368434	gene classes	230	0.873333333333333	ion channels	3
+-0.3	ligand-dependent nuclear receptors	0.000585897916510231	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.293333333333333	ligand-dependent nuclear receptors	0.000711455094562333	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.286666666666667	ligand-dependent nuclear receptors	0.000862222740232054	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.28	ligand-dependent nuclear receptors	0.00104267494149884	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.273333333333333	ligand-dependent nuclear receptors	0.00125547603623824	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.266666666666667	ligand-dependent nuclear receptors	0.00150541784962477	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.26	ligand-dependent nuclear receptors	0.00179782478627155	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.253333333333333	ligand-dependent nuclear receptors	0.00213858361389888	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.246666666666667	ligand-dependent nuclear receptors	0.00254236895631182	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.24	ligand-dependent nuclear receptors	0.00300993584425704	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.233333333333333	ligand-dependent nuclear receptors	0.0035491482623522	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.226666666666667	ligand-dependent nuclear receptors	0.00416856160957927	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.22	ligand-dependent nuclear receptors	0.00487736914117275	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.213333333333333	ligand-dependent nuclear receptors	0.00569265440960268	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.206666666666667	ligand-dependent nuclear receptors	0.0066269589282125	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.2	ligand-dependent nuclear receptors	0.00768463312450236	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.193333333333333	ligand-dependent nuclear receptors	0.00887734449662466	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.186666666666667	ligand-dependent nuclear receptors	0.0102171963642835	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.18	ligand-dependent nuclear receptors	0.0117166460489861	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.173333333333333	ligand-dependent nuclear receptors	0.0134129770009382	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.166666666666667	ligand-dependent nuclear receptors	0.0152976235388124	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.16	ligand-dependent nuclear receptors	0.0173833016720935	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.153333333333333	ligand-dependent nuclear receptors	0.0196826554837132	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.146666666666667	ligand-dependent nuclear receptors	0.022207976900778	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.14	ligand-dependent nuclear receptors	0.0249875266806516	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.133333333333333	ligand-dependent nuclear receptors	0.0280343977011161	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.126666666666667	ligand-dependent nuclear receptors	0.031342269311647	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.12	ligand-dependent nuclear receptors	0.0349197503543511	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.113333333333333	ligand-dependent nuclear receptors	0.0387740599727926	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.106666666666667	ligand-dependent nuclear receptors	0.0429108275771051	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.1	ligand-dependent nuclear receptors	0.047372213094328	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.0933333333333333	ligand-dependent nuclear receptors	0.0521218386867868	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.0866666666666666	ligand-dependent nuclear receptors	0.0571586134667167	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.08	ligand-dependent nuclear receptors	0.062479230854051	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.0733333333333333	ligand-dependent nuclear receptors	0.0680779397380705	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.0666666666666667	ligand-dependent nuclear receptors	0.0739636127826455	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.06	ligand-dependent nuclear receptors	0.0801231350446188	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.0533333333333332	ligand-dependent nuclear receptors	0.0865242871144843	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.0466666666666666	ligand-dependent nuclear receptors	0.0931502636552594	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.0399999999999999	ligand-dependent nuclear receptors	0.099981803745334	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.0333333333333333	ligand-dependent nuclear receptors	0.106997321597817	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.0266666666666666	ligand-dependent nuclear receptors	0.114191009184718	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.0199999999999999	ligand-dependent nuclear receptors	0.121512861903728	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.0133333333333333	ligand-dependent nuclear receptors	0.128935092588405	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.0066666666666666	ligand-dependent nuclear receptors	0.136428698424395	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0	ligand-dependent nuclear receptors	0.143963794039414	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.00666666666666682	ligand-dependent nuclear receptors	0.151508586171023	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.0133333333333334	ligand-dependent nuclear receptors	0.159027292454255	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.02	ligand-dependent nuclear receptors	0.166489640011481	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.0266666666666668	ligand-dependent nuclear receptors	0.173866696757469	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.0333333333333334	ligand-dependent nuclear receptors	0.181130938702508	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.04	ligand-dependent nuclear receptors	0.188256671944251	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.0466666666666666	ligand-dependent nuclear receptors	0.195196204268392	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.0533333333333335	ligand-dependent nuclear receptors	0.201949021735576	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.0600000000000001	ligand-dependent nuclear receptors	0.208498588557015	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.0666666666666667	ligand-dependent nuclear receptors	0.214831910173143	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.0733333333333335	ligand-dependent nuclear receptors	0.220939818630356	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.0800000000000001	ligand-dependent nuclear receptors	0.226801717512602	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.0866666666666667	ligand-dependent nuclear receptors	0.232417526863597	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.0933333333333335	ligand-dependent nuclear receptors	0.237807499139775	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.1	ligand-dependent nuclear receptors	0.242980958343876	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.106666666666667	ligand-dependent nuclear receptors	0.247951625976718	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.113333333333334	ligand-dependent nuclear receptors	0.252737464442699	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.12	ligand-dependent nuclear receptors	0.257342589872793	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.126666666666667	ligand-dependent nuclear receptors	0.261818253238524	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.133333333333333	ligand-dependent nuclear receptors	0.266195293781512	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.14	ligand-dependent nuclear receptors	0.270507755114238	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.146666666666667	ligand-dependent nuclear receptors	0.274792497640757	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.153333333333333	ligand-dependent nuclear receptors	0.279092478233094	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.16	ligand-dependent nuclear receptors	0.283456378497906	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.166666666666667	ligand-dependent nuclear receptors	0.287925920122019	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.173333333333333	ligand-dependent nuclear receptors	0.292544804082553	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.18	ligand-dependent nuclear receptors	0.297356970015356	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.186666666666667	ligand-dependent nuclear receptors	0.302406272857317	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.193333333333333	ligand-dependent nuclear receptors	0.307778094953683	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.2	ligand-dependent nuclear receptors	0.313480721850291	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.206666666666667	ligand-dependent nuclear receptors	0.319553305993386	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.213333333333333	ligand-dependent nuclear receptors	0.326032636109875	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.22	ligand-dependent nuclear receptors	0.332952732426573	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.226666666666667	ligand-dependent nuclear receptors	0.340378261537638	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.233333333333333	ligand-dependent nuclear receptors	0.348339997125444	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.24	ligand-dependent nuclear receptors	0.356828944141791	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.246666666666667	ligand-dependent nuclear receptors	0.365863463631635	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.253333333333333	ligand-dependent nuclear receptors	0.37545768826583	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.26	ligand-dependent nuclear receptors	0.385621943112358	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.266666666666667	ligand-dependent nuclear receptors	0.396437296479824	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.273333333333333	ligand-dependent nuclear receptors	0.407827613312997	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.28	ligand-dependent nuclear receptors	0.419788042567596	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.286666666666667	ligand-dependent nuclear receptors	0.432309443906885	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.293333333333333	ligand-dependent nuclear receptors	0.44537852695381	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.3	ligand-dependent nuclear receptors	0.459012459674643	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.306666666666667	ligand-dependent nuclear receptors	0.473184762472687	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.313333333333333	ligand-dependent nuclear receptors	0.487835321983305	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.32	ligand-dependent nuclear receptors	0.502935520457344	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.326666666666667	ligand-dependent nuclear receptors	0.518453971747285	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.333333333333334	ligand-dependent nuclear receptors	0.534357279243302	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.34	ligand-dependent nuclear receptors	0.550650163818803	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.346666666666667	ligand-dependent nuclear receptors	0.56724486360472	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.353333333333334	ligand-dependent nuclear receptors	0.584102156943625	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.36	ligand-dependent nuclear receptors	0.601181995741806	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.366666666666667	ligand-dependent nuclear receptors	0.618443861574297	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.373333333333334	ligand-dependent nuclear receptors	0.635853813028959	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.38	ligand-dependent nuclear receptors	0.653364034329953	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.386666666666667	ligand-dependent nuclear receptors	0.670926019604814	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.393333333333333	ligand-dependent nuclear receptors	0.688500884186226	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.4	ligand-dependent nuclear receptors	0.706050816266173	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.406666666666667	ligand-dependent nuclear receptors	0.723539116620111	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.413333333333333	ligand-dependent nuclear receptors	0.740913541709061	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.42	ligand-dependent nuclear receptors	0.758150212270961	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.426666666666667	ligand-dependent nuclear receptors	0.775217657956237	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.433333333333333	ligand-dependent nuclear receptors	0.792086075934444	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.44	ligand-dependent nuclear receptors	0.808727338031488	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.446666666666667	ligand-dependent nuclear receptors	0.825095861998298	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.453333333333333	ligand-dependent nuclear receptors	0.841163575641588	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.46	ligand-dependent nuclear receptors	0.85692448828081	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.466666666666667	ligand-dependent nuclear receptors	0.872357312071346	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.473333333333333	ligand-dependent nuclear receptors	0.887442212101413	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.48	ligand-dependent nuclear receptors	0.902160097277395	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.486666666666667	ligand-dependent nuclear receptors	0.916442064371496	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.493333333333333	ligand-dependent nuclear receptors	0.930321715149295	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.5	ligand-dependent nuclear receptors	0.943785353727935	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.506666666666667	ligand-dependent nuclear receptors	0.956820844881997	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.513333333333334	ligand-dependent nuclear receptors	0.969417747344869	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.52	ligand-dependent nuclear receptors	0.981536367659555	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.526666666666667	ligand-dependent nuclear receptors	0.99317121761963	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.533333333333333	ligand-dependent nuclear receptors	1.00434806449781	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.54	ligand-dependent nuclear receptors	1.01506638939114	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.546666666666667	ligand-dependent nuclear receptors	1.02532879928743	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.553333333333334	ligand-dependent nuclear receptors	1.03514051272611	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.56	ligand-dependent nuclear receptors	1.04445653867925	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.566666666666667	ligand-dependent nuclear receptors	1.05335140494406	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.573333333333333	ligand-dependent nuclear receptors	1.0618455461974	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.58	ligand-dependent nuclear receptors	1.06996449080889	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.586666666666667	ligand-dependent nuclear receptors	1.07773914592124	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.593333333333334	ligand-dependent nuclear receptors	1.08518791763574	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.6	ligand-dependent nuclear receptors	1.0923628265347	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.606666666666667	ligand-dependent nuclear receptors	1.09933320367118	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.613333333333334	ligand-dependent nuclear receptors	1.10615465944233	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.62	ligand-dependent nuclear receptors	1.11288830493166	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.626666666666667	ligand-dependent nuclear receptors	1.119600543833	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.633333333333334	ligand-dependent nuclear receptors	1.12637879802044	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.64	ligand-dependent nuclear receptors	1.13329994351135	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.646666666666667	ligand-dependent nuclear receptors	1.14044309242351	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.653333333333334	ligand-dependent nuclear receptors	1.14788938966916	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.66	ligand-dependent nuclear receptors	1.1557209314952	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.666666666666667	ligand-dependent nuclear receptors	1.16405769612018	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.673333333333333	ligand-dependent nuclear receptors	1.1729910908525	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.68	ligand-dependent nuclear receptors	1.18256616512699	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.686666666666667	ligand-dependent nuclear receptors	1.19285389535432	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.693333333333333	ligand-dependent nuclear receptors	1.20391872338778	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.7	ligand-dependent nuclear receptors	1.21581926952773	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.706666666666667	ligand-dependent nuclear receptors	1.22871997619457	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.713333333333333	ligand-dependent nuclear receptors	1.24254198570437	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.72	ligand-dependent nuclear receptors	1.25730407199762	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.726666666666667	ligand-dependent nuclear receptors	1.27301072122881	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.733333333333333	ligand-dependent nuclear receptors	1.28965100655988	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.74	ligand-dependent nuclear receptors	1.30725722487181	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.746666666666667	ligand-dependent nuclear receptors	1.32576905329236	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.753333333333333	ligand-dependent nuclear receptors	1.34506103068366	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.76	ligand-dependent nuclear receptors	1.36504728873271	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.766666666666667	ligand-dependent nuclear receptors	1.3856239430769	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.773333333333333	ligand-dependent nuclear receptors	1.40667027813898	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.78	ligand-dependent nuclear receptors	1.42806878344345	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.786666666666667	ligand-dependent nuclear receptors	1.44960221144552	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.793333333333333	ligand-dependent nuclear receptors	1.47109596265693	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.8	ligand-dependent nuclear receptors	1.49236223461783	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.806666666666667	ligand-dependent nuclear receptors	1.51320174282512	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.813333333333334	ligand-dependent nuclear receptors	1.53334550502278	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.82	ligand-dependent nuclear receptors	1.55254272735761	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.826666666666667	ligand-dependent nuclear receptors	1.57061405258756	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.833333333333334	ligand-dependent nuclear receptors	1.58733564311528	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.84	ligand-dependent nuclear receptors	1.60248463035345	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.846666666666667	ligand-dependent nuclear receptors	1.61583552089244	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.853333333333334	ligand-dependent nuclear receptors	1.62689292147854	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.86	ligand-dependent nuclear receptors	1.63569643506437	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.866666666666667	ligand-dependent nuclear receptors	1.64205823056801	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.873333333333333	ligand-dependent nuclear receptors	1.64580552350761	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.88	ligand-dependent nuclear receptors	1.64678289433661	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.886666666666667	ligand-dependent nuclear receptors	1.64464288019278	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.893333333333334	ligand-dependent nuclear receptors	1.63927428237401	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.9	ligand-dependent nuclear receptors	1.63077920990818	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.906666666666667	ligand-dependent nuclear receptors	1.61909885398999	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.913333333333334	ligand-dependent nuclear receptors	1.60420028884904	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.92	ligand-dependent nuclear receptors	1.58606638436332	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.926666666666667	ligand-dependent nuclear receptors	1.56431822569397	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.933333333333333	ligand-dependent nuclear receptors	1.53943062037774	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.94	ligand-dependent nuclear receptors	1.51148547983016	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.946666666666667	ligand-dependent nuclear receptors	1.48059012332197	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.953333333333333	ligand-dependent nuclear receptors	1.44687613618851	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.96	ligand-dependent nuclear receptors	1.41032401347476	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.966666666666667	ligand-dependent nuclear receptors	1.37116169376044	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.973333333333333	ligand-dependent nuclear receptors	1.32975585866969	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.98	ligand-dependent nuclear receptors	1.28632265976589	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.986666666666667	ligand-dependent nuclear receptors	1.24109187015293	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+0.993333333333333	ligand-dependent nuclear receptors	1.1942996813443	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+1	ligand-dependent nuclear receptors	1.14606489798594	gene classes	35	0.88	ligand-dependent nuclear receptors	4
+-0.3	growth factors	0.000492729251877157	gene classes	68	0.893333333333334	growth factors	2
+-0.293333333333333	growth factors	0.000634825714824054	gene classes	68	0.893333333333334	growth factors	2
+-0.286666666666667	growth factors	0.000811890372549426	gene classes	68	0.893333333333334	growth factors	2
+-0.28	growth factors	0.00103005128092151	gene classes	68	0.893333333333334	growth factors	2
+-0.273333333333333	growth factors	0.00129797349901682	gene classes	68	0.893333333333334	growth factors	2
+-0.266666666666667	growth factors	0.001634397730784	gene classes	68	0.893333333333334	growth factors	2
+-0.26	growth factors	0.00204169040647935	gene classes	68	0.893333333333334	growth factors	2
+-0.253333333333333	growth factors	0.0025314636724493	gene classes	68	0.893333333333334	growth factors	2
+-0.246666666666667	growth factors	0.00312252737911633	gene classes	68	0.893333333333334	growth factors	2
+-0.24	growth factors	0.00383923240495592	gene classes	68	0.893333333333334	growth factors	2
+-0.233333333333333	growth factors	0.0046855815780678	gene classes	68	0.893333333333334	growth factors	2
+-0.226666666666667	growth factors	0.00567845641906184	gene classes	68	0.893333333333334	growth factors	2
+-0.22	growth factors	0.00685261412098339	gene classes	68	0.893333333333334	growth factors	2
+-0.213333333333333	growth factors	0.00822921958053352	gene classes	68	0.893333333333334	growth factors	2
+-0.206666666666667	growth factors	0.00981398176684892	gene classes	68	0.893333333333334	growth factors	2
+-0.2	growth factors	0.0116264758843706	gene classes	68	0.893333333333334	growth factors	2
+-0.193333333333333	growth factors	0.0137205867198308	gene classes	68	0.893333333333334	growth factors	2
+-0.186666666666667	growth factors	0.0160967154480842	gene classes	68	0.893333333333334	growth factors	2
+-0.18	growth factors	0.0187610170055595	gene classes	68	0.893333333333334	growth factors	2
+-0.173333333333333	growth factors	0.0217286985816152	gene classes	68	0.893333333333334	growth factors	2
+-0.166666666666667	growth factors	0.025067078562218	gene classes	68	0.893333333333334	growth factors	2
+-0.16	growth factors	0.0287349766189699	gene classes	68	0.893333333333334	growth factors	2
+-0.153333333333333	growth factors	0.0327350818960533	gene classes	68	0.893333333333334	growth factors	2
+-0.146666666666667	growth factors	0.0370778996033803	gene classes	68	0.893333333333334	growth factors	2
+-0.14	growth factors	0.0417918220317227	gene classes	68	0.893333333333334	growth factors	2
+-0.133333333333333	growth factors	0.0468172472143495	gene classes	68	0.893333333333334	growth factors	2
+-0.126666666666667	growth factors	0.0521351199437398	gene classes	68	0.893333333333334	growth factors	2
+-0.12	growth factors	0.0577362205240556	gene classes	68	0.893333333333334	growth factors	2
+-0.113333333333333	growth factors	0.0635879738848201	gene classes	68	0.893333333333334	growth factors	2
+-0.106666666666667	growth factors	0.0696224235240868	gene classes	68	0.893333333333334	growth factors	2
+-0.1	growth factors	0.0757920791882174	gene classes	68	0.893333333333334	growth factors	2
+-0.0933333333333333	growth factors	0.0820456304718538	gene classes	68	0.893333333333334	growth factors	2
+-0.0866666666666666	growth factors	0.0883081657174316	gene classes	68	0.893333333333334	growth factors	2
+-0.08	growth factors	0.0945101589033807	gene classes	68	0.893333333333334	growth factors	2
+-0.0733333333333333	growth factors	0.100583386963942	gene classes	68	0.893333333333334	growth factors	2
+-0.0666666666666667	growth factors	0.106417763997713	gene classes	68	0.893333333333334	growth factors	2
+-0.06	growth factors	0.11195498651807	gene classes	68	0.893333333333334	growth factors	2
+-0.0533333333333332	growth factors	0.117130519562337	gene classes	68	0.893333333333334	growth factors	2
+-0.0466666666666666	growth factors	0.121871137773712	gene classes	68	0.893333333333334	growth factors	2
+-0.0399999999999999	growth factors	0.12602769966418	gene classes	68	0.893333333333334	growth factors	2
+-0.0333333333333333	growth factors	0.129616724788188	gene classes	68	0.893333333333334	growth factors	2
+-0.0266666666666666	growth factors	0.132589122306939	gene classes	68	0.893333333333334	growth factors	2
+-0.0199999999999999	growth factors	0.134870499854021	gene classes	68	0.893333333333334	growth factors	2
+-0.0133333333333333	growth factors	0.13637321857986	gene classes	68	0.893333333333334	growth factors	2
+-0.0066666666666666	growth factors	0.137163148756735	gene classes	68	0.893333333333334	growth factors	2
+0	growth factors	0.137234230776719	gene classes	68	0.893333333333334	growth factors	2
+0.00666666666666682	growth factors	0.136531533704846	gene classes	68	0.893333333333334	growth factors	2
+0.0133333333333334	growth factors	0.135077918079997	gene classes	68	0.893333333333334	growth factors	2
+0.02	growth factors	0.132966784465816	gene classes	68	0.893333333333334	growth factors	2
+0.0266666666666668	growth factors	0.130240384482373	gene classes	68	0.893333333333334	growth factors	2
+0.0333333333333334	growth factors	0.12688838465515	gene classes	68	0.893333333333334	growth factors	2
+0.04	growth factors	0.123026552148062	gene classes	68	0.893333333333334	growth factors	2
+0.0466666666666666	growth factors	0.118752296372834	gene classes	68	0.893333333333334	growth factors	2
+0.0533333333333335	growth factors	0.114141781281699	gene classes	68	0.893333333333334	growth factors	2
+0.0600000000000001	growth factors	0.109247517664496	gene classes	68	0.893333333333334	growth factors	2
+0.0666666666666667	growth factors	0.104202887698933	gene classes	68	0.893333333333334	growth factors	2
+0.0733333333333335	growth factors	0.0990949722090889	gene classes	68	0.893333333333334	growth factors	2
+0.0800000000000001	growth factors	0.0940105394359461	gene classes	68	0.893333333333334	growth factors	2
+0.0866666666666667	growth factors	0.089057847937821	gene classes	68	0.893333333333334	growth factors	2
+0.0933333333333335	growth factors	0.0843073105566624	gene classes	68	0.893333333333334	growth factors	2
+0.1	growth factors	0.0798307584104598	gene classes	68	0.893333333333334	growth factors	2
+0.106666666666667	growth factors	0.075720615824159	gene classes	68	0.893333333333334	growth factors	2
+0.113333333333334	growth factors	0.0720644995430088	gene classes	68	0.893333333333334	growth factors	2
+0.12	growth factors	0.0688738798304111	gene classes	68	0.893333333333334	growth factors	2
+0.126666666666667	growth factors	0.0661911799167016	gene classes	68	0.893333333333334	growth factors	2
+0.133333333333333	growth factors	0.0641101512832394	gene classes	68	0.893333333333334	growth factors	2
+0.14	growth factors	0.0626442301753115	gene classes	68	0.893333333333334	growth factors	2
+0.146666666666667	growth factors	0.0617725815054301	gene classes	68	0.893333333333334	growth factors	2
+0.153333333333333	growth factors	0.0615063544847386	gene classes	68	0.893333333333334	growth factors	2
+0.16	growth factors	0.0619366861119178	gene classes	68	0.893333333333334	growth factors	2
+0.166666666666667	growth factors	0.0629960322606958	gene classes	68	0.893333333333334	growth factors	2
+0.173333333333333	growth factors	0.0646587915974737	gene classes	68	0.893333333333334	growth factors	2
+0.18	growth factors	0.0669191637119559	gene classes	68	0.893333333333334	growth factors	2
+0.186666666666667	growth factors	0.0698578509440703	gene classes	68	0.893333333333334	growth factors	2
+0.193333333333333	growth factors	0.0733630438572307	gene classes	68	0.893333333333334	growth factors	2
+0.2	growth factors	0.0774219374659326	gene classes	68	0.893333333333334	growth factors	2
+0.206666666666667	growth factors	0.0820457590174116	gene classes	68	0.893333333333334	growth factors	2
+0.213333333333333	growth factors	0.087268653528276	gene classes	68	0.893333333333334	growth factors	2
+0.22	growth factors	0.0930144553256213	gene classes	68	0.893333333333334	growth factors	2
+0.226666666666667	growth factors	0.0992801718326148	gene classes	68	0.893333333333334	growth factors	2
+0.233333333333333	growth factors	0.106109527639791	gene classes	68	0.893333333333334	growth factors	2
+0.24	growth factors	0.113515081314985	gene classes	68	0.893333333333334	growth factors	2
+0.246666666666667	growth factors	0.12146023992858	gene classes	68	0.893333333333334	growth factors	2
+0.253333333333333	growth factors	0.12996047967369	gene classes	68	0.893333333333334	growth factors	2
+0.26	growth factors	0.139106824162544	gene classes	68	0.893333333333334	growth factors	2
+0.266666666666667	growth factors	0.148889912572893	gene classes	68	0.893333333333334	growth factors	2
+0.273333333333333	growth factors	0.159306109077879	gene classes	68	0.893333333333334	growth factors	2
+0.28	growth factors	0.170384996329033	gene classes	68	0.893333333333334	growth factors	2
+0.286666666666667	growth factors	0.182271409206814	gene classes	68	0.893333333333334	growth factors	2
+0.293333333333333	growth factors	0.194902696964137	gene classes	68	0.893333333333334	growth factors	2
+0.3	growth factors	0.208297735424145	gene classes	68	0.893333333333334	growth factors	2
+0.306666666666667	growth factors	0.222502364518814	gene classes	68	0.893333333333334	growth factors	2
+0.313333333333333	growth factors	0.237650106362113	gene classes	68	0.893333333333334	growth factors	2
+0.32	growth factors	0.253638914486796	gene classes	68	0.893333333333334	growth factors	2
+0.326666666666667	growth factors	0.270481881535141	gene classes	68	0.893333333333334	growth factors	2
+0.333333333333334	growth factors	0.288237467477883	gene classes	68	0.893333333333334	growth factors	2
+0.34	growth factors	0.306949891295731	gene classes	68	0.893333333333334	growth factors	2
+0.346666666666667	growth factors	0.326511420682601	gene classes	68	0.893333333333334	growth factors	2
+0.353333333333334	growth factors	0.346904042868728	gene classes	68	0.893333333333334	growth factors	2
+0.36	growth factors	0.368177107239031	gene classes	68	0.893333333333334	growth factors	2
+0.366666666666667	growth factors	0.390269914585872	gene classes	68	0.893333333333334	growth factors	2
+0.373333333333334	growth factors	0.413078251648331	gene classes	68	0.893333333333334	growth factors	2
+0.38	growth factors	0.43655091469551	gene classes	68	0.893333333333334	growth factors	2
+0.386666666666667	growth factors	0.460703450758375	gene classes	68	0.893333333333334	growth factors	2
+0.393333333333333	growth factors	0.485400624657748	gene classes	68	0.893333333333334	growth factors	2
+0.4	growth factors	0.510549171343273	gene classes	68	0.893333333333334	growth factors	2
+0.406666666666667	growth factors	0.536073827622667	gene classes	68	0.893333333333334	growth factors	2
+0.413333333333333	growth factors	0.561932272678543	gene classes	68	0.893333333333334	growth factors	2
+0.42	growth factors	0.587980541878329	gene classes	68	0.893333333333334	growth factors	2
+0.426666666666667	growth factors	0.614133572997394	gene classes	68	0.893333333333334	growth factors	2
+0.433333333333333	growth factors	0.640301915268584	gene classes	68	0.893333333333334	growth factors	2
+0.44	growth factors	0.666375116736332	gene classes	68	0.893333333333334	growth factors	2
+0.446666666666667	growth factors	0.692266674414282	gene classes	68	0.893333333333334	growth factors	2
+0.453333333333333	growth factors	0.717890278392735	gene classes	68	0.893333333333334	growth factors	2
+0.46	growth factors	0.743127281510083	gene classes	68	0.893333333333334	growth factors	2
+0.466666666666667	growth factors	0.767868913034786	gene classes	68	0.893333333333334	growth factors	2
+0.473333333333333	growth factors	0.792072505544103	gene classes	68	0.893333333333334	growth factors	2
+0.48	growth factors	0.815663361912449	gene classes	68	0.893333333333334	growth factors	2
+0.486666666666667	growth factors	0.838486010803293	gene classes	68	0.893333333333334	growth factors	2
+0.493333333333333	growth factors	0.86050397361393	gene classes	68	0.893333333333334	growth factors	2
+0.5	growth factors	0.881703970457381	gene classes	68	0.893333333333334	growth factors	2
+0.506666666666667	growth factors	0.902040220471736	gene classes	68	0.893333333333334	growth factors	2
+0.513333333333334	growth factors	0.92133572812251	gene classes	68	0.893333333333334	growth factors	2
+0.52	growth factors	0.939682642155336	gene classes	68	0.893333333333334	growth factors	2
+0.526666666666667	growth factors	0.957091125054218	gene classes	68	0.893333333333334	growth factors	2
+0.533333333333333	growth factors	0.973550122442493	gene classes	68	0.893333333333334	growth factors	2
+0.54	growth factors	0.988956692826161	gene classes	68	0.893333333333334	growth factors	2
+0.546666666666667	growth factors	1.00349482623712	gene classes	68	0.893333333333334	growth factors	2
+0.553333333333334	growth factors	1.01721808872154	gene classes	68	0.893333333333334	growth factors	2
+0.56	growth factors	1.03015887037197	gene classes	68	0.893333333333334	growth factors	2
+0.566666666666667	growth factors	1.04237709576735	gene classes	68	0.893333333333334	growth factors	2
+0.573333333333333	growth factors	1.0540595385521	gene classes	68	0.893333333333334	growth factors	2
+0.58	growth factors	1.06531834975308	gene classes	68	0.893333333333334	growth factors	2
+0.586666666666667	growth factors	1.07626017795224	gene classes	68	0.893333333333334	growth factors	2
+0.593333333333334	growth factors	1.087046936895	gene classes	68	0.893333333333334	growth factors	2
+0.6	growth factors	1.09783627900361	gene classes	68	0.893333333333334	growth factors	2
+0.606666666666667	growth factors	1.10876507881322	gene classes	68	0.893333333333334	growth factors	2
+0.613333333333334	growth factors	1.1200223154547	gene classes	68	0.893333333333334	growth factors	2
+0.62	growth factors	1.13173486175436	gene classes	68	0.893333333333334	growth factors	2
+0.626666666666667	growth factors	1.14401030792289	gene classes	68	0.893333333333334	growth factors	2
+0.633333333333334	growth factors	1.15695822113684	gene classes	68	0.893333333333334	growth factors	2
+0.64	growth factors	1.17081869250024	gene classes	68	0.893333333333334	growth factors	2
+0.646666666666667	growth factors	1.18555333584297	gene classes	68	0.893333333333334	growth factors	2
+0.653333333333334	growth factors	1.20121803357964	gene classes	68	0.893333333333334	growth factors	2
+0.66	growth factors	1.21788850906823	gene classes	68	0.893333333333334	growth factors	2
+0.666666666666667	growth factors	1.23569755095501	gene classes	68	0.893333333333334	growth factors	2
+0.673333333333333	growth factors	1.25451048403224	gene classes	68	0.893333333333334	growth factors	2
+0.68	growth factors	1.27431468612688	gene classes	68	0.893333333333334	growth factors	2
+0.686666666666667	growth factors	1.29514988167699	gene classes	68	0.893333333333334	growth factors	2
+0.693333333333333	growth factors	1.31699684728783	gene classes	68	0.893333333333334	growth factors	2
+0.7	growth factors	1.33970850123928	gene classes	68	0.893333333333334	growth factors	2
+0.706666666666667	growth factors	1.36322950357346	gene classes	68	0.893333333333334	growth factors	2
+0.713333333333333	growth factors	1.38757615705999	gene classes	68	0.893333333333334	growth factors	2
+0.72	growth factors	1.41264344112807	gene classes	68	0.893333333333334	growth factors	2
+0.726666666666667	growth factors	1.4383262205904	gene classes	68	0.893333333333334	growth factors	2
+0.733333333333333	growth factors	1.4645696862196	gene classes	68	0.893333333333334	growth factors	2
+0.74	growth factors	1.49139109876979	gene classes	68	0.893333333333334	growth factors	2
+0.746666666666667	growth factors	1.51867680375414	gene classes	68	0.893333333333334	growth factors	2
+0.753333333333333	growth factors	1.54637308754718	gene classes	68	0.893333333333334	growth factors	2
+0.76	growth factors	1.57444601396133	gene classes	68	0.893333333333334	growth factors	2
+0.766666666666667	growth factors	1.60290219941696	gene classes	68	0.893333333333334	growth factors	2
+0.773333333333333	growth factors	1.63164403394603	gene classes	68	0.893333333333334	growth factors	2
+0.78	growth factors	1.66062697598186	gene classes	68	0.893333333333334	growth factors	2
+0.786666666666667	growth factors	1.68980372256544	gene classes	68	0.893333333333334	growth factors	2
+0.793333333333333	growth factors	1.71910222167405	gene classes	68	0.893333333333334	growth factors	2
+0.8	growth factors	1.74841351538214	gene classes	68	0.893333333333334	growth factors	2
+0.806666666666667	growth factors	1.77762979277188	gene classes	68	0.893333333333334	growth factors	2
+0.813333333333334	growth factors	1.80658544852608	gene classes	68	0.893333333333334	growth factors	2
+0.82	growth factors	1.83508324982392	gene classes	68	0.893333333333334	growth factors	2
+0.826666666666667	growth factors	1.86294967730947	gene classes	68	0.893333333333334	growth factors	2
+0.833333333333334	growth factors	1.88996033876292	gene classes	68	0.893333333333334	growth factors	2
+0.84	growth factors	1.91568612917247	gene classes	68	0.893333333333334	growth factors	2
+0.846666666666667	growth factors	1.93987700624054	gene classes	68	0.893333333333334	growth factors	2
+0.853333333333334	growth factors	1.96227234939442	gene classes	68	0.893333333333334	growth factors	2
+0.86	growth factors	1.98253555713158	gene classes	68	0.893333333333334	growth factors	2
+0.866666666666667	growth factors	1.9998475408609	gene classes	68	0.893333333333334	growth factors	2
+0.873333333333333	growth factors	2.01417652338894	gene classes	68	0.893333333333334	growth factors	2
+0.88	growth factors	2.02517810884447	gene classes	68	0.893333333333334	growth factors	2
+0.886666666666667	growth factors	2.03237292259636	gene classes	68	0.893333333333334	growth factors	2
+0.893333333333334	growth factors	2.03487678178624	gene classes	68	0.893333333333334	growth factors	2
+0.9	growth factors	2.0329165281012	gene classes	68	0.893333333333334	growth factors	2
+0.906666666666667	growth factors	2.02620157550347	gene classes	68	0.893333333333334	growth factors	2
+0.913333333333334	growth factors	2.01413372215129	gene classes	68	0.893333333333334	growth factors	2
+0.92	growth factors	1.996261780503	gene classes	68	0.893333333333334	growth factors	2
+0.926666666666667	growth factors	1.97299273911894	gene classes	68	0.893333333333334	growth factors	2
+0.933333333333333	growth factors	1.9442511494114	gene classes	68	0.893333333333334	growth factors	2
+0.94	growth factors	1.9094593678561	gene classes	68	0.893333333333334	growth factors	2
+0.946666666666667	growth factors	1.86888822803558	gene classes	68	0.893333333333334	growth factors	2
+0.953333333333333	growth factors	1.82305994478525	gene classes	68	0.893333333333334	growth factors	2
+0.96	growth factors	1.77218402323711	gene classes	68	0.893333333333334	growth factors	2
+0.966666666666667	growth factors	1.71590469262378	gene classes	68	0.893333333333334	growth factors	2
+0.973333333333333	growth factors	1.65515063407258	gene classes	68	0.893333333333334	growth factors	2
+0.98	growth factors	1.59047664587835	gene classes	68	0.893333333333334	growth factors	2
+0.986666666666667	growth factors	1.52231751305736	gene classes	68	0.893333333333334	growth factors	2
+0.993333333333333	growth factors	1.45078550711789	gene classes	68	0.893333333333334	growth factors	2
+1	growth factors	1.37696859016548	gene classes	68	0.893333333333334	growth factors	2
+-0.3	transmembrane receptors	0.00311533605952513	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.293333333333333	transmembrane receptors	0.00385573469450771	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.286666666666667	transmembrane receptors	0.00474531796929082	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.28	transmembrane receptors	0.00580107238067977	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.273333333333333	transmembrane receptors	0.00704699458846505	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.266666666666667	transmembrane receptors	0.00855068205725139	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.26	transmembrane receptors	0.0103068244266438	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.253333333333333	transmembrane receptors	0.0123459140831241	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.246666666666667	transmembrane receptors	0.0147143386946096	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.24	transmembrane receptors	0.0174846347271141	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.233333333333333	transmembrane receptors	0.0206487705253248	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.226666666666667	transmembrane receptors	0.0242422063997011	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.22	transmembrane receptors	0.028340376259892	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.213333333333333	transmembrane receptors	0.0329923755654637	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.206666666666667	transmembrane receptors	0.038186831094797	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.2	transmembrane receptors	0.0439543351162621	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.193333333333333	transmembrane receptors	0.0503967527743544	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.186666666666667	transmembrane receptors	0.0575020636376162	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.18	transmembrane receptors	0.0652542323032058	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.173333333333333	transmembrane receptors	0.0736642784935363	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.166666666666667	transmembrane receptors	0.0828408721143275	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.16	transmembrane receptors	0.0926836688091842	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.153333333333333	transmembrane receptors	0.103168575361499	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.146666666666667	transmembrane receptors	0.11428698354179	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.14	transmembrane receptors	0.126073033565269	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.133333333333333	transmembrane receptors	0.138391286837585	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.126666666666667	transmembrane receptors	0.151188592202036	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.12	transmembrane receptors	0.164424802100418	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.113333333333333	transmembrane receptors	0.178030091021145	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.106666666666667	transmembrane receptors	0.191880554707961	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.1	transmembrane receptors	0.205890355806542	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.0933333333333333	transmembrane receptors	0.219965577948282	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.0866666666666666	transmembrane receptors	0.23399026413733	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.08	transmembrane receptors	0.247864202736647	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.0733333333333333	transmembrane receptors	0.261490704500729	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.0666666666666667	transmembrane receptors	0.274712595699788	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.06	transmembrane receptors	0.287462822034701	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.0533333333333332	transmembrane receptors	0.299667425127561	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.0466666666666666	transmembrane receptors	0.311242082853751	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.0399999999999999	transmembrane receptors	0.321995680206116	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.0333333333333333	transmembrane receptors	0.331976275536877	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.0266666666666666	transmembrane receptors	0.341134964740856	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.0199999999999999	transmembrane receptors	0.349390836296744	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.0133333333333333	transmembrane receptors	0.356642411865108	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.0066666666666666	transmembrane receptors	0.362985246285431	gene classes	228	0.893333333333334	transmembrane receptors	8
+0	transmembrane receptors	0.368415464041877	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.00666666666666682	transmembrane receptors	0.372861515514934	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.0133333333333334	transmembrane receptors	0.376343002022255	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.02	transmembrane receptors	0.378963667827778	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.0266666666666668	transmembrane receptors	0.380755637228712	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.0333333333333334	transmembrane receptors	0.381662945726101	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.04	transmembrane receptors	0.381799035192419	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.0466666666666666	transmembrane receptors	0.381249119507145	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.0533333333333335	transmembrane receptors	0.380064223287071	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.0600000000000001	transmembrane receptors	0.378210692807076	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.0666666666666667	transmembrane receptors	0.375842440487666	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.0733333333333335	transmembrane receptors	0.373020834461066	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.0800000000000001	transmembrane receptors	0.369793344163816	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.0866666666666667	transmembrane receptors	0.366192534477972	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.0933333333333335	transmembrane receptors	0.36233241100292	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.1	transmembrane receptors	0.358274108968054	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.106666666666667	transmembrane receptors	0.354075292075282	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.113333333333334	transmembrane receptors	0.349811034526517	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.12	transmembrane receptors	0.345559383667431	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.126666666666667	transmembrane receptors	0.341387271607097	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.133333333333333	transmembrane receptors	0.337386918820765	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.14	transmembrane receptors	0.333633658265979	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.146666666666667	transmembrane receptors	0.330186245707151	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.153333333333333	transmembrane receptors	0.32711292375308	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.16	transmembrane receptors	0.324555641868781	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.166666666666667	transmembrane receptors	0.322531581131042	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.173333333333333	transmembrane receptors	0.321087806621214	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.18	transmembrane receptors	0.320286879291946	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.186666666666667	transmembrane receptors	0.320277587350556	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.193333333333333	transmembrane receptors	0.320990942864511	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.2	transmembrane receptors	0.32245016313487	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.206666666666667	transmembrane receptors	0.324708571165577	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.213333333333333	transmembrane receptors	0.327812726069393	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.22	transmembrane receptors	0.331655059634349	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.226666666666667	transmembrane receptors	0.336205490822914	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.233333333333333	transmembrane receptors	0.341477947641277	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.24	transmembrane receptors	0.347393530338604	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.246666666666667	transmembrane receptors	0.35382939447567	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.253333333333333	transmembrane receptors	0.36070506694517	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.26	transmembrane receptors	0.36796539984448	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.266666666666667	transmembrane receptors	0.375465855031309	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.273333333333333	transmembrane receptors	0.383092476877805	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.28	transmembrane receptors	0.390743637676597	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.286666666666667	transmembrane receptors	0.398289112498963	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.293333333333333	transmembrane receptors	0.405634750617684	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.3	transmembrane receptors	0.4126926834234	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.306666666666667	transmembrane receptors	0.419367047903739	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.313333333333333	transmembrane receptors	0.425537229145878	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.32	transmembrane receptors	0.431205304708131	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.326666666666667	transmembrane receptors	0.436335654690694	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.333333333333334	transmembrane receptors	0.440864426920822	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.34	transmembrane receptors	0.444779588870276	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.346666666666667	transmembrane receptors	0.448152426937382	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.353333333333334	transmembrane receptors	0.451015804413367	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.36	transmembrane receptors	0.453370545144484	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.366666666666667	transmembrane receptors	0.455319285540682	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.373333333333334	transmembrane receptors	0.456963841726172	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.38	transmembrane receptors	0.458389605092082	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.386666666666667	transmembrane receptors	0.459684711055799	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.393333333333333	transmembrane receptors	0.460978367687088	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.4	transmembrane receptors	0.462372633588012	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.406666666666667	transmembrane receptors	0.463973932520896	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.413333333333333	transmembrane receptors	0.465934467511071	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.42	transmembrane receptors	0.468309910603362	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.426666666666667	transmembrane receptors	0.471183372410016	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.433333333333333	transmembrane receptors	0.474669206566314	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.44	transmembrane receptors	0.478876461821459	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.446666666666667	transmembrane receptors	0.483790655775549	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.453333333333333	transmembrane receptors	0.489452973264102	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.46	transmembrane receptors	0.495974976091915	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.466666666666667	transmembrane receptors	0.503358085746632	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.473333333333333	transmembrane receptors	0.511554231013735	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.48	transmembrane receptors	0.520564781925657	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.486666666666667	transmembrane receptors	0.530496641568039	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.493333333333333	transmembrane receptors	0.541251338656748	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.5	transmembrane receptors	0.552788010604475	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.506666666666667	transmembrane receptors	0.565095996315685	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.513333333333334	transmembrane receptors	0.578279454929426	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.52	transmembrane receptors	0.592198542230399	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.526666666666667	transmembrane receptors	0.606844156626687	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.533333333333333	transmembrane receptors	0.622243831402365	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.54	transmembrane receptors	0.638457808417252	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.546666666666667	transmembrane receptors	0.65540029871104	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.553333333333334	transmembrane receptors	0.673082622126574	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.56	transmembrane receptors	0.691586129113071	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.566666666666667	transmembrane receptors	0.710938553019215	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.573333333333333	transmembrane receptors	0.731095361871333	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.58	transmembrane receptors	0.752080307266085	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.586666666666667	transmembrane receptors	0.774024538251855	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.593333333333334	transmembrane receptors	0.796888344346547	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.6	transmembrane receptors	0.820644109356113	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.606666666666667	transmembrane receptors	0.845300045891444	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.613333333333334	transmembrane receptors	0.871001335280041	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.62	transmembrane receptors	0.897596286930308	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.626666666666667	transmembrane receptors	0.925050266598271	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.633333333333334	transmembrane receptors	0.953347428798044	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.64	transmembrane receptors	0.982512918268757	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.646666666666667	transmembrane receptors	1.01236001468784	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.653333333333334	transmembrane receptors	1.04280537007384	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.66	transmembrane receptors	1.07377927315271	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.666666666666667	transmembrane receptors	1.10516378813002	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.673333333333333	transmembrane receptors	1.13678766907401	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.68	transmembrane receptors	1.16852248041792	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.686666666666667	transmembrane receptors	1.20021679124646	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.693333333333333	transmembrane receptors	1.2317089421919	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.7	transmembrane receptors	1.26286731256584	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.706666666666667	transmembrane receptors	1.29356124046773	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.713333333333333	transmembrane receptors	1.32356365408181	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.72	transmembrane receptors	1.3528179120971	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.726666666666667	transmembrane receptors	1.3812439490517	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.733333333333333	transmembrane receptors	1.40874823643145	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.74	transmembrane receptors	1.43511518656287	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.746666666666667	transmembrane receptors	1.46045494226725	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.753333333333333	transmembrane receptors	1.48474699585391	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.76	transmembrane receptors	1.5079349942386	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.766666666666667	transmembrane receptors	1.5299685060204	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.773333333333333	transmembrane receptors	1.55100980255425	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.78	transmembrane receptors	1.57110607894948	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.786666666666667	transmembrane receptors	1.59023800922107	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.793333333333333	transmembrane receptors	1.60848890125045	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.8	transmembrane receptors	1.62599188648021	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.806666666666667	transmembrane receptors	1.64280351280952	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.813333333333334	transmembrane receptors	1.65889133575131	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.82	transmembrane receptors	1.67434664990616	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.826666666666667	transmembrane receptors	1.68920401781209	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.833333333333334	transmembrane receptors	1.70344790307316	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.84	transmembrane receptors	1.71691339388275	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.846666666666667	transmembrane receptors	1.72962217918062	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.853333333333334	transmembrane receptors	1.74146460562523	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.86	transmembrane receptors	1.75225505162711	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.866666666666667	transmembrane receptors	1.761663764805	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.873333333333333	transmembrane receptors	1.76962460978492	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.88	transmembrane receptors	1.77590383224453	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.886666666666667	transmembrane receptors	1.78008042529604	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.893333333333334	transmembrane receptors	1.78177728657486	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.9	transmembrane receptors	1.78091129061923	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.906666666666667	transmembrane receptors	1.77720429465828	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.913333333333334	transmembrane receptors	1.76999775853955	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.92	transmembrane receptors	1.75916644330391	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.926666666666667	transmembrane receptors	1.74467075001229	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.933333333333333	transmembrane receptors	1.72631644589059	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.94	transmembrane receptors	1.70331057171127	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.946666666666667	transmembrane receptors	1.67607570143132	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.953333333333333	transmembrane receptors	1.64464223719913	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.96	transmembrane receptors	1.60893239031585	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.966666666666667	transmembrane receptors	1.56847421489784	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.973333333333333	transmembrane receptors	1.52404459367499	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.98	transmembrane receptors	1.47583267746109	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.986666666666667	transmembrane receptors	1.42388897932509	gene classes	228	0.893333333333334	transmembrane receptors	8
+0.993333333333333	transmembrane receptors	1.36839375924705	gene classes	228	0.893333333333334	transmembrane receptors	8
+1	transmembrane receptors	1.31009334826372	gene classes	228	0.893333333333334	transmembrane receptors	8
+-0.3	transcription regulators	0.0202326413286112	gene classes	1053	0.9	transcription regulators	6
+-0.293333333333333	transcription regulators	0.0213554936154785	gene classes	1053	0.9	transcription regulators	6
+-0.286666666666667	transcription regulators	0.0226644003999738	gene classes	1053	0.9	transcription regulators	6
+-0.28	transcription regulators	0.0242096615913599	gene classes	1053	0.9	transcription regulators	6
+-0.273333333333333	transcription regulators	0.0259683675816083	gene classes	1053	0.9	transcription regulators	6
+-0.266666666666667	transcription regulators	0.027959589986748	gene classes	1053	0.9	transcription regulators	6
+-0.26	transcription regulators	0.0302246446844841	gene classes	1053	0.9	transcription regulators	6
+-0.253333333333333	transcription regulators	0.0327314390119246	gene classes	1053	0.9	transcription regulators	6
+-0.246666666666667	transcription regulators	0.0354976424432071	gene classes	1053	0.9	transcription regulators	6
+-0.24	transcription regulators	0.0385484307175841	gene classes	1053	0.9	transcription regulators	6
+-0.233333333333333	transcription regulators	0.0418462999624329	gene classes	1053	0.9	transcription regulators	6
+-0.226666666666667	transcription regulators	0.0454067680691797	gene classes	1053	0.9	transcription regulators	6
+-0.22	transcription regulators	0.0492385760437649	gene classes	1053	0.9	transcription regulators	6
+-0.213333333333333	transcription regulators	0.0533057878067946	gene classes	1053	0.9	transcription regulators	6
+-0.206666666666667	transcription regulators	0.0576256235724517	gene classes	1053	0.9	transcription regulators	6
+-0.2	transcription regulators	0.0621983697126356	gene classes	1053	0.9	transcription regulators	6
+-0.193333333333333	transcription regulators	0.0669981305446249	gene classes	1053	0.9	transcription regulators	6
+-0.186666666666667	transcription regulators	0.0720537107068994	gene classes	1053	0.9	transcription regulators	6
+-0.18	transcription regulators	0.0773681571114313	gene classes	1053	0.9	transcription regulators	6
+-0.173333333333333	transcription regulators	0.0829319449139484	gene classes	1053	0.9	transcription regulators	6
+-0.166666666666667	transcription regulators	0.0887987994231926	gene classes	1053	0.9	transcription regulators	6
+-0.16	transcription regulators	0.0949786495235778	gene classes	1053	0.9	transcription regulators	6
+-0.153333333333333	transcription regulators	0.101478597679792	gene classes	1053	0.9	transcription regulators	6
+-0.146666666666667	transcription regulators	0.10838686575289	gene classes	1053	0.9	transcription regulators	6
+-0.14	transcription regulators	0.115708397011783	gene classes	1053	0.9	transcription regulators	6
+-0.133333333333333	transcription regulators	0.12345927453771	gene classes	1053	0.9	transcription regulators	6
+-0.126666666666667	transcription regulators	0.13175894019346	gene classes	1053	0.9	transcription regulators	6
+-0.12	transcription regulators	0.140580704401334	gene classes	1053	0.9	transcription regulators	6
+-0.113333333333333	transcription regulators	0.149936071733591	gene classes	1053	0.9	transcription regulators	6
+-0.106666666666667	transcription regulators	0.159954316316471	gene classes	1053	0.9	transcription regulators	6
+-0.1	transcription regulators	0.170550591204338	gene classes	1053	0.9	transcription regulators	6
+-0.0933333333333333	transcription regulators	0.181720941437071	gene classes	1053	0.9	transcription regulators	6
+-0.0866666666666666	transcription regulators	0.19355981122618	gene classes	1053	0.9	transcription regulators	6
+-0.08	transcription regulators	0.205928812731038	gene classes	1053	0.9	transcription regulators	6
+-0.0733333333333333	transcription regulators	0.218802441644611	gene classes	1053	0.9	transcription regulators	6
+-0.0666666666666667	transcription regulators	0.23219052904692	gene classes	1053	0.9	transcription regulators	6
+-0.06	transcription regulators	0.245946534737031	gene classes	1053	0.9	transcription regulators	6
+-0.0533333333333332	transcription regulators	0.260011905630019	gene classes	1053	0.9	transcription regulators	6
+-0.0466666666666666	transcription regulators	0.274321715987783	gene classes	1053	0.9	transcription regulators	6
+-0.0399999999999999	transcription regulators	0.288753118364629	gene classes	1053	0.9	transcription regulators	6
+-0.0333333333333333	transcription regulators	0.303224820356299	gene classes	1053	0.9	transcription regulators	6
+-0.0266666666666666	transcription regulators	0.317641160282424	gene classes	1053	0.9	transcription regulators	6
+-0.0199999999999999	transcription regulators	0.331929913993517	gene classes	1053	0.9	transcription regulators	6
+-0.0133333333333333	transcription regulators	0.346008920827772	gene classes	1053	0.9	transcription regulators	6
+-0.0066666666666666	transcription regulators	0.359806537300069	gene classes	1053	0.9	transcription regulators	6
+0	transcription regulators	0.373311051220655	gene classes	1053	0.9	transcription regulators	6
+0.00666666666666682	transcription regulators	0.386464349543698	gene classes	1053	0.9	transcription regulators	6
+0.0133333333333334	transcription regulators	0.399254868693754	gene classes	1053	0.9	transcription regulators	6
+0.02	transcription regulators	0.41172128097569	gene classes	1053	0.9	transcription regulators	6
+0.0266666666666668	transcription regulators	0.423847443951487	gene classes	1053	0.9	transcription regulators	6
+0.0333333333333334	transcription regulators	0.435682190654473	gene classes	1053	0.9	transcription regulators	6
+0.04	transcription regulators	0.44729100461985	gene classes	1053	0.9	transcription regulators	6
+0.0466666666666666	transcription regulators	0.458703752798229	gene classes	1053	0.9	transcription regulators	6
+0.0533333333333335	transcription regulators	0.469997802320171	gene classes	1053	0.9	transcription regulators	6
+0.0600000000000001	transcription regulators	0.481239059113797	gene classes	1053	0.9	transcription regulators	6
+0.0666666666666667	transcription regulators	0.492491655186842	gene classes	1053	0.9	transcription regulators	6
+0.0733333333333335	transcription regulators	0.503816453692767	gene classes	1053	0.9	transcription regulators	6
+0.0800000000000001	transcription regulators	0.515259008192548	gene classes	1053	0.9	transcription regulators	6
+0.0866666666666667	transcription regulators	0.526892729732825	gene classes	1053	0.9	transcription regulators	6
+0.0933333333333335	transcription regulators	0.538726878496397	gene classes	1053	0.9	transcription regulators	6
+0.1	transcription regulators	0.550775281404685	gene classes	1053	0.9	transcription regulators	6
+0.106666666666667	transcription regulators	0.563088918081656	gene classes	1053	0.9	transcription regulators	6
+0.113333333333334	transcription regulators	0.575617941839033	gene classes	1053	0.9	transcription regulators	6
+0.12	transcription regulators	0.588345257849215	gene classes	1053	0.9	transcription regulators	6
+0.126666666666667	transcription regulators	0.601264749887786	gene classes	1053	0.9	transcription regulators	6
+0.133333333333333	transcription regulators	0.614300223739041	gene classes	1053	0.9	transcription regulators	6
+0.14	transcription regulators	0.627404729767543	gene classes	1053	0.9	transcription regulators	6
+0.146666666666667	transcription regulators	0.640515948721444	gene classes	1053	0.9	transcription regulators	6
+0.153333333333333	transcription regulators	0.653568273522335	gene classes	1053	0.9	transcription regulators	6
+0.16	transcription regulators	0.66649557001158	gene classes	1053	0.9	transcription regulators	6
+0.166666666666667	transcription regulators	0.679214271337009	gene classes	1053	0.9	transcription regulators	6
+0.173333333333333	transcription regulators	0.691695246393297	gene classes	1053	0.9	transcription regulators	6
+0.18	transcription regulators	0.703872572251125	gene classes	1053	0.9	transcription regulators	6
+0.186666666666667	transcription regulators	0.715685445202829	gene classes	1053	0.9	transcription regulators	6
+0.193333333333333	transcription regulators	0.727149398245528	gene classes	1053	0.9	transcription regulators	6
+0.2	transcription regulators	0.738217055355093	gene classes	1053	0.9	transcription regulators	6
+0.206666666666667	transcription regulators	0.74887659624113	gene classes	1053	0.9	transcription regulators	6
+0.213333333333333	transcription regulators	0.759176381697268	gene classes	1053	0.9	transcription regulators	6
+0.22	transcription regulators	0.769094846413028	gene classes	1053	0.9	transcription regulators	6
+0.226666666666667	transcription regulators	0.778663633701801	gene classes	1053	0.9	transcription regulators	6
+0.233333333333333	transcription regulators	0.787939912689699	gene classes	1053	0.9	transcription regulators	6
+0.24	transcription regulators	0.796919824991944	gene classes	1053	0.9	transcription regulators	6
+0.246666666666667	transcription regulators	0.805650351461793	gene classes	1053	0.9	transcription regulators	6
+0.253333333333333	transcription regulators	0.814174951010816	gene classes	1053	0.9	transcription regulators	6
+0.26	transcription regulators	0.822489512895158	gene classes	1053	0.9	transcription regulators	6
+0.266666666666667	transcription regulators	0.830629871424752	gene classes	1053	0.9	transcription regulators	6
+0.273333333333333	transcription regulators	0.838615785734433	gene classes	1053	0.9	transcription regulators	6
+0.28	transcription regulators	0.846427198560913	gene classes	1053	0.9	transcription regulators	6
+0.286666666666667	transcription regulators	0.854083267747036	gene classes	1053	0.9	transcription regulators	6
+0.293333333333333	transcription regulators	0.861584615007652	gene classes	1053	0.9	transcription regulators	6
+0.3	transcription regulators	0.868892039814703	gene classes	1053	0.9	transcription regulators	6
+0.306666666666667	transcription regulators	0.87602315271841	gene classes	1053	0.9	transcription regulators	6
+0.313333333333333	transcription regulators	0.882971414949989	gene classes	1053	0.9	transcription regulators	6
+0.32	transcription regulators	0.889690746669965	gene classes	1053	0.9	transcription regulators	6
+0.326666666666667	transcription regulators	0.896214333569114	gene classes	1053	0.9	transcription regulators	6
+0.333333333333334	transcription regulators	0.902537086178781	gene classes	1053	0.9	transcription regulators	6
+0.34	transcription regulators	0.908632332344216	gene classes	1053	0.9	transcription regulators	6
+0.346666666666667	transcription regulators	0.914543996075162	gene classes	1053	0.9	transcription regulators	6
+0.353333333333334	transcription regulators	0.920277537641061	gene classes	1053	0.9	transcription regulators	6
+0.36	transcription regulators	0.92583304421003	gene classes	1053	0.9	transcription regulators	6
+0.366666666666667	transcription regulators	0.931256418850859	gene classes	1053	0.9	transcription regulators	6
+0.373333333333334	transcription regulators	0.936562551763184	gene classes	1053	0.9	transcription regulators	6
+0.38	transcription regulators	0.941769793005718	gene classes	1053	0.9	transcription regulators	6
+0.386666666666667	transcription regulators	0.946913917695873	gene classes	1053	0.9	transcription regulators	6
+0.393333333333333	transcription regulators	0.952012304533291	gene classes	1053	0.9	transcription regulators	6
+0.4	transcription regulators	0.957084691829461	gene classes	1053	0.9	transcription regulators	6
+0.406666666666667	transcription regulators	0.962149387881827	gene classes	1053	0.9	transcription regulators	6
+0.413333333333333	transcription regulators	0.967217733382576	gene classes	1053	0.9	transcription regulators	6
+0.42	transcription regulators	0.972297525097433	gene classes	1053	0.9	transcription regulators	6
+0.426666666666667	transcription regulators	0.977390253290364	gene classes	1053	0.9	transcription regulators	6
+0.433333333333333	transcription regulators	0.982495553394888	gene classes	1053	0.9	transcription regulators	6
+0.44	transcription regulators	0.987607241358517	gene classes	1053	0.9	transcription regulators	6
+0.446666666666667	transcription regulators	0.99271690459958	gene classes	1053	0.9	transcription regulators	6
+0.453333333333333	transcription regulators	0.997812436235038	gene classes	1053	0.9	transcription regulators	6
+0.46	transcription regulators	1.002882281547	gene classes	1053	0.9	transcription regulators	6
+0.466666666666667	transcription regulators	1.00791683235487	gene classes	1053	0.9	transcription regulators	6
+0.473333333333333	transcription regulators	1.01289740853408	gene classes	1053	0.9	transcription regulators	6
+0.48	transcription regulators	1.01781853659364	gene classes	1053	0.9	transcription regulators	6
+0.486666666666667	transcription regulators	1.02267510818957	gene classes	1053	0.9	transcription regulators	6
+0.493333333333333	transcription regulators	1.02744803255021	gene classes	1053	0.9	transcription regulators	6
+0.5	transcription regulators	1.03214302606962	gene classes	1053	0.9	transcription regulators	6
+0.506666666666667	transcription regulators	1.03675918852237	gene classes	1053	0.9	transcription regulators	6
+0.513333333333334	transcription regulators	1.04127797705746	gene classes	1053	0.9	transcription regulators	6
+0.52	transcription regulators	1.04571193701038	gene classes	1053	0.9	transcription regulators	6
+0.526666666666667	transcription regulators	1.05005741870974	gene classes	1053	0.9	transcription regulators	6
+0.533333333333333	transcription regulators	1.05429136376885	gene classes	1053	0.9	transcription regulators	6
+0.54	transcription regulators	1.05842260453394	gene classes	1053	0.9	transcription regulators	6
+0.546666666666667	transcription regulators	1.06243581765235	gene classes	1053	0.9	transcription regulators	6
+0.553333333333334	transcription regulators	1.06629375291722	gene classes	1053	0.9	transcription regulators	6
+0.56	transcription regulators	1.06999663290756	gene classes	1053	0.9	transcription regulators	6
+0.566666666666667	transcription regulators	1.07350992367704	gene classes	1053	0.9	transcription regulators	6
+0.573333333333333	transcription regulators	1.07677737430549	gene classes	1053	0.9	transcription regulators	6
+0.58	transcription regulators	1.07979552459599	gene classes	1053	0.9	transcription regulators	6
+0.586666666666667	transcription regulators	1.08250727040109	gene classes	1053	0.9	transcription regulators	6
+0.593333333333334	transcription regulators	1.08484636962486	gene classes	1053	0.9	transcription regulators	6
+0.6	transcription regulators	1.0868150253868	gene classes	1053	0.9	transcription regulators	6
+0.606666666666667	transcription regulators	1.08833680301183	gene classes	1053	0.9	transcription regulators	6
+0.613333333333334	transcription regulators	1.08935597116291	gene classes	1053	0.9	transcription regulators	6
+0.62	transcription regulators	1.08988886074784	gene classes	1053	0.9	transcription regulators	6
+0.626666666666667	transcription regulators	1.0898493440809	gene classes	1053	0.9	transcription regulators	6
+0.633333333333334	transcription regulators	1.08921578912479	gene classes	1053	0.9	transcription regulators	6
+0.64	transcription regulators	1.08802338117955	gene classes	1053	0.9	transcription regulators	6
+0.646666666666667	transcription regulators	1.08619205056497	gene classes	1053	0.9	transcription regulators	6
+0.653333333333334	transcription regulators	1.0837520576022	gene classes	1053	0.9	transcription regulators	6
+0.66	transcription regulators	1.08075887467543	gene classes	1053	0.9	transcription regulators	6
+0.666666666666667	transcription regulators	1.07716033369727	gene classes	1053	0.9	transcription regulators	6
+0.673333333333333	transcription regulators	1.07304324888814	gene classes	1053	0.9	transcription regulators	6
+0.68	transcription regulators	1.06848289448385	gene classes	1053	0.9	transcription regulators	6
+0.686666666666667	transcription regulators	1.0634810867725	gene classes	1053	0.9	transcription regulators	6
+0.693333333333333	transcription regulators	1.05816658259418	gene classes	1053	0.9	transcription regulators	6
+0.7	transcription regulators	1.05263233794725	gene classes	1053	0.9	transcription regulators	6
+0.706666666666667	transcription regulators	1.04695895994129	gene classes	1053	0.9	transcription regulators	6
+0.713333333333333	transcription regulators	1.04128041621399	gene classes	1053	0.9	transcription regulators	6
+0.72	transcription regulators	1.03570327290068	gene classes	1053	0.9	transcription regulators	6
+0.726666666666667	transcription regulators	1.03040238723528	gene classes	1053	0.9	transcription regulators	6
+0.733333333333333	transcription regulators	1.02546307115995	gene classes	1053	0.9	transcription regulators	6
+0.74	transcription regulators	1.02101128711855	gene classes	1053	0.9	transcription regulators	6
+0.746666666666667	transcription regulators	1.01728046223119	gene classes	1053	0.9	transcription regulators	6
+0.753333333333333	transcription regulators	1.01428458032735	gene classes	1053	0.9	transcription regulators	6
+0.76	transcription regulators	1.01216315263237	gene classes	1053	0.9	transcription regulators	6
+0.766666666666667	transcription regulators	1.01114776930204	gene classes	1053	0.9	transcription regulators	6
+0.773333333333333	transcription regulators	1.01117595646904	gene classes	1053	0.9	transcription regulators	6
+0.78	transcription regulators	1.01238423517233	gene classes	1053	0.9	transcription regulators	6
+0.786666666666667	transcription regulators	1.01493712083241	gene classes	1053	0.9	transcription regulators	6
+0.793333333333333	transcription regulators	1.01869972035905	gene classes	1053	0.9	transcription regulators	6
+0.8	transcription regulators	1.02377613368771	gene classes	1053	0.9	transcription regulators	6
+0.806666666666667	transcription regulators	1.03020668149069	gene classes	1053	0.9	transcription regulators	6
+0.813333333333334	transcription regulators	1.0377927211256	gene classes	1053	0.9	transcription regulators	6
+0.82	transcription regulators	1.04655920342428	gene classes	1053	0.9	transcription regulators	6
+0.826666666666667	transcription regulators	1.0563877733017	gene classes	1053	0.9	transcription regulators	6
+0.833333333333334	transcription regulators	1.06702657974594	gene classes	1053	0.9	transcription regulators	6
+0.84	transcription regulators	1.07835855162628	gene classes	1053	0.9	transcription regulators	6
+0.846666666666667	transcription regulators	1.09011424373491	gene classes	1053	0.9	transcription regulators	6
+0.853333333333334	transcription regulators	1.10200252260258	gene classes	1053	0.9	transcription regulators	6
+0.86	transcription regulators	1.11369769530261	gene classes	1053	0.9	transcription regulators	6
+0.866666666666667	transcription regulators	1.12484903427126	gene classes	1053	0.9	transcription regulators	6
+0.873333333333333	transcription regulators	1.13514756045849	gene classes	1053	0.9	transcription regulators	6
+0.88	transcription regulators	1.14401337951903	gene classes	1053	0.9	transcription regulators	6
+0.886666666666667	transcription regulators	1.15115303092558	gene classes	1053	0.9	transcription regulators	6
+0.893333333333334	transcription regulators	1.15627148053709	gene classes	1053	0.9	transcription regulators	6
+0.9	transcription regulators	1.15854089936247	gene classes	1053	0.9	transcription regulators	6
+0.906666666666667	transcription regulators	1.1579087393881	gene classes	1053	0.9	transcription regulators	6
+0.913333333333334	transcription regulators	1.15413466755887	gene classes	1053	0.9	transcription regulators	6
+0.92	transcription regulators	1.14622524970227	gene classes	1053	0.9	transcription regulators	6
+0.926666666666667	transcription regulators	1.13453818099919	gene classes	1053	0.9	transcription regulators	6
+0.933333333333333	transcription regulators	1.11889641144609	gene classes	1053	0.9	transcription regulators	6
+0.94	transcription regulators	1.09840652559449	gene classes	1053	0.9	transcription regulators	6
+0.946666666666667	transcription regulators	1.07380617005117	gene classes	1053	0.9	transcription regulators	6
+0.953333333333333	transcription regulators	1.04501191469539	gene classes	1053	0.9	transcription regulators	6
+0.96	transcription regulators	1.01156294844558	gene classes	1053	0.9	transcription regulators	6
+0.966666666666667	transcription regulators	0.974365990964737	gene classes	1053	0.9	transcription regulators	6
+0.973333333333333	transcription regulators	0.933529670764307	gene classes	1053	0.9	transcription regulators	6
+0.98	transcription regulators	0.88910780801218	gene classes	1053	0.9	transcription regulators	6
+0.986666666666667	transcription regulators	0.842029246241063	gene classes	1053	0.9	transcription regulators	6
+0.993333333333333	transcription regulators	0.792621547284204	gene classes	1053	0.9	transcription regulators	6
+1	transcription regulators	0.741353532636104	gene classes	1053	0.9	transcription regulators	6
+-0.3	G-protein coupled receptors	6.99067352242257e-05	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.293333333333333	G-protein coupled receptors	0.00010495371497339	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.286666666666667	G-protein coupled receptors	0.000154465270455968	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.28	G-protein coupled receptors	0.000224331432257032	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.273333333333333	G-protein coupled receptors	0.00032534934311437	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.266666666666667	G-protein coupled receptors	0.00046268502990734	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.26	G-protein coupled receptors	0.000654381736566871	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.253333333333333	G-protein coupled receptors	0.000916409927642699	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.246666666666667	G-protein coupled receptors	0.00126161857654012	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.24	G-protein coupled receptors	0.00173586533871666	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.233333333333333	G-protein coupled receptors	0.00235227079573831	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.226666666666667	G-protein coupled receptors	0.00315007347456337	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.22	G-protein coupled receptors	0.0042005166497009	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.213333333333333	G-protein coupled receptors	0.00551767414173362	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.206666666666667	G-protein coupled receptors	0.00719581311070491	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.2	G-protein coupled receptors	0.0092988188800082	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.193333333333333	G-protein coupled receptors	0.0118576621415574	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.186666666666667	G-protein coupled receptors	0.0150514370655831	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.18	G-protein coupled receptors	0.0188780394473462	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.173333333333333	G-protein coupled receptors	0.0234312190472177	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.166666666666667	G-protein coupled receptors	0.0288950415315352	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.16	G-protein coupled receptors	0.035216410629752	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.153333333333333	G-protein coupled receptors	0.0425694775617457	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.146666666666667	G-protein coupled receptors	0.0510018302555304	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.14	G-protein coupled receptors	0.0604548242529651	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.133333333333333	G-protein coupled receptors	0.0711376024862526	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.126666666666667	G-protein coupled receptors	0.0828764864757368	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.12	G-protein coupled receptors	0.0956442823708133	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.113333333333333	G-protein coupled receptors	0.109479406047326	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.106666666666667	G-protein coupled receptors	0.124112967754353	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.1	G-protein coupled receptors	0.139473161690917	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.0933333333333333	G-protein coupled receptors	0.155351413012301	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.0866666666666666	G-protein coupled receptors	0.171494728905878	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.08	G-protein coupled receptors	0.187664321935967	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.0733333333333333	G-protein coupled receptors	0.203588427553793	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.0666666666666667	G-protein coupled receptors	0.219005259716471	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.06	G-protein coupled receptors	0.233536483262434	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.0533333333333332	G-protein coupled receptors	0.247061375162923	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.0466666666666666	G-protein coupled receptors	0.259227624849383	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.0399999999999999	G-protein coupled receptors	0.269830017279151	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.0333333333333333	G-protein coupled receptors	0.2788703379301	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.0266666666666666	G-protein coupled receptors	0.285947685442181	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.0199999999999999	G-protein coupled receptors	0.291254482652509	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.0133333333333333	G-protein coupled receptors	0.294791098050646	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.0066666666666666	G-protein coupled receptors	0.296384428978419	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0	G-protein coupled receptors	0.296430994897267	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.00666666666666682	G-protein coupled receptors	0.294919850707508	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.0133333333333334	G-protein coupled receptors	0.29204368572113	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.02	G-protein coupled receptors	0.28812301648029	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.0266666666666668	G-protein coupled receptors	0.283218252698606	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.0333333333333334	G-protein coupled receptors	0.277664795820733	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.04	G-protein coupled receptors	0.271658927556761	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.0466666666666666	G-protein coupled receptors	0.2653564089876	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.0533333333333335	G-protein coupled receptors	0.258967532633188	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.0600000000000001	G-protein coupled receptors	0.252628677101691	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.0666666666666667	G-protein coupled receptors	0.246462201151933	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.0733333333333335	G-protein coupled receptors	0.240532018159815	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.0800000000000001	G-protein coupled receptors	0.234945668631912	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.0866666666666667	G-protein coupled receptors	0.229697668013367	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.0933333333333335	G-protein coupled receptors	0.224796617464806	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.1	G-protein coupled receptors	0.220286365573112	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.106666666666667	G-protein coupled receptors	0.216086615809642	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.113333333333334	G-protein coupled receptors	0.212196524889842	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.12	G-protein coupled receptors	0.208577655271427	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.126666666666667	G-protein coupled receptors	0.205162446750437	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.133333333333333	G-protein coupled receptors	0.201935386629985	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.14	G-protein coupled receptors	0.198831720332423	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.146666666666667	G-protein coupled receptors	0.195812699202158	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.153333333333333	G-protein coupled receptors	0.192851913144519	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.16	G-protein coupled receptors	0.189914428009866	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.166666666666667	G-protein coupled receptors	0.186985777394522	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.173333333333333	G-protein coupled receptors	0.184059600658088	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.18	G-protein coupled receptors	0.181140528018929	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.186666666666667	G-protein coupled receptors	0.178250036379803	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.193333333333333	G-protein coupled receptors	0.175414812486689	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.2	G-protein coupled receptors	0.172671070406593	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.206666666666667	G-protein coupled receptors	0.170090426970406	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.213333333333333	G-protein coupled receptors	0.167701623218992	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.22	G-protein coupled receptors	0.165583891663868	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.226666666666667	G-protein coupled receptors	0.16380808184998	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.233333333333333	G-protein coupled receptors	0.16239338407181	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.24	G-protein coupled receptors	0.161460160823475	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.246666666666667	G-protein coupled receptors	0.161005262198174	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.253333333333333	G-protein coupled receptors	0.161049917704588	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.26	G-protein coupled receptors	0.161701694734603	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.266666666666667	G-protein coupled receptors	0.162871155766371	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.273333333333333	G-protein coupled receptors	0.164599013505306	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.28	G-protein coupled receptors	0.166874971274456	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.286666666666667	G-protein coupled receptors	0.169605598644053	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.293333333333333	G-protein coupled receptors	0.172807914397826	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.3	G-protein coupled receptors	0.176371719879841	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.306666666666667	G-protein coupled receptors	0.180219728904087	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.313333333333333	G-protein coupled receptors	0.184307632904448	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.32	G-protein coupled receptors	0.188516148809817	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.326666666666667	G-protein coupled receptors	0.192775589700755	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.333333333333334	G-protein coupled receptors	0.197007025411028	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.34	G-protein coupled receptors	0.201153277607654	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.346666666666667	G-protein coupled receptors	0.205147458686525	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.353333333333334	G-protein coupled receptors	0.208975287620005	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.36	G-protein coupled receptors	0.212637977101121	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.366666666666667	G-protein coupled receptors	0.21613260581885	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.373333333333334	G-protein coupled receptors	0.219535108526828	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.38	G-protein coupled receptors	0.222915156419928	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.386666666666667	G-protein coupled receptors	0.226383118272953	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.393333333333333	G-protein coupled receptors	0.230046302126999	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.4	G-protein coupled receptors	0.234094981309561	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.406666666666667	G-protein coupled receptors	0.238652563345868	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.413333333333333	G-protein coupled receptors	0.243846541722895	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.42	G-protein coupled receptors	0.249978929126986	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.426666666666667	G-protein coupled receptors	0.25704165272057	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.433333333333333	G-protein coupled receptors	0.265248196246195	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.44	G-protein coupled receptors	0.274769190409849	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.446666666666667	G-protein coupled receptors	0.285540780259287	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.453333333333333	G-protein coupled receptors	0.297825418303492	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.46	G-protein coupled receptors	0.311526423780831	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.466666666666667	G-protein coupled receptors	0.326581240612688	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.473333333333333	G-protein coupled receptors	0.343202298178895	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.48	G-protein coupled receptors	0.361061824099872	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.486666666666667	G-protein coupled receptors	0.380166495176909	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.493333333333333	G-protein coupled receptors	0.400438615532184	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.5	G-protein coupled receptors	0.421605449682688	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.506666666666667	G-protein coupled receptors	0.443622237087199	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.513333333333334	G-protein coupled receptors	0.466239604764633	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.52	G-protein coupled receptors	0.489260654608458	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.526666666666667	G-protein coupled receptors	0.512545391116153	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.533333333333333	G-protein coupled receptors	0.535874760301525	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.54	G-protein coupled receptors	0.559093046674319	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.546666666666667	G-protein coupled receptors	0.582040545562038	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.553333333333334	G-protein coupled receptors	0.60464094824732	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.56	G-protein coupled receptors	0.626755310706164	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.566666666666667	G-protein coupled receptors	0.648377849621972	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.573333333333333	G-protein coupled receptors	0.669534049558443	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.58	G-protein coupled receptors	0.690183945471068	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.586666666666667	G-protein coupled receptors	0.710500711084441	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.593333333333334	G-protein coupled receptors	0.73058758998285	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.6	G-protein coupled receptors	0.750617670123382	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.606666666666667	G-protein coupled receptors	0.770790995805601	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.613333333333334	G-protein coupled receptors	0.791385851769055	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.62	G-protein coupled receptors	0.812635661015083	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.626666666666667	G-protein coupled receptors	0.834747674056363	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.633333333333334	G-protein coupled receptors	0.858228947169647	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.64	G-protein coupled receptors	0.883112006070744	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.646666666666667	G-protein coupled receptors	0.909754684681783	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.653333333333334	G-protein coupled receptors	0.938523712413746	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.66	G-protein coupled receptors	0.969353933427314	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.666666666666667	G-protein coupled receptors	1.00271799853512	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.673333333333333	G-protein coupled receptors	1.03855720351268	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.68	G-protein coupled receptors	1.07675644367677	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.686666666666667	G-protein coupled receptors	1.11777901388048	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.693333333333333	G-protein coupled receptors	1.16102670367916	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.7	G-protein coupled receptors	1.20647757512681	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.706666666666667	G-protein coupled receptors	1.2539852634791	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.713333333333333	G-protein coupled receptors	1.30297388777178	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.72	G-protein coupled receptors	1.35321509580396	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.726666666666667	G-protein coupled receptors	1.40416517101836	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.733333333333333	G-protein coupled receptors	1.45534177085194	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.74	G-protein coupled receptors	1.50620772900625	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.746666666666667	G-protein coupled receptors	1.55635300084628	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.753333333333333	G-protein coupled receptors	1.60532276916865	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.76	G-protein coupled receptors	1.65264924711557	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.766666666666667	G-protein coupled receptors	1.69829743604822	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.773333333333333	G-protein coupled receptors	1.74188978359481	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.78	G-protein coupled receptors	1.78353629697578	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.786666666666667	G-protein coupled receptors	1.82348077598824	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.793333333333333	G-protein coupled receptors	1.86166857928789	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.8	G-protein coupled receptors	1.89876041616552	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.806666666666667	G-protein coupled receptors	1.9351287357279	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.813333333333334	G-protein coupled receptors	1.97128516697998	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.82	G-protein coupled receptors	2.00776438190169	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.826666666666667	G-protein coupled receptors	2.04515700571859	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.833333333333334	G-protein coupled receptors	2.08387091098456	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.84	G-protein coupled receptors	2.12411430555289	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.846666666666667	G-protein coupled receptors	2.16641194204728	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.853333333333334	G-protein coupled receptors	2.21041250012512	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.86	G-protein coupled receptors	2.25599000407824	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.866666666666667	G-protein coupled receptors	2.30276486184622	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.873333333333333	G-protein coupled receptors	2.3499220878152	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.88	G-protein coupled receptors	2.39650893054249	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.886666666666667	G-protein coupled receptors	2.44136493573955	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.893333333333334	G-protein coupled receptors	2.48341289421673	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.9	G-protein coupled receptors	2.5203250230322	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.906666666666667	G-protein coupled receptors	2.55137439034306	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.913333333333334	G-protein coupled receptors	2.57471793912927	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.92	G-protein coupled receptors	2.58793577795539	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.926666666666667	G-protein coupled receptors	2.59095528782399	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.933333333333333	G-protein coupled receptors	2.58104704498526	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.94	G-protein coupled receptors	2.55766364867609	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.946666666666667	G-protein coupled receptors	2.52112310812515	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.953333333333333	G-protein coupled receptors	2.468281045639	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.96	G-protein coupled receptors	2.4016828107431	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.966666666666667	G-protein coupled receptors	2.32106762647409	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.973333333333333	G-protein coupled receptors	2.22602358953369	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.98	G-protein coupled receptors	2.11960924049506	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.986666666666667	G-protein coupled receptors	2.00199139076915	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+0.993333333333333	G-protein coupled receptors	1.87549954639974	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+1	G-protein coupled receptors	1.74269223214692	gene classes	205	0.926666666666667	G-protein coupled receptors	1
+-0.3	neuropeptide/hormones	1.56219897012769e-06	gene classes	80	0.94	neuropeptide/hormones	5
+-0.293333333333333	neuropeptide/hormones	2.49135402861854e-06	gene classes	80	0.94	neuropeptide/hormones	5
+-0.286666666666667	neuropeptide/hormones	4.02745548177263e-06	gene classes	80	0.94	neuropeptide/hormones	5
+-0.28	neuropeptide/hormones	6.35257907362449e-06	gene classes	80	0.94	neuropeptide/hormones	5
+-0.273333333333333	neuropeptide/hormones	9.85845136480415e-06	gene classes	80	0.94	neuropeptide/hormones	5
+-0.266666666666667	neuropeptide/hormones	1.5380972305636e-05	gene classes	80	0.94	neuropeptide/hormones	5
+-0.26	neuropeptide/hormones	2.34336761230311e-05	gene classes	80	0.94	neuropeptide/hormones	5
+-0.253333333333333	neuropeptide/hormones	3.54021195981349e-05	gene classes	80	0.94	neuropeptide/hormones	5
+-0.246666666666667	neuropeptide/hormones	5.32514002397499e-05	gene classes	80	0.94	neuropeptide/hormones	5
+-0.24	neuropeptide/hormones	7.84312860972128e-05	gene classes	80	0.94	neuropeptide/hormones	5
+-0.233333333333333	neuropeptide/hormones	0.000115152762670689	gene classes	80	0.94	neuropeptide/hormones	5
+-0.226666666666667	neuropeptide/hormones	0.000167186906650293	gene classes	80	0.94	neuropeptide/hormones	5
+-0.22	neuropeptide/hormones	0.000238209799723036	gene classes	80	0.94	neuropeptide/hormones	5
+-0.213333333333333	neuropeptide/hormones	0.000339423453323551	gene classes	80	0.94	neuropeptide/hormones	5
+-0.206666666666667	neuropeptide/hormones	0.000476101785812212	gene classes	80	0.94	neuropeptide/hormones	5
+-0.2	neuropeptide/hormones	0.000657231441021985	gene classes	80	0.94	neuropeptide/hormones	5
+-0.193333333333333	neuropeptide/hormones	0.000906961295476455	gene classes	80	0.94	neuropeptide/hormones	5
+-0.186666666666667	neuropeptide/hormones	0.00122999354442028	gene classes	80	0.94	neuropeptide/hormones	5
+-0.18	neuropeptide/hormones	0.0016489891664988	gene classes	80	0.94	neuropeptide/hormones	5
+-0.173333333333333	neuropeptide/hormones	0.00219755147633955	gene classes	80	0.94	neuropeptide/hormones	5
+-0.166666666666667	neuropeptide/hormones	0.00288317116428027	gene classes	80	0.94	neuropeptide/hormones	5
+-0.16	neuropeptide/hormones	0.00374948357322605	gene classes	80	0.94	neuropeptide/hormones	5
+-0.153333333333333	neuropeptide/hormones	0.00482935720978199	gene classes	80	0.94	neuropeptide/hormones	5
+-0.146666666666667	neuropeptide/hormones	0.00613258907055928	gene classes	80	0.94	neuropeptide/hormones	5
+-0.14	neuropeptide/hormones	0.00772902000514176	gene classes	80	0.94	neuropeptide/hormones	5
+-0.133333333333333	neuropeptide/hormones	0.00962748581843416	gene classes	80	0.94	neuropeptide/hormones	5
+-0.126666666666667	neuropeptide/hormones	0.0118371777210594	gene classes	80	0.94	neuropeptide/hormones	5
+-0.12	neuropeptide/hormones	0.0144474285927442	gene classes	80	0.94	neuropeptide/hormones	5
+-0.113333333333333	neuropeptide/hormones	0.0174125714786058	gene classes	80	0.94	neuropeptide/hormones	5
+-0.106666666666667	neuropeptide/hormones	0.0207467317726354	gene classes	80	0.94	neuropeptide/hormones	5
+-0.1	neuropeptide/hormones	0.0244938971018315	gene classes	80	0.94	neuropeptide/hormones	5
+-0.0933333333333333	neuropeptide/hormones	0.0285742684735029	gene classes	80	0.94	neuropeptide/hormones	5
+-0.0866666666666666	neuropeptide/hormones	0.0329801323373409	gene classes	80	0.94	neuropeptide/hormones	5
+-0.08	neuropeptide/hormones	0.0376698438227389	gene classes	80	0.94	neuropeptide/hormones	5
+-0.0733333333333333	neuropeptide/hormones	0.0425472135842405	gene classes	80	0.94	neuropeptide/hormones	5
+-0.0666666666666667	neuropeptide/hormones	0.0475462164135332	gene classes	80	0.94	neuropeptide/hormones	5
+-0.06	neuropeptide/hormones	0.0525596190746995	gene classes	80	0.94	neuropeptide/hormones	5
+-0.0533333333333332	neuropeptide/hormones	0.0574864750485055	gene classes	80	0.94	neuropeptide/hormones	5
+-0.0466666666666666	neuropeptide/hormones	0.0621779482805013	gene classes	80	0.94	neuropeptide/hormones	5
+-0.0399999999999999	neuropeptide/hormones	0.0665410456936223	gene classes	80	0.94	neuropeptide/hormones	5
+-0.0333333333333333	neuropeptide/hormones	0.070477445844907	gene classes	80	0.94	neuropeptide/hormones	5
+-0.0266666666666666	neuropeptide/hormones	0.0737792705504651	gene classes	80	0.94	neuropeptide/hormones	5
+-0.0199999999999999	neuropeptide/hormones	0.0764562051644267	gene classes	80	0.94	neuropeptide/hormones	5
+-0.0133333333333333	neuropeptide/hormones	0.0783985068398759	gene classes	80	0.94	neuropeptide/hormones	5
+-0.0066666666666666	neuropeptide/hormones	0.0794802188531024	gene classes	80	0.94	neuropeptide/hormones	5
+0	neuropeptide/hormones	0.0797861930068037	gene classes	80	0.94	neuropeptide/hormones	5
+0.00666666666666682	neuropeptide/hormones	0.0792358710961604	gene classes	80	0.94	neuropeptide/hormones	5
+0.0133333333333334	neuropeptide/hormones	0.0778603392124869	gene classes	80	0.94	neuropeptide/hormones	5
+0.02	neuropeptide/hormones	0.0757912672475478	gene classes	80	0.94	neuropeptide/hormones	5
+0.0266666666666668	neuropeptide/hormones	0.0730189648844873	gene classes	80	0.94	neuropeptide/hormones	5
+0.0333333333333334	neuropeptide/hormones	0.0697129454460395	gene classes	80	0.94	neuropeptide/hormones	5
+0.04	neuropeptide/hormones	0.0660193985151733	gene classes	80	0.94	neuropeptide/hormones	5
+0.0466666666666666	neuropeptide/hormones	0.0620358948031785	gene classes	80	0.94	neuropeptide/hormones	5
+0.0533333333333335	neuropeptide/hormones	0.0579666256244588	gene classes	80	0.94	neuropeptide/hormones	5
+0.0600000000000001	neuropeptide/hormones	0.0539639568139048	gene classes	80	0.94	neuropeptide/hormones	5
+0.0666666666666667	neuropeptide/hormones	0.0502334332326028	gene classes	80	0.94	neuropeptide/hormones	5
+0.0733333333333335	neuropeptide/hormones	0.0469022396056414	gene classes	80	0.94	neuropeptide/hormones	5
+0.0800000000000001	neuropeptide/hormones	0.0441707759439581	gene classes	80	0.94	neuropeptide/hormones	5
+0.0866666666666667	neuropeptide/hormones	0.0422440564044121	gene classes	80	0.94	neuropeptide/hormones	5
+0.0933333333333335	neuropeptide/hormones	0.0411810999873281	gene classes	80	0.94	neuropeptide/hormones	5
+0.1	neuropeptide/hormones	0.0412531223927706	gene classes	80	0.94	neuropeptide/hormones	5
+0.106666666666667	neuropeptide/hormones	0.0425603245437342	gene classes	80	0.94	neuropeptide/hormones	5
+0.113333333333334	neuropeptide/hormones	0.0451299105243206	gene classes	80	0.94	neuropeptide/hormones	5
+0.12	neuropeptide/hormones	0.0493178416463814	gene classes	80	0.94	neuropeptide/hormones	5
+0.126666666666667	neuropeptide/hormones	0.0550366358081192	gene classes	80	0.94	neuropeptide/hormones	5
+0.133333333333333	neuropeptide/hormones	0.0623315303892354	gene classes	80	0.94	neuropeptide/hormones	5
+0.14	neuropeptide/hormones	0.071570699279748	gene classes	80	0.94	neuropeptide/hormones	5
+0.146666666666667	neuropeptide/hormones	0.0824764192998855	gene classes	80	0.94	neuropeptide/hormones	5
+0.153333333333333	neuropeptide/hormones	0.0951595879336231	gene classes	80	0.94	neuropeptide/hormones	5
+0.16	neuropeptide/hormones	0.109755823825764	gene classes	80	0.94	neuropeptide/hormones	5
+0.166666666666667	neuropeptide/hormones	0.125963145989702	gene classes	80	0.94	neuropeptide/hormones	5
+0.173333333333333	neuropeptide/hormones	0.143852483111529	gene classes	80	0.94	neuropeptide/hormones	5
+0.18	neuropeptide/hormones	0.163277205661201	gene classes	80	0.94	neuropeptide/hormones	5
+0.186666666666667	neuropeptide/hormones	0.183925151993174	gene classes	80	0.94	neuropeptide/hormones	5
+0.193333333333333	neuropeptide/hormones	0.205732831495304	gene classes	80	0.94	neuropeptide/hormones	5
+0.2	neuropeptide/hormones	0.228334580638062	gene classes	80	0.94	neuropeptide/hormones	5
+0.206666666666667	neuropeptide/hormones	0.251417891758406	gene classes	80	0.94	neuropeptide/hormones	5
+0.213333333333333	neuropeptide/hormones	0.274687457352543	gene classes	80	0.94	neuropeptide/hormones	5
+0.22	neuropeptide/hormones	0.297764015418161	gene classes	80	0.94	neuropeptide/hormones	5
+0.226666666666667	neuropeptide/hormones	0.320309525606923	gene classes	80	0.94	neuropeptide/hormones	5
+0.233333333333333	neuropeptide/hormones	0.341839686891722	gene classes	80	0.94	neuropeptide/hormones	5
+0.24	neuropeptide/hormones	0.362166771505671	gene classes	80	0.94	neuropeptide/hormones	5
+0.246666666666667	neuropeptide/hormones	0.380876056897803	gene classes	80	0.94	neuropeptide/hormones	5
+0.253333333333333	neuropeptide/hormones	0.397594607964143	gene classes	80	0.94	neuropeptide/hormones	5
+0.26	neuropeptide/hormones	0.412329323643784	gene classes	80	0.94	neuropeptide/hormones	5
+0.266666666666667	neuropeptide/hormones	0.424648724936513	gene classes	80	0.94	neuropeptide/hormones	5
+0.273333333333333	neuropeptide/hormones	0.434553850987702	gene classes	80	0.94	neuropeptide/hormones	5
+0.28	neuropeptide/hormones	0.442204378398892	gene classes	80	0.94	neuropeptide/hormones	5
+0.286666666666667	neuropeptide/hormones	0.447273986533003	gene classes	80	0.94	neuropeptide/hormones	5
+0.293333333333333	neuropeptide/hormones	0.450209808876042	gene classes	80	0.94	neuropeptide/hormones	5
+0.3	neuropeptide/hormones	0.451247634016028	gene classes	80	0.94	neuropeptide/hormones	5
+0.306666666666667	neuropeptide/hormones	0.450372133774174	gene classes	80	0.94	neuropeptide/hormones	5
+0.313333333333333	neuropeptide/hormones	0.448232339100353	gene classes	80	0.94	neuropeptide/hormones	5
+0.32	neuropeptide/hormones	0.445121898800631	gene classes	80	0.94	neuropeptide/hormones	5
+0.326666666666667	neuropeptide/hormones	0.441421993475247	gene classes	80	0.94	neuropeptide/hormones	5
+0.333333333333334	neuropeptide/hormones	0.437625640218271	gene classes	80	0.94	neuropeptide/hormones	5
+0.34	neuropeptide/hormones	0.434166746683761	gene classes	80	0.94	neuropeptide/hormones	5
+0.346666666666667	neuropeptide/hormones	0.431482497131736	gene classes	80	0.94	neuropeptide/hormones	5
+0.353333333333334	neuropeptide/hormones	0.429850253405549	gene classes	80	0.94	neuropeptide/hormones	5
+0.36	neuropeptide/hormones	0.429784730731387	gene classes	80	0.94	neuropeptide/hormones	5
+0.366666666666667	neuropeptide/hormones	0.431417926738949	gene classes	80	0.94	neuropeptide/hormones	5
+0.373333333333334	neuropeptide/hormones	0.434816399012207	gene classes	80	0.94	neuropeptide/hormones	5
+0.38	neuropeptide/hormones	0.440430860535122	gene classes	80	0.94	neuropeptide/hormones	5
+0.386666666666667	neuropeptide/hormones	0.447906031808579	gene classes	80	0.94	neuropeptide/hormones	5
+0.393333333333333	neuropeptide/hormones	0.457189000176504	gene classes	80	0.94	neuropeptide/hormones	5
+0.4	neuropeptide/hormones	0.468290624938538	gene classes	80	0.94	neuropeptide/hormones	5
+0.406666666666667	neuropeptide/hormones	0.48066088726318	gene classes	80	0.94	neuropeptide/hormones	5
+0.413333333333333	neuropeptide/hormones	0.494035620182862	gene classes	80	0.94	neuropeptide/hormones	5
+0.42	neuropeptide/hormones	0.507982864658384	gene classes	80	0.94	neuropeptide/hormones	5
+0.426666666666667	neuropeptide/hormones	0.521979720007087	gene classes	80	0.94	neuropeptide/hormones	5
+0.433333333333333	neuropeptide/hormones	0.53548083807163	gene classes	80	0.94	neuropeptide/hormones	5
+0.44	neuropeptide/hormones	0.547961472887081	gene classes	80	0.94	neuropeptide/hormones	5
+0.446666666666667	neuropeptide/hormones	0.559030523450503	gene classes	80	0.94	neuropeptide/hormones	5
+0.453333333333333	neuropeptide/hormones	0.567899497074353	gene classes	80	0.94	neuropeptide/hormones	5
+0.46	neuropeptide/hormones	0.574414536128749	gene classes	80	0.94	neuropeptide/hormones	5
+0.466666666666667	neuropeptide/hormones	0.578320406439096	gene classes	80	0.94	neuropeptide/hormones	5
+0.473333333333333	neuropeptide/hormones	0.578858432867717	gene classes	80	0.94	neuropeptide/hormones	5
+0.48	neuropeptide/hormones	0.57644910160574	gene classes	80	0.94	neuropeptide/hormones	5
+0.486666666666667	neuropeptide/hormones	0.570903079455012	gene classes	80	0.94	neuropeptide/hormones	5
+0.493333333333333	neuropeptide/hormones	0.562060097128336	gene classes	80	0.94	neuropeptide/hormones	5
+0.5	neuropeptide/hormones	0.550552067486593	gene classes	80	0.94	neuropeptide/hormones	5
+0.506666666666667	neuropeptide/hormones	0.536427368769348	gene classes	80	0.94	neuropeptide/hormones	5
+0.513333333333334	neuropeptide/hormones	0.520125139868012	gene classes	80	0.94	neuropeptide/hormones	5
+0.52	neuropeptide/hormones	0.502297280214787	gene classes	80	0.94	neuropeptide/hormones	5
+0.526666666666667	neuropeptide/hormones	0.483305239919926	gene classes	80	0.94	neuropeptide/hormones	5
+0.533333333333333	neuropeptide/hormones	0.463823621122022	gene classes	80	0.94	neuropeptide/hormones	5
+0.54	neuropeptide/hormones	0.444391825857691	gene classes	80	0.94	neuropeptide/hormones	5
+0.546666666666667	neuropeptide/hormones	0.425677980642887	gene classes	80	0.94	neuropeptide/hormones	5
+0.553333333333334	neuropeptide/hormones	0.408089973299497	gene classes	80	0.94	neuropeptide/hormones	5
+0.56	neuropeptide/hormones	0.392090035659356	gene classes	80	0.94	neuropeptide/hormones	5
+0.566666666666667	neuropeptide/hormones	0.378356596245233	gene classes	80	0.94	neuropeptide/hormones	5
+0.573333333333333	neuropeptide/hormones	0.366886179696908	gene classes	80	0.94	neuropeptide/hormones	5
+0.58	neuropeptide/hormones	0.358127876506537	gene classes	80	0.94	neuropeptide/hormones	5
+0.586666666666667	neuropeptide/hormones	0.35240505564373	gene classes	80	0.94	neuropeptide/hormones	5
+0.593333333333334	neuropeptide/hormones	0.349501148493182	gene classes	80	0.94	neuropeptide/hormones	5
+0.6	neuropeptide/hormones	0.3498574539437	gene classes	80	0.94	neuropeptide/hormones	5
+0.606666666666667	neuropeptide/hormones	0.353361095583059	gene classes	80	0.94	neuropeptide/hormones	5
+0.613333333333334	neuropeptide/hormones	0.359771683361317	gene classes	80	0.94	neuropeptide/hormones	5
+0.62	neuropeptide/hormones	0.369562123183702	gene classes	80	0.94	neuropeptide/hormones	5
+0.626666666666667	neuropeptide/hormones	0.382276011056695	gene classes	80	0.94	neuropeptide/hormones	5
+0.633333333333334	neuropeptide/hormones	0.397804749423859	gene classes	80	0.94	neuropeptide/hormones	5
+0.64	neuropeptide/hormones	0.416589064902959	gene classes	80	0.94	neuropeptide/hormones	5
+0.646666666666667	neuropeptide/hormones	0.43803513884874	gene classes	80	0.94	neuropeptide/hormones	5
+0.653333333333334	neuropeptide/hormones	0.462240989207392	gene classes	80	0.94	neuropeptide/hormones	5
+0.66	neuropeptide/hormones	0.489363974001756	gene classes	80	0.94	neuropeptide/hormones	5
+0.666666666666667	neuropeptide/hormones	0.518944920505339	gene classes	80	0.94	neuropeptide/hormones	5
+0.673333333333333	neuropeptide/hormones	0.551138580782225	gene classes	80	0.94	neuropeptide/hormones	5
+0.68	neuropeptide/hormones	0.585802367305585	gene classes	80	0.94	neuropeptide/hormones	5
+0.686666666666667	neuropeptide/hormones	0.622557265801158	gene classes	80	0.94	neuropeptide/hormones	5
+0.693333333333333	neuropeptide/hormones	0.661505758361892	gene classes	80	0.94	neuropeptide/hormones	5
+0.7	neuropeptide/hormones	0.702230562993785	gene classes	80	0.94	neuropeptide/hormones	5
+0.706666666666667	neuropeptide/hormones	0.74440376953423	gene classes	80	0.94	neuropeptide/hormones	5
+0.713333333333333	neuropeptide/hormones	0.787979920554342	gene classes	80	0.94	neuropeptide/hormones	5
+0.72	neuropeptide/hormones	0.832448409207588	gene classes	80	0.94	neuropeptide/hormones	5
+0.726666666666667	neuropeptide/hormones	0.877572940190122	gene classes	80	0.94	neuropeptide/hormones	5
+0.733333333333333	neuropeptide/hormones	0.923153115550333	gene classes	80	0.94	neuropeptide/hormones	5
+0.74	neuropeptide/hormones	0.968929352351163	gene classes	80	0.94	neuropeptide/hormones	5
+0.746666666666667	neuropeptide/hormones	1.01480366028806	gene classes	80	0.94	neuropeptide/hormones	5
+0.753333333333333	neuropeptide/hormones	1.06076395293955	gene classes	80	0.94	neuropeptide/hormones	5
+0.76	neuropeptide/hormones	1.10689963407864	gene classes	80	0.94	neuropeptide/hormones	5
+0.766666666666667	neuropeptide/hormones	1.15350109129747	gene classes	80	0.94	neuropeptide/hormones	5
+0.773333333333333	neuropeptide/hormones	1.20095677075972	gene classes	80	0.94	neuropeptide/hormones	5
+0.78	neuropeptide/hormones	1.24969112727444	gene classes	80	0.94	neuropeptide/hormones	5
+0.786666666666667	neuropeptide/hormones	1.30070049632095	gene classes	80	0.94	neuropeptide/hormones	5
+0.793333333333333	neuropeptide/hormones	1.35449696328597	gene classes	80	0.94	neuropeptide/hormones	5
+0.8	neuropeptide/hormones	1.41179997802528	gene classes	80	0.94	neuropeptide/hormones	5
+0.806666666666667	neuropeptide/hormones	1.47429160119142	gene classes	80	0.94	neuropeptide/hormones	5
+0.813333333333334	neuropeptide/hormones	1.54197928373886	gene classes	80	0.94	neuropeptide/hormones	5
+0.82	neuropeptide/hormones	1.61592374591506	gene classes	80	0.94	neuropeptide/hormones	5
+0.826666666666667	neuropeptide/hormones	1.69737206586069	gene classes	80	0.94	neuropeptide/hormones	5
+0.833333333333334	neuropeptide/hormones	1.78577189710862	gene classes	80	0.94	neuropeptide/hormones	5
+0.84	neuropeptide/hormones	1.88202498397894	gene classes	80	0.94	neuropeptide/hormones	5
+0.846666666666667	neuropeptide/hormones	1.98593792769891	gene classes	80	0.94	neuropeptide/hormones	5
+0.853333333333334	neuropeptide/hormones	2.09631622440157	gene classes	80	0.94	neuropeptide/hormones	5
+0.86	neuropeptide/hormones	2.21311630381916	gene classes	80	0.94	neuropeptide/hormones	5
+0.866666666666667	neuropeptide/hormones	2.33444060843685	gene classes	80	0.94	neuropeptide/hormones	5
+0.873333333333333	neuropeptide/hormones	2.45851009183348	gene classes	80	0.94	neuropeptide/hormones	5
+0.88	neuropeptide/hormones	2.58338872920442	gene classes	80	0.94	neuropeptide/hormones	5
+0.886666666666667	neuropeptide/hormones	2.70654477242762	gene classes	80	0.94	neuropeptide/hormones	5
+0.893333333333334	neuropeptide/hormones	2.82547270420976	gene classes	80	0.94	neuropeptide/hormones	5
+0.9	neuropeptide/hormones	2.93638434296989	gene classes	80	0.94	neuropeptide/hormones	5
+0.906666666666667	neuropeptide/hormones	3.03764550509923	gene classes	80	0.94	neuropeptide/hormones	5
+0.913333333333334	neuropeptide/hormones	3.12562780905437	gene classes	80	0.94	neuropeptide/hormones	5
+0.92	neuropeptide/hormones	3.19688674556036	gene classes	80	0.94	neuropeptide/hormones	5
+0.926666666666667	neuropeptide/hormones	3.25099697122166	gene classes	80	0.94	neuropeptide/hormones	5
+0.933333333333333	neuropeptide/hormones	3.28354982959912	gene classes	80	0.94	neuropeptide/hormones	5
+0.94	neuropeptide/hormones	3.29385435265478	gene classes	80	0.94	neuropeptide/hormones	5
+0.946666666666667	neuropeptide/hormones	3.28257450032373	gene classes	80	0.94	neuropeptide/hormones	5
+0.953333333333333	neuropeptide/hormones	3.245381973551	gene classes	80	0.94	neuropeptide/hormones	5
+0.96	neuropeptide/hormones	3.1855820381118	gene classes	80	0.94	neuropeptide/hormones	5
+0.966666666666667	neuropeptide/hormones	3.10427477914114	gene classes	80	0.94	neuropeptide/hormones	5
+0.973333333333333	neuropeptide/hormones	2.999175019847	gene classes	80	0.94	neuropeptide/hormones	5
+0.98	neuropeptide/hormones	2.87601474615868	gene classes	80	0.94	neuropeptide/hormones	5
+0.986666666666667	neuropeptide/hormones	2.73593865888088	gene classes	80	0.94	neuropeptide/hormones	5
+0.993333333333333	neuropeptide/hormones	2.58052445138511	gene classes	80	0.94	neuropeptide/hormones	5
+1	neuropeptide/hormones	2.41459737223407	gene classes	80	0.94	neuropeptide/hormones	5

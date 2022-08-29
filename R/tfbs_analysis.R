@@ -3,12 +3,14 @@
 ### Prepare gene input
 ##########
 
+results_path_extended_figure6 = "figure_outputs/figure_extended_6/"
+
 library(tidyverse)
 
-setwd("Documents/projects/hypoMap_paper/")
+#setwd("/Users/lsteuernagel/Documents/projects/hypoMap_paper/")
 
 ### Be careful: Check transcript not only gene to get accurate TSS!
-background_genes_all = data.table::fread("figure_outputs/figure_4/per_gene_correlations.txt",data.table=F)
+background_genes_all = data.table::fread(paste0("figure_outputs/figure_4/","per_gene_correlations.txt"),data.table=F)
 ieg_genes = data.table::fread("data_inputs/immediate_early_genes_wuetal.txt")$gene
 
 # make subsample for refernce during enrichemnt
@@ -157,13 +159,20 @@ all_stats = dplyr::full_join(all_stats,gene_info_short,by=c("seqname"="Transcrip
 pwm_mapping=data.frame(pwm_id = names(name(pwm_library_to_use)),pwm_name=name(pwm_library_to_use))
 all_stats = dplyr::full_join(all_stats,pwm_mapping,by=c("siteSet_name"="pwm_id"))
 
+#data.table::fwrite(all_stats,"data_inputs/all_pwm_enrichment_result")
+#all_stats = data.table::fread("table_outputs/all_pwm_enrichment_result",data.table=F)
 
 ##########
 ###  Summarize and visualize results
 ##########
 
+# colors:
+short_palette = as.character(palette.colors(palette = "Okabe-Ito"))
+short_palette = short_palette[!short_palette %in% c("#999999","#000000")]
+getOkabeItoPalette = colorRampPalette(short_palette)
+
 text_size = 20
-repel_label_size =7
+repel_label_size =6
 
 library(ggplot2)
 library(cowplot)
@@ -183,11 +192,14 @@ pwm_per_gene$class[pwm_per_gene$gene %in% c("1700016P03Rik",ieg_genes[ieg_genes 
 
 ## save:
 pwms_of_interest = c("MA0018.1","MA0018.2")
-data.table::fwrite(pwm_per_gene[pwm_per_gene$siteSet_name %in% pwms_of_interest,c("gene", "class","siteSet_name","pwm_name","total_pwms_in_gene","n_transcripts","pwms_per_transcript")],paste0(results_path_supplementary_figure7,"tfbs_detected_per_gene_promoter.csv"))
+data.table::fwrite(pwm_per_gene[pwm_per_gene$siteSet_name %in% pwms_of_interest,c("gene", "class","siteSet_name","pwm_name","total_pwms_in_gene","n_transcripts","pwms_per_transcript")],
+                   paste0(results_path_extended_figure6,"tfbs_detected_per_gene_promoter.csv"))
+
+pwm_per_gene = data.table::fread(paste0(results_path_extended_figure6,"tfbs_detected_per_gene_promoter.csv"),data.table=F)
 
 # for MA0018.1
 pwms_of_interest = c("MA0018.1","MA0018.2")
-gois= c("Fos","Jund","1700016P03Rik","Jun","Egr1")
+gois= c("Fos","Jund","1700016P03Rik","Jun","Egr1")#,"Btg2","Gem","Btg2","Noct","Sgk1")
 plot_list = list()
 for(pwm in pwms_of_interest){
   
@@ -195,39 +207,42 @@ for(pwm in pwms_of_interest){
   current_pwm_stat = pwm_per_gene[pwm_per_gene$siteSet_name %in%pwm ,]
   add_0_genes = gene_info_short$gene[!gene_info_short$gene %in% current_pwm_stat$gene]
   if(length(add_0_genes)>0){
-  add_0_genes = data.frame(gene = add_0_genes, pwms_per_transcript = 0)
-  add_0_genes$class = "Background"
-  add_0_genes$class[add_0_genes$gene %in% c("1700016P03Rik",ieg_genes[ieg_genes %in% background_genes_all$gene])] = "IEGs"
-  current_pwm_stat = bind_rows(current_pwm_stat,add_0_genes)
+    add_0_genes = data.frame(gene = add_0_genes, pwms_per_transcript = 0)
+    add_0_genes$class = "Background"
+    add_0_genes$class[add_0_genes$gene %in% c("1700016P03Rik",ieg_genes[ieg_genes %in% background_genes_all$gene])] = "IEGs"
+    current_pwm_stat = bind_rows(current_pwm_stat,add_0_genes)
   }
   
   # plot:
   plot_list[[pwm]] = ggplot2::ggplot(current_pwm_stat,aes(x=pwms_per_transcript,fill=class))+geom_density(alpha=0.5)+
-  geom_point(data=current_pwm_stat[current_pwm_stat$gene %in% gois,],mapping = aes(x=pwms_per_transcript,y=0.05),show.legend = FALSE)+
-  ggrepel::geom_label_repel(data=current_pwm_stat[current_pwm_stat$gene %in% gois,],mapping = aes(x=pwms_per_transcript,y=0.05,label = gene),angle = 45,max.overlaps=10,size=repel_label_size,show.legend = FALSE)+
-  xlab("PWM per non-overlapping promoter")+ylab("Density")+  #"Summed adjusted p-value"
-  labs(fill='Gene')+
-  ggtitle(paste0("CREB1: ",pwm))+
-  theme( text = element_text(size=text_size),
-        axis.title.x = element_text(size = text_size),
-         panel.grid.major = element_line(colour = "grey90"),
-         panel.grid.minor = element_line(colour = "grey90"),
-         panel.background = element_rect(fill="white"))#+ theme_light()
+    geom_point(data=current_pwm_stat[current_pwm_stat$gene %in% gois,],mapping = aes(x=pwms_per_transcript,y=0.05),show.legend = FALSE)+
+    ggrepel::geom_label_repel(data=current_pwm_stat[current_pwm_stat$gene %in% gois,],mapping = aes(x=pwms_per_transcript,y=0.05,label = gene),angle = 45,max.overlaps=10,size=repel_label_size,show.legend = FALSE)+
+    xlab("PWM per non-overlapping promoter")+ylab("Density")+  #"Summed adjusted p-value"
+    labs(fill='Gene')+scale_color_manual(values=short_palette)+scale_fill_manual(values=short_palette)+
+    ggtitle(paste0("CREB1: ",pwm))+
+    theme( text = element_text(size=text_size),
+           axis.title.x = element_text(size = text_size),
+           panel.grid.major = element_line(colour = "grey90"),
+           panel.grid.minor = element_line(colour = "grey90"),
+           panel.background = element_rect(fill="white"))#+ theme_light()
 }
 
 pb  = cowplot::plot_grid(plotlist=plot_list,ncol=1)
 pb
 
-results_path_supplementary_figure7 = "figure_outputs/figure_supplementary_7/"
 
 #save
-ggsave(filename = paste0(results_path_supplementary_figure7,"creb1_TFBS_density.png"),
+ggsave(filename = paste0(results_path_extended_figure6,"creb1_TFBS_density.png"),
        plot = pb, "png",dpi=450,width=300,height = 250,units="mm")
-ggsave(filename = paste0(results_path_supplementary_figure7,"creb1_TFBS_density.pdf"),
+ggsave(filename = paste0(results_path_extended_figure6,"creb1_TFBS_density.pdf"),
        plot = pb, "pdf",dpi=450,width=300,height = 250,units="mm")
 
 
+## source data
+source_ext_figure6b_1 = plot_list[[1]]$data
+data.table::fwrite(source_ext_figure6b_1,paste0(results_path_extended_figure6,"source_ext_figure6_b_tfbs_1.txt"),sep="\t")
 
+source_ext_figure6b_2 = plot_list[[2]]$data
+data.table::fwrite(source_ext_figure6b_2,paste0(results_path_extended_figure6,"source_ext_figure6_b_tfbs_2.txt"),sep="\t")
 
-
-
+#minor

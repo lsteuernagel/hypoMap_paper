@@ -1,0 +1,313 @@
+section	comp	pct
+Figure1 wt1_posta	"Sst/Pnoc
+of
+Sst"	38.9830508474576
+Figure2 wt1_postb	"Sst/Pnoc
+of
+Sst"	60.7843137254902
+Figure3 wt1_middle 2a	"Sst/Pnoc
+of
+Sst"	68.2539682539683
+Figure4 wt1_middle 2b	"Sst/Pnoc
+of
+Sst"	61.1111111111111
+Figure5 wt1_middle 1a	"Sst/Pnoc
+of
+Sst"	61.6666666666667
+Figure6 wt1_middle 1b	"Sst/Pnoc
+of
+Sst"	44.2307692307692
+Figure7 wt2_ant	"Sst/Pnoc
+of
+Sst"	62.5
+Figure8  wt2_ middle1a	"Sst/Pnoc
+of
+Sst"	70
+Figure9 wt2_ middle1a	"Sst/Pnoc
+of
+Sst"	65.625
+Figure10	"Sst/Pnoc
+of
+Sst"	78.7878787878788
+Figure11 wt2_ middle1a	"Sst/Pnoc
+of
+Sst"	58.3333333333333
+Figure12 wt3_ middle1a	"Sst/Pnoc
+of
+Sst"	48.5714285714286
+Figure1 wt1_posta	"Sst/Pnoc/Nts
+of
+Sst/Pnoc"	17.3913043478261
+Figure2 wt1_postb	"Sst/Pnoc/Nts
+of
+Sst/Pnoc"	0
+Figure3 wt1_middle 2a	"Sst/Pnoc/Nts
+of
+Sst/Pnoc"	4.65116279069768
+Figure4 wt1_middle 2b	"Sst/Pnoc/Nts
+of
+Sst/Pnoc"	0
+Figure5 wt1_middle 1a	"Sst/Pnoc/Nts
+of
+Sst/Pnoc"	0
+Figure6 wt1_middle 1b	"Sst/Pnoc/Nts
+of
+Sst/Pnoc"	0
+Figure7 wt2_ant	"Sst/Pnoc/Nts
+of
+Sst/Pnoc"	13.3333333333333
+Figure8  wt2_ middle1a	"Sst/Pnoc/Nts
+of
+Sst/Pnoc"	0
+Figure9 wt2_ middle1a	"Sst/Pnoc/Nts
+of
+Sst/Pnoc"	0
+Figure10	"Sst/Pnoc/Nts
+of
+Sst/Pnoc"	0
+Figure11 wt2_ middle1a	"Sst/Pnoc/Nts
+of
+Sst/Pnoc"	4.76190476190476
+Figure12 wt3_ middle1a	"Sst/Pnoc/Nts
+of
+Sst/Pnoc"	41.1764705882353
+Figure1 wt1_posta	"Sst/Pnoc/Unc13c
+of
+Sst/Pnoc"	26.0869565217391
+Figure2 wt1_postb	"Sst/Pnoc/Unc13c
+of
+Sst/Pnoc"	48.3870967741936
+Figure3 wt1_middle 2a	"Sst/Pnoc/Unc13c
+of
+Sst/Pnoc"	41.8604651162791
+Figure4 wt1_middle 2b	"Sst/Pnoc/Unc13c
+of
+Sst/Pnoc"	45.4545454545455
+Figure5 wt1_middle 1a	"Sst/Pnoc/Unc13c
+of
+Sst/Pnoc"	29.7297297297297
+Figure6 wt1_middle 1b	"Sst/Pnoc/Unc13c
+of
+Sst/Pnoc"	100
+Figure7 wt2_ant	"Sst/Pnoc/Unc13c
+of
+Sst/Pnoc"	26.6666666666667
+Figure8  wt2_ middle1a	"Sst/Pnoc/Unc13c
+of
+Sst/Pnoc"	57.1428571428571
+Figure9 wt2_ middle1a	"Sst/Pnoc/Unc13c
+of
+Sst/Pnoc"	47.6190476190476
+Figure10	"Sst/Pnoc/Unc13c
+of
+Sst/Pnoc"	61.5384615384615
+Figure11 wt2_ middle1a	"Sst/Pnoc/Unc13c
+of
+Sst/Pnoc"	42.8571428571429
+Figure12 wt3_ middle1a	"Sst/Pnoc/Unc13c
+of
+Sst/Pnoc"	100
+Figure1 wt1_posta	"Sst/Pnoc/Nts/Unc13
+of
+Sst/Pnoc"	4.34782608695652
+Figure2 wt1_postb	"Sst/Pnoc/Nts/Unc13
+of
+Sst/Pnoc"	0
+Figure3 wt1_middle 2a	"Sst/Pnoc/Nts/Unc13
+of
+Sst/Pnoc"	4.65116279069768
+Figure4 wt1_middle 2b	"Sst/Pnoc/Nts/Unc13
+of
+Sst/Pnoc"	0
+Figure5 wt1_middle 1a	"Sst/Pnoc/Nts/Unc13
+of
+Sst/Pnoc"	0
+Figure6 wt1_middle 1b	"Sst/Pnoc/Nts/Unc13
+of
+Sst/Pnoc"	0
+Figure7 wt2_ant	"Sst/Pnoc/Nts/Unc13
+of
+Sst/Pnoc"	6.66666666666667
+Figure8  wt2_ middle1a	"Sst/Pnoc/Nts/Unc13
+of
+Sst/Pnoc"	0
+Figure9 wt2_ middle1a	"Sst/Pnoc/Nts/Unc13
+of
+Sst/Pnoc"	0
+Figure10	"Sst/Pnoc/Nts/Unc13
+of
+Sst/Pnoc"	0
+Figure11 wt2_ middle1a	"Sst/Pnoc/Nts/Unc13
+of
+Sst/Pnoc"	0
+Figure12 wt3_ middle1a	"Sst/Pnoc/Nts/Unc13
+of
+Sst/Pnoc"	11.7647058823529
+figure1 wt1	"Crabp1/Pnoc
+of
+Crabp1"	72.5
+figure3 wt3	"Crabp1/Pnoc
+of
+Crabp1"	66.6666666666667
+figure4 wt3 middle 1a	"Crabp1/Pnoc
+of
+Crabp1"	69.5652173913044
+figure5 wt3 middle2a	"Crabp1/Pnoc
+of
+Crabp1"	62.6016260162602
+figure6 middle 1a	"Crabp1/Pnoc
+of
+Crabp1"	87.3239436619718
+figure7 wt1 middle 1b	"Crabp1/Pnoc
+of
+Crabp1"	71.2328767123288
+figure8 middle2b	"Crabp1/Pnoc
+of
+Crabp1"	72
+figure9 awt3 anterior	"Crabp1/Pnoc
+of
+Crabp1"	86
+figure 10 wt4 middle 1a	"Crabp1/Pnoc
+of
+Crabp1"	89.7435897435898
+figure11 wt4 middle 1b	"Crabp1/Pnoc
+of
+Crabp1"	75.3623188405797
+figure12 wt4 middle2a	"Crabp1/Pnoc
+of
+Crabp1"	84.5070422535211
+figure13 wt4 middle2b	"Crabp1/Pnoc
+of
+Crabp1"	73.2394366197183
+figure14 wt4 postb	"Crabp1/Pnoc
+of
+Crabp1"	77.0833333333334
+figure15 wt4 post a	"Crabp1/Pnoc
+of
+Crabp1"	81.1111111111111
+figure1 wt1	"Crabp1/Pnoc/Tmem215
+of
+Crabp1/Pnoc"	75.8620689655172
+figure3 wt3	"Crabp1/Pnoc/Tmem215
+of
+Crabp1/Pnoc"	38.8888888888889
+figure4 wt3 middle 1a	"Crabp1/Pnoc/Tmem215
+of
+Crabp1/Pnoc"	2.08333333333333
+figure5 wt3 middle2a	"Crabp1/Pnoc/Tmem215
+of
+Crabp1/Pnoc"	44.1558441558442
+figure6 middle 1a	"Crabp1/Pnoc/Tmem215
+of
+Crabp1/Pnoc"	61.2903225806452
+figure7 wt1 middle 1b	"Crabp1/Pnoc/Tmem215
+of
+Crabp1/Pnoc"	46.1538461538462
+figure8 middle2b	"Crabp1/Pnoc/Tmem215
+of
+Crabp1/Pnoc"	33.3333333333333
+figure9 awt3 anterior	"Crabp1/Pnoc/Tmem215
+of
+Crabp1/Pnoc"	58.1395348837209
+figure 10 wt4 middle 1a	"Crabp1/Pnoc/Tmem215
+of
+Crabp1/Pnoc"	40
+figure11 wt4 middle 1b	"Crabp1/Pnoc/Tmem215
+of
+Crabp1/Pnoc"	46.1538461538462
+figure12 wt4 middle2a	"Crabp1/Pnoc/Tmem215
+of
+Crabp1/Pnoc"	46.6666666666667
+figure13 wt4 middle2b	"Crabp1/Pnoc/Tmem215
+of
+Crabp1/Pnoc"	23.0769230769231
+figure14 wt4 postb	"Crabp1/Pnoc/Tmem215
+of
+Crabp1/Pnoc"	32.4324324324324
+figure15 wt4 post a	"Crabp1/Pnoc/Tmem215
+of
+Crabp1/Pnoc"	26.027397260274
+figure1 wt1	"Crabp1/Pnoc/Htr3b
+of
+Crabp1/Pnoc"	31.0344827586207
+figure3 wt3	"Crabp1/Pnoc/Htr3b
+of
+Crabp1/Pnoc"	55.5555555555556
+figure4 wt3 middle 1a	"Crabp1/Pnoc/Htr3b
+of
+Crabp1/Pnoc"	33.3333333333333
+figure5 wt3 middle2a	"Crabp1/Pnoc/Htr3b
+of
+Crabp1/Pnoc"	20.7792207792208
+figure6 middle 1a	"Crabp1/Pnoc/Htr3b
+of
+Crabp1/Pnoc"	30.6451612903226
+figure7 wt1 middle 1b	"Crabp1/Pnoc/Htr3b
+of
+Crabp1/Pnoc"	23.0769230769231
+figure8 middle2b	"Crabp1/Pnoc/Htr3b
+of
+Crabp1/Pnoc"	18.0555555555556
+figure9 awt3 anterior	"Crabp1/Pnoc/Htr3b
+of
+Crabp1/Pnoc"	25.5813953488372
+figure 10 wt4 middle 1a	"Crabp1/Pnoc/Htr3b
+of
+Crabp1/Pnoc"	17.1428571428571
+figure11 wt4 middle 1b	"Crabp1/Pnoc/Htr3b
+of
+Crabp1/Pnoc"	32.6923076923077
+figure12 wt4 middle2a	"Crabp1/Pnoc/Htr3b
+of
+Crabp1/Pnoc"	30
+figure13 wt4 middle2b	"Crabp1/Pnoc/Htr3b
+of
+Crabp1/Pnoc"	44.2307692307692
+figure14 wt4 postb	"Crabp1/Pnoc/Htr3b
+of
+Crabp1/Pnoc"	45.945945945946
+figure15 wt4 post a	"Crabp1/Pnoc/Htr3b
+of
+Crabp1/Pnoc"	42.4657534246575
+figure1 wt1	"Crabp1/Pnoc/Tmem215/Htr3b
+of
+Crabp1/Pnoc"	10.3448275862069
+figure3 wt3	"Crabp1/Pnoc/Tmem215/Htr3b
+of
+Crabp1/Pnoc"	13.8888888888889
+figure4 wt3 middle 1a	"Crabp1/Pnoc/Tmem215/Htr3b
+of
+Crabp1/Pnoc"	2.08333333333333
+figure5 wt3 middle2a	"Crabp1/Pnoc/Tmem215/Htr3b
+of
+Crabp1/Pnoc"	7.79220779220779
+figure6 middle 1a	"Crabp1/Pnoc/Tmem215/Htr3b
+of
+Crabp1/Pnoc"	6.45161290322581
+figure7 wt1 middle 1b	"Crabp1/Pnoc/Tmem215/Htr3b
+of
+Crabp1/Pnoc"	7.69230769230769
+figure8 middle2b	"Crabp1/Pnoc/Tmem215/Htr3b
+of
+Crabp1/Pnoc"	12.5
+figure9 awt3 anterior	"Crabp1/Pnoc/Tmem215/Htr3b
+of
+Crabp1/Pnoc"	4.65116279069768
+figure 10 wt4 middle 1a	"Crabp1/Pnoc/Tmem215/Htr3b
+of
+Crabp1/Pnoc"	5.71428571428571
+figure11 wt4 middle 1b	"Crabp1/Pnoc/Tmem215/Htr3b
+of
+Crabp1/Pnoc"	11.5384615384615
+figure12 wt4 middle2a	"Crabp1/Pnoc/Tmem215/Htr3b
+of
+Crabp1/Pnoc"	15
+figure13 wt4 middle2b	"Crabp1/Pnoc/Tmem215/Htr3b
+of
+Crabp1/Pnoc"	15.3846153846154
+figure14 wt4 postb	"Crabp1/Pnoc/Tmem215/Htr3b
+of
+Crabp1/Pnoc"	16.2162162162162
+figure15 wt4 post a	"Crabp1/Pnoc/Tmem215/Htr3b
+of
+Crabp1/Pnoc"	10.958904109589

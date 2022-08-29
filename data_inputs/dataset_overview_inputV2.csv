@@ -1,0 +1,19 @@
+Name,SRA Acc,comments,Download Issues,Count,GEO Acc,paper,year,Technology,Subregion
+Affinati,SRP315086 ,"second Rupp, 1 library is not available SRR1425361","SRR14252361 has only read 1, skipped",Done,GSE172204,https://elifesciences.org/articles/69065,2021,10x v3 nucSeq,Ventromedial hypothalamus
+Anderson,SRP355661 ,"virgin only, may also choose nonaggressive?  Alll data included",Nil,Done,GSE193921,https://doi.org/10.1016/j.neuron.2021.12.002,2022,10x v3,Ventromedial hypothalamus
+Campbell,SRP096361,Directory structure is different from others,Nil,Done,GSE93374,https://www.ncbi.nlm.nih.gov/pubmed/28166221,2017,Drop-seq,Arcuate Nucleus/Median Eminence
+Chen,SRP090730,Directory structure is different from others,Nil,Done,GSE87544,https://www.ncbi.nlm.nih.gov/pubmed/28355573,2017,Drop-seq,Hypothalamus
+Flynn,SRP252133,,Nil,Done,GSE146692,https://elifesciences.org/articles/58901,2020,10x v2,Ventroposterior hypothalamus
+Kim,10.17632/ypx3sw2f7c.3,Could find fastq reads. GRCm38 (mm10) using a RefSeq annotation gff file retrieved from NCBI on 18 January 2016,cannot find reads,"Cannot find reads, use count table",10.17632/ypx3sw2f7c.3,https://www.ncbi.nlm.nih.gov/pubmed/31626771,2019,10x v2,Ventromedial hypothalamus
+kimDev,SRP200721,Used only P45 samples,"Downloaded original bams, extracted fastqs and re-ran cellranger",Done,GSE132355,https://www.biorxiv.org/content/10.1101/657148v3,2020,10x v2,Hypothalamus
+Lam,…,"Dowsett, directory structure is different from others",Nil,Done,…,…,2021,10x v3 nucSeq,Hypothalamus
+Lee_Idol,SRP161751,"used only wt, Idol samples dropped",Nil,Done,GSE119960,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7028310/,2019,Drop-seq,Hypothalamus
+Mickelsen,SRP179101,,Nil,Done,GSE125065,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7043322/,2019,10x v2,Lateral hypothalamus
+Moffit,SRP142447,,"Downloaded original bams, extracted fastqs and re-ran cellranger",Done,GSE113576,https://www.ncbi.nlm.nih.gov/pubmed/30385464,2018,10x v2,Preoptic region
+Morris,SRP308663,,"Downloaded original bams, extracted fastqs and re-ran cellranger",Done,GSE167927,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8521297/,2021,10x v3,Suprachiasmatic nucleus
+Mousebrainorg,SRP135960,"Hypo only, 2 libraries not available SRR6854123, SRR6854124","Downloaded original bams, extracted fastqs and re-ran cellranger, 2 libraries skipped",Done,SRP135960,https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6086934/,2018,10x v2,Hypothalamus
+RomanovDev,SRP201462 ,P23 used,Nil,Done,GSE132730,https://www.nature.com/articles/s41586-020-2266-0?proof=trueIn%EF%BB%BF,2020,10x v2,Hypothalamus
+Rossi,SRP194426,,Nil,Done,GSE130597,https://www.ncbi.nlm.nih.gov/pubmed/31249056,2019,Drop-seq,Lateral hypothalamus
+Rupp,SRP315601 ,,Nil,Done,GSE172461,https://www.biorxiv.org/content/10.1101/2021.12.10.472115v1.full,2021,10x v3 nucSeq,Mediobasal Hypothalamus
+wen10x,SRP201224,,Nil,Done,GSE132608,https://www.ncbi.nlm.nih.gov/pubmed/32066983,2019,10x v2,Suprachiasmatic nucleus
+wenDropSeq,SRP154310,,Nil,Done,GSE117295,https://www.ncbi.nlm.nih.gov/pubmed/32066983,2019,Drop-seq,Suprachiasmatic nucleus

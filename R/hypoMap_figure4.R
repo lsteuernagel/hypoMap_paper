@@ -7,7 +7,6 @@ results_path_figure4 = "figure_outputs/figure_4/"
 system(paste0("mkdir -p ",results_path_figure4))
 
 # load required functions
-require(mapscvi)
 require(dplyr)
 require(ggplot2)
 require(Seurat)
@@ -15,148 +14,52 @@ source("R/utility_functions.R")
 source("R/plot_functions.R")
 
 # where to find large data objects (need to change to local dir !)
-large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap/hypoMap_largeFiles/"
+large_data_path = "/beegfs/scratch/bruening_scratch/lsteuernagel/data/hypoMap_v2c_final/"
 
 # load seurat objects via large_data_path
 load_required_files(large_data_path = large_data_path)
+hypoMap_v2_seurat@meta.data$Author_Class_Curated[hypoMap_v2_seurat@meta.data$Author_Class_Curated=="Differentiating"] = "Dividing"
 
-# colors
-reference_color = "#cc2118"
-query_sn_color = "#302ac9"
-bg_col = "grey90"
-cols_for_feature_plot = c(bg_col,"#0b3ebd") # "#0b3ebd"
-
-rasterize_point_size = 2.2
-rasterize_pixels = 2048
-
-##########
-### Plot mapping results
-##########
-
-## with labels on hypomap background:
-mapped_query_snseq_neurons_plot = mapscvi::plot_query_labels(query_seura_object=query_snseq_neurons,reference_seurat=neuron_map_seurat,label_col="K31_named",
-                                                             label_col_query = "predicted_K31_named",overlay = TRUE,bg_col = bg_col,
-                                                             query_pt_size = 0.05,labelonplot = TRUE,label.size=5,repel=TRUE)
-mapped_query_snseq_neurons_plot = rasterize_ggplot(mapped_query_snseq_neurons_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
-mapped_query_snseq_neurons_plot
-
-ggsave(filename = paste0(results_path_figure4,"mapping_snseq.png"),
-       plot = mapped_query_snseq_neurons_plot, "png",dpi=450,width=200,height = 200,units="mm")
-ggsave(filename = paste0(results_path_figure4,"mapping_snseq.pdf"),
-       plot = mapped_query_snseq_neurons_plot, "pdf",dpi=450,width=200,height = 200,units="mm")
+# load colors 
+load_colors()
+getLongPalette = colorRampPalette(long_palette_strong)
+getOkabeItoPalette = colorRampPalette(short_palette)
 
 
-## mapping quality:
-#colnames(query_snseq_neurons@meta.data)
-quality_query_snseq_neurons_plot=Seurat::FeaturePlot(query_snseq_neurons,features = "prediction_probability",reduction = paste0("umap_","scvi"),
-                                                     label = FALSE,raster=FALSE,cols = cols_for_feature_plot)+
-  NoAxes()+ggtitle("Mapping probability")
-quality_query_snseq_neurons_plot = rasterize_ggplot(quality_query_snseq_neurons_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
-quality_query_snseq_neurons_plot
-
-ggsave(filename = paste0(results_path_figure4,"mapping_prob_snseq.png"),
-       plot = quality_query_snseq_neurons_plot, "png",dpi=450,width=200,height = 200,units="mm")
-ggsave(filename = paste0(results_path_figure4,"mapping_prob_snseq.pdf"),
-       plot = quality_query_snseq_neurons_plot, "pdf",dpi=450,width=200,height = 200,units="mm")
+## plotting
+load_plot_params()
 
 
 ##########
-### Sankey plots
+### Plot nucseq on rest
 ##########
 
-# we selected the VMH and the SCN neurons as examples
+hypoMap_v2_seurat@meta.data$Dowsett10xnuc_anno_col=NA
+hypoMap_v2_seurat@meta.data$Dowsett10xnuc_anno_col[hypoMap_v2_seurat@meta.data$Dataset=="Dowsett10xnuc"] = as.character(hypoMap_v2_seurat@meta.data$C25_named[hypoMap_v2_seurat@meta.data$Dataset=="Dowsett10xnuc"])
+hypoMap_v2_seurat@meta.data$Dowsett10xnuc_anno_col = factor(hypoMap_v2_seurat@meta.data$Dowsett10xnuc_anno_col,levels = unique(hypoMap_v2_seurat@meta.data$Dowsett10xnuc_anno_col))
+#hypoMap_v2_seurat@meta.data$Dowsett10xnuc_anno_col = factor(hypoMap_v2_seurat@meta.data$Dowsett10xnuc_anno_col,levels = levels(as.factor(hypoMap_v2_seurat@meta.data$C185)))
+# plot
+# getLongPalette or getOkabeItoPalette
+nucseq_in_hypoMap_plot=DimPlot(hypoMap_v2_seurat,group.by = "Dowsett10xnuc_anno_col",reduction = paste0("umap_","scvi"),pt.size = 0.2,raster = F,cols = getOkabeItoPalette(25),
+                               label = TRUE,label.size = 5,repel = TRUE,order = TRUE,na.value = bg_col,raster.dpi = c(rasterize_px,rasterize_px))+
+  NoLegend()+NoAxes()+ggtitle("Nucseq clusters")
+# change order
+plot_data = nucseq_in_hypoMap_plot$data
+nucseq_in_hypoMap_plot$data = plot_data[order(plot_data$Dowsett10xnuc_anno_col,na.last = FALSE),]
+# i rasterize afterwards so that I can use standard ggplot functions to set color palettes etc
+nucseq_in_hypoMap_plot = rasterize_ggplot(nucseq_in_hypoMap_plot,pixel_raster = rasterize_pixels,pointsize = rasterize_point_size)
+nucseq_in_hypoMap_plot
 
-# create cluster overview using mapscvi:
-overview_clustering = mapscvi::compare_clustering(query_snseq_neurons,"predicted_K98_named","Cluster_IDs",min_cells = 10,min_pct = 0.1,return_data=TRUE)
-data.table::fwrite(overview_clustering,paste0(results_path_figure4,"overview_clustering_nucSeq.txt"),sep="\t")
+ggsave(filename = paste0(results_path_figure4,"nucseq_in_hypoMap.png"),
+       plot = nucseq_in_hypoMap_plot, "png",dpi=450,width=300,height = 300,units="mm")
+ggsave(filename = paste0(results_path_figure4,"nucseq_in_hypoMap.pdf"),
+       plot = nucseq_in_hypoMap_plot, "pdf",dpi=450,width=300,height = 300,units="mm")
 
+##source data
+nucseq_in_hypoMap_data = nucseq_in_hypoMap_plot$data
+nucseq_in_hypoMap_data$Cell_ID = rownames(nucseq_in_hypoMap_data)
+data.table::fwrite(nucseq_in_hypoMap_data,paste0(results_path_figure4,"source_figure4_a_umap_nucseq.txt"),sep="\t")
 
-#### SCN plots
-# select most relevant clusters:
-clustering_2_filter = c("C32-C1ql3/Rgs16","C40-Vip")
-clustering_1_filter = overview_clustering$clustering_1[overview_clustering$clustering_2 %in% clustering_2_filter]
-
-## which clusters are truly SCN (annoated)
-clustering_1_filter_SCN = unique(neuron_map_seurat@meta.data$K98_named[neuron_map_seurat@meta.data$K98_named %in% clustering_1_filter & neuron_map_seurat@meta.data$suggested_region == "Suprachiasmatic nucleus" ])
-clustering_1_filter_SCN
-# I add the Arx cluster manually
-unique(neuron_map_seurat@meta.data$other_likely_regions[neuron_map_seurat@meta.data$K98_named == "Arx.Six6.HY1"])
-unique(neuron_map_seurat@meta.data$other_likely_regions[neuron_map_seurat@meta.data$K98_named == "Nr5a2.Satb2.HY1"]) # but not the Satb2
-clustering_1_filter_SCN = c(clustering_1_filter_SCN,"Arx.Six6.HY1")
-
-# orientation umap:
-cellsh = query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K98_named %in% clustering_1_filter_SCN]
-scn_dimplot = DimPlot(query_snseq_neurons,cells.highlight = cellsh,sizes.highlight = 0.15)+NoLegend()+NoAxes()+scale_color_manual(values=c(bg_col,query_sn_color))
-scn_dimplot = DimPlot(query_snseq_neurons,cells.highlight = cellsh,sizes.highlight = 0.15)+NoLegend()+NoAxes()+scale_color_manual(values=c("lightgrey","red"))
-scn_dimplot = rasterize_ggplot(scn_dimplot,pixel_raster = 1024,pointsize = 1.1)
-scn_dimplot
-
-# sankey
-sankey_scn = mapscvi::plot_sankey_comparison(overview_clustering,clustering_1_filter = clustering_1_filter_SCN,clustering_2_filter = clustering_2_filter,
-                                             text_size=20, col1 = reference_color, col2 = query_sn_color,use_and = FALSE,light_factor = 0.45)
-sankey_scn
-
-# get the numbers:
-n_scn_cells_nuc = length(query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K98_named %in% clustering_1_filter_SCN])
-pct_scn_cells_nuc = n_scn_cells_nuc / nrow(query_snseq_neurons@meta.data)
-n_scn_cells_sc = length(neuron_map_seurat@meta.data$Cell_ID[neuron_map_seurat@meta.data$K98_named %in% clustering_1_filter_SCN])
-pct_scn_cells_sc = n_scn_cells_sc / nrow(neuron_map_seurat@meta.data)
-
-# save sankeys
-library(webshot)
-# https://stackoverflow.com/questions/65158327/how-can-i-save-a-networkd3sankeynetwork-into-a-static-image-automatically-vi
-networkD3::saveNetwork(sankey_scn, paste0(results_path_figure4,"sankey_scn_neurons.html"))
-# convert it
-# need: webshot::install_phantomjs()
-webshot::webshot(paste0(results_path_figure4,"sankey_scn_neurons.html"),file=paste0(results_path_figure4,"sankey_scn_neurons.png"), vwidth = 1000, vheight = 900)
-webshot::webshot(paste0(results_path_figure4,"sankey_scn_neurons.html"),file=paste0(results_path_figure4,"sankey_scn_neurons.pdf"), vwidth = 1000, vheight = 900)
-
-# save dimplot
-ggsave(filename = paste0(results_path_figure4,"scn_dimplot.png"),
-       plot = scn_dimplot, "png",dpi=450,width=200,height = 200,units="mm")
-ggsave(filename = paste0(results_path_figure4,"scn_dimplot.pdf"),
-       plot = scn_dimplot, "pdf",dpi=450,width=200,height = 200,units="mm")
-
-
-#### VMH plots
-# select most relevant clusters:
-clustering_1_filter = c("Gpr149.Cd40.Fezf1.HY2","Nr5a1.Cd40.Fezf1.HY2")
-clustering_2_filter = overview_clustering$clustering_2[overview_clustering$clustering_1=="Gpr149.Cd40.Fezf1.HY2"]
-
-# this is actually a VMH region !
-unique(neuron_map_seurat@meta.data$suggested_region_curated[neuron_map_seurat@meta.data$K98_named == "Gpr149.Cd40.Fezf1.HY2"])
-unique(neuron_map_seurat@meta.data$suggested_region_curated[neuron_map_seurat@meta.data$K98_named == "Nr5a1.Cd40.Fezf1.HY2"])
-
-
-# orientation umap:
-cellsh = query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K98_named %in% clustering_1_filter]
-vmh_dimplot = DimPlot(query_snseq_neurons,cells.highlight = cellsh,sizes.highlight = 0.15)+NoLegend()+NoAxes()+scale_color_manual(values=c(bg_col,query_sn_color))
-vmh_dimplot = DimPlot(query_snseq_neurons,cells.highlight = cellsh,sizes.highlight = 0.15)+NoLegend()+NoAxes()+scale_color_manual(values=c("lightgrey","red"))
-vmh_dimplot = rasterize_ggplot(vmh_dimplot,pixel_raster = 1024,pointsize = 1.1)
-vmh_dimplot
-
-# sankey
-sankey_vmh = mapscvi::plot_sankey_comparison(overview_clustering,clustering_1_filter = clustering_1_filter,clustering_2_filter = clustering_2_filter,
-                                             text_size=20, col1 = reference_color, col2 = query_sn_color,use_and = FALSE,light_factor = 0.45)
-sankey_vmh
-
-# get the numbers:
-n_vmh_cells_nuc = length(query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K98_named %in% clustering_1_filter])
-pct_vmh_cells_nuc = n_vmh_cells_nuc / nrow(query_snseq_neurons@meta.data)
-n_vmh_cells_sc = length(neuron_map_seurat@meta.data$Cell_ID[neuron_map_seurat@meta.data$K98_named %in% clustering_1_filter])
-pct_vmh_cells_sc = n_vmh_cells_sc / nrow(neuron_map_seurat@meta.data)
-
-# save sankeys
-networkD3::saveNetwork(sankey_vmh, paste0(results_path_figure4,"sankey_vmh_neurons.html"))
-# convert it
-webshot::webshot(paste0(results_path_figure4,"sankey_vmh_neurons.html"),file=paste0(results_path_figure4,"sankey_vmh_neurons.png"), vwidth = 1000, vheight = 900)
-webshot::webshot(paste0(results_path_figure4,"sankey_vmh_neurons.html"),file=paste0(results_path_figure4,"sankey_vmh_neurons.pdf"), vwidth = 1000, vheight = 900)
-
-# save dimplot
-ggsave(filename = paste0(results_path_figure4,"vmh_dimplot.png"),
-       plot = vmh_dimplot, "png",dpi=450,width=200,height = 200,units="mm")
-ggsave(filename = paste0(results_path_figure4,"vmh_dimplot.pdf"),
-       plot = vmh_dimplot, "pdf",dpi=450,width=200,height = 200,units="mm")
 
 
 ###########################
@@ -167,17 +70,15 @@ ggsave(filename = paste0(results_path_figure4,"vmh_dimplot.pdf"),
 ### Cluster marker genes
 ##########
 
-# load marker genes sc seq
-sc_seq_markers_K169 = neuron_map_seurat@misc$markers_comparisons_all[neuron_map_seurat@misc$markers_comparisons_all$p_val_adj<0.01,]
-
-# load marker genes sn seq
-sn_seq_markers_K169 = data.table::fread(paste0("data_inputs/sn_seq_mapped_neurons_K169_markers_2_sampleID.txt"),data.table = F)
-sn_seq_markers_K169$specificity = (sn_seq_markers_K169$pct.1 / sn_seq_markers_K169$pct.2) * sn_seq_markers_K169$avg_logFC
-sn_seq_markers_K169$avg_log2FC = sn_seq_markers_K169$avg_logFC
+# padj_cut = 0.001
+# fc_min = 0.25
+markers_C185 = hypoMap_v2_seurat@misc$marker_genes_all[hypoMap_v2_seurat@misc$marker_genes_all$p_val_adj < 0.001 & 
+                                                         hypoMap_v2_seurat@misc$marker_genes_all$specificity > 0.25 & 
+                                                         stringr::str_extract(hypoMap_v2_seurat@misc$marker_genes_all$cluster_id,"C[0-9]+") == "C185",]
 
 # which cluster seem relevant (have a sufficient number of cells mapped in sn-seq data to calculate reliable averages)
 min_cells = 30
-clusters_to_check = names(table(query_snseq_neurons@meta.data$predicted_K169_pruned))[table(query_snseq_neurons@meta.data$predicted_K169_pruned)>=min_cells]
+clusters_to_check = names(table(hypoMap_v2_seurat@meta.data$C185[hypoMap_v2_seurat@meta.data$Dataset=="Dowsett10xnuc"]))[table(hypoMap_v2_seurat@meta.data$C185[hypoMap_v2_seurat@meta.data$Dataset=="Dowsett10xnuc"])>=min_cells]
 length(clusters_to_check)
 
 ##########
@@ -186,6 +87,9 @@ length(clusters_to_check)
 ##########
 ### global gene mean calculation
 ##########
+
+# which clusters to exclude fromsc-seq comparison
+not_scseq_datasets = c("Dowsett10xnuc","Affinati10x","Rupp10x")
 
 # build metacell expression matrix
 build_cell = function(cells,expr_matrix){
@@ -196,17 +100,19 @@ build_cell = function(cells,expr_matrix){
   }
 }
 st=Sys.time()
-cluster_list_neuron_map = split(neuron_map_seurat@meta.data$Cell_ID[neuron_map_seurat@meta.data$K169_pruned %in% clusters_to_check],f =neuron_map_seurat@meta.data$K169_pruned[neuron_map_seurat@meta.data$K169_pruned %in% clusters_to_check] )
-mean_expr = lapply(cluster_list_neuron_map,build_cell,expr_matrix = neuron_map_seurat@assays$RNA@data)#seurat_object_harmonized
+cluster_list_sc_seq = split(hypoMap_v2_seurat@meta.data$Cell_ID[hypoMap_v2_seurat@meta.data$C185 %in% clusters_to_check &  ! hypoMap_v2_seurat@meta.data$Dataset %in% not_scseq_datasets],
+                                                                f =hypoMap_v2_seurat@meta.data$C185[hypoMap_v2_seurat@meta.data$C185 %in% clusters_to_check & !hypoMap_v2_seurat@meta.data$Dataset %in% not_scseq_datasets] )
+mean_expr_sc = lapply(cluster_list_sc_seq,build_cell,expr_matrix = hypoMap_v2_seurat@assays$RNA@data)#seurat_object_harmonized
 message("Time used to summarise expression matrix : ",Sys.time()-st)
-neuron_map_mean_expression = as.matrix(do.call(cbind,mean_expr))
+mean_expression_sc = as.matrix(do.call(cbind,mean_expr_sc))
 
 # for snseq
 st=Sys.time()
-cluster_list_snseq = split(query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K169_pruned %in% clusters_to_check],f =query_snseq_neurons@meta.data$predicted_K169_pruned[query_snseq_neurons@meta.data$predicted_K169_pruned %in% clusters_to_check] )
-mean_expr_sn = lapply(cluster_list_snseq,build_cell,expr_matrix = query_snseq_neurons@assays$RNA@data)#seurat_object_harmonized
+cluster_list_sn_seq = split(hypoMap_v2_seurat@meta.data$Cell_ID[hypoMap_v2_seurat@meta.data$C185 %in% clusters_to_check & hypoMap_v2_seurat@meta.data$Dataset == "Dowsett10xnuc"],
+                            f =hypoMap_v2_seurat@meta.data$C185[hypoMap_v2_seurat@meta.data$C185 %in% clusters_to_check & hypoMap_v2_seurat@meta.data$Dataset == "Dowsett10xnuc"] )
+mean_expr_sn = lapply(cluster_list_sn_seq,build_cell,expr_matrix = hypoMap_v2_seurat@assays$RNA@data)#seurat_object_harmonized
 message("Time used to summarise expression matrix : ",Sys.time()-st)
-snseq_mean_expression = as.matrix(do.call(cbind,mean_expr_sn))
+mean_expression_sn = as.matrix(do.call(cbind,mean_expr_sn))
 
 ##########
 ### Calculate highest percentage per cluster to subset genes
@@ -217,58 +123,36 @@ min_pct_genes = 0.2
 min_mean_genes = 0.2
 
 ## add a max pct value
-Idents(neuron_map_seurat) = "K169_pruned"
-all_clusterstats_sc = list()
-for(cluster in unique(neuron_map_seurat@meta.data$K169_pruned)){
+Idents(hypoMap_v2_seurat) = "C185"
+all_clusterstats = list()
+for(cluster in unique(hypoMap_v2_seurat@meta.data$C185)){
   message(cluster)
-  cells1 = neuron_map_seurat@meta.data$Cell_ID[neuron_map_seurat@meta.data$K169_pruned == cluster]
-  all_clusterstats_sc[[cluster]] = get_expression_stats(object=neuron_map_seurat, cells.1=cells1,features = NULL,  thresh.min = 0)
-  all_clusterstats_sc[[cluster]]$cluster = cluster
+  cells1 = hypoMap_v2_seurat@meta.data$Cell_ID[hypoMap_v2_seurat@meta.data$C185 == cluster]
+  all_clusterstats[[cluster]] = get_expression_stats(object=hypoMap_v2_seurat, cells.1=cells1,features = NULL,  thresh.min = 0)
+  all_clusterstats[[cluster]]$cluster = cluster
 }
-all_clusterstats_sc_df = do.call(rbind,all_clusterstats_sc)
-all_clusterstats_sc_df_summarized = all_clusterstats_sc_df %>% dplyr::filter(pct.1 > 0) %>% dplyr::group_by(gene) %>% dplyr::filter(pct.1 == max(pct.1)) %>% distinct(gene,.keep_all = TRUE)
-sc_genes_to_keep = all_clusterstats_sc_df_summarized$gene[all_clusterstats_sc_df_summarized$mean.1>min_mean_genes | all_clusterstats_sc_df_summarized$pct.1 > min_pct_genes]
-
-# run the same for sn
-Idents(query_snseq_neurons) = "predicted_K169_pruned"
-all_clusterstats_sn = list()
-for(cluster in unique(query_snseq_neurons@meta.data$predicted_K169_pruned)){
-  message(cluster)
-  cells1 = query_snseq_neurons@meta.data$Cell_ID[query_snseq_neurons@meta.data$predicted_K169_pruned == cluster]
-  if(length(cells1)>=5){
-    all_clusterstats_sn[[cluster]] = get_expression_stats(object=query_snseq_neurons, cells.1=cells1,features = NULL,  thresh.min = 0)
-    all_clusterstats_sn[[cluster]]$cluster = cluster
-  }
-}
-all_clusterstats_sn_df = do.call(rbind,all_clusterstats_sn)
-all_clusterstats_sn_df_summarized = all_clusterstats_sn_df %>% dplyr::filter(pct.1 > 0) %>% dplyr::group_by(gene) %>% dplyr::filter(pct.1 == max(pct.1)) %>% distinct(gene,.keep_all = TRUE)
-sn_genes_to_keep = all_clusterstats_sn_df_summarized$gene[all_clusterstats_sn_df_summarized$mean.1>min_mean_genes | all_clusterstats_sn_df_summarized$pct.1 > min_pct_genes]
-
-all_genes_to_keep = base::union(sc_genes_to_keep,sn_genes_to_keep)
-
-# make a table that can be saved 
-all_clusterstats_both_summarized = dplyr::full_join(all_clusterstats_sc_df_summarized,all_clusterstats_sn_df_summarized, by =c("gene"="gene"),suffix=c("_sc","_sn"))
-# data.table::fwrite(all_clusterstats_both_summarized,paste0(results_path_figure4,"max_expression_in_any_cluster_per_gene.txt"),sep = "\t")
-#all_clusterstats_both_summarized = data.table::fread(paste0(results_path_figure4,"max_expression_in_any_cluster_per_gene.txt"))
+all_clusterstats_df = do.call(rbind,all_clusterstats)
+all_clusterstats_df_summarized = all_clusterstats_df %>% dplyr::filter(pct.1 > 0) %>% dplyr::group_by(gene) %>% dplyr::filter(pct.1 == max(pct.1)) %>% distinct(gene,.keep_all = TRUE)
+genes_to_keep = all_clusterstats_df_summarized$gene[all_clusterstats_df_summarized$mean.1>min_mean_genes | all_clusterstats_df_summarized$pct.1 > min_pct_genes]
 
 ##########
 ### Calculate per gene correlations
 ##########
 
-# need to subset to same genes 
-shared_genes = sort(intersect(rownames(neuron_map_mean_expression),rownames(snseq_mean_expression)))
-shared_genes = shared_genes[shared_genes %in% all_genes_to_keep] 
+# # need to subset to same genes 
+# shared_genes = sort(intersect(rownames(neuron_map_mean_expression),rownames(snseq_mean_expression)))
+# shared_genes = shared_genes[shared_genes %in% all_genes_to_keep] 
+# 
+# # and same order
+# neuron_map_mean_expression_subset = neuron_map_mean_expression[genes_to_keep,]
+# snseq_mean_expression_subset = snseq_mean_expression[genes_to_keep,]
 
-# and same order
-neuron_map_mean_expression_subset = neuron_map_mean_expression[shared_genes,]
-snseq_mean_expression_subset = snseq_mean_expression[shared_genes,]
-
-all_cors=sapply(shared_genes,function(gene,mat1,mat2){
+all_cors=sapply(genes_to_keep,function(gene,mat1,mat2){
   suppressWarnings(cor(mat1[gene,],mat2[gene,],use="pairwise.complete.obs",method ="pearson"))
-},mat1=neuron_map_mean_expression_subset,mat2=snseq_mean_expression_subset)
-all_cors_spearman=sapply(shared_genes,function(gene,mat1,mat2){
+},mat1=mean_expression_sc,mat2=mean_expression_sn)
+all_cors_spearman=sapply(genes_to_keep,function(gene,mat1,mat2){
   suppressWarnings(cor(mat1[gene,],mat2[gene,],use="pairwise.complete.obs",method ="spearman"))
-},mat1=neuron_map_mean_expression_subset,mat2=snseq_mean_expression_subset)
+},mat1=mean_expression_sc,mat2=mean_expression_sn)
 per_gene_cor = data.frame(gene = names(all_cors), pearson = all_cors,spearman = all_cors_spearman)
 
 ## add more info to gene_cors
@@ -277,21 +161,11 @@ padj_cut = 0.001
 fc_min = 0.25
 
 ## simple classificationfor markers:
-per_gene_cor$sn_marker = FALSE
-per_gene_cor$sn_marker[per_gene_cor$gene %in% sn_seq_markers_K169$gene[sn_seq_markers_K169$p_val_adj<padj_cut & sn_seq_markers_K169$avg_log2FC > fc_min & sn_seq_markers_K169$cluster %in% clusters_to_check]] = TRUE
-per_gene_cor$sc_marker = FALSE
-per_gene_cor$sc_marker[per_gene_cor$gene %in% sc_seq_markers_K169$gene[sc_seq_markers_K169$p_val_adj<padj_cut & sc_seq_markers_K169$avg_logFC > fc_min & sc_seq_markers_K169$cluster %in% clusters_to_check]] = TRUE
-per_gene_cor$both_marker = FALSE
-per_gene_cor$both_marker[per_gene_cor$sn_marker & per_gene_cor$sc_marker] = TRUE
-per_gene_cor$sn_marker[per_gene_cor$both_marker] = FALSE
-per_gene_cor$sc_marker[per_gene_cor$both_marker] = FALSE
+per_gene_cor$marker_gene = FALSE
+per_gene_cor$marker_gene[per_gene_cor$gene %in% markers_C185$gene ] = TRUE
 
-## add max value
-all_clusterstats_both_summarized_for_join = all_clusterstats_both_summarized %>% 
-  dplyr::mutate(max_pct_any = base::pmax(pct.1_sc,pct.1_sn,na.rm = TRUE), max_mean_any =  base::pmax(pct.1_sc,mean.1_sn,na.rm = TRUE)) %>%
-  dplyr::select(gene,max_pct_any,max_mean_any)
-per_gene_cor = dplyr::left_join(per_gene_cor,all_clusterstats_both_summarized_for_join,by=c("gene"="gene"))
 # save gene cors!
+
 data.table::fwrite(per_gene_cor,paste0(results_path_figure4,"per_gene_correlations.txt"),sep = "\t")
 
 #per_gene_cor = data.table::fread(paste0(results_path_figure4,"per_gene_correlations.txt"),data.table = FALSE)
@@ -306,9 +180,9 @@ class_list = jsonlite::read_json("data_inputs/gene_classes.json")
 names(class_list) = paste0(names(class_list),"s")
 
 # add markers from above to list
-class_list[["Markers"]] = per_gene_cor$gene[per_gene_cor$both_marker]
-class_list[["Unique sc-seq"]] = per_gene_cor$gene[per_gene_cor$sc_marker]
-class_list[["Unique Nuc-seq"]] = per_gene_cor$gene[per_gene_cor$sn_marker]
+# class_list[["Markers"]] = per_gene_cor$gene[per_gene_cor$both_marker]
+# class_list[["Unique sc-seq"]] = per_gene_cor$gene[per_gene_cor$sc_marker]
+# class_list[["Unique Nuc-seq"]] = per_gene_cor$gene[per_gene_cor$sn_marker]
 
 # make a combined receptor class
 class_list[["enzyme"]] = unique(c(class_list[["peptidase"]],class_list[["Gphosphatase"]],class_list[["kinase"]],class_list[["enzyme"]]))
@@ -317,6 +191,21 @@ class_list[["enzyme"]] = unique(c(class_list[["peptidase"]],class_list[["Gphosph
 class_list_subset = class_list[names(class_list) %in% c("ligand-dependent nuclear receptors", "transmembrane receptors", "G-protein coupled receptors",
                                                         "neuropeptide/hormones","transcription regulators","translation regulators",
                                                         "ion channels","growth factors","Markers" ,"Unique sc-seq","Unique Nuc-seq")]
+
+# add to per_gene_cor and save
+class_list_subset_df <- purrr::map_df(class_list_subset, ~as.data.frame(.x), .id="class")
+class_list_subset_df = class_list_subset_df %>% tidyr::gather(key="key",value="gene",-class) %>% dplyr::filter(!is.na(gene)) %>% dplyr::select(-key)  %>%
+  dplyr::distinct(class,gene)
+rownames(class_list_subset_df) = 1:nrow(class_list_subset_df)
+class_list_subset_df$val = TRUE
+class_list_subset_df_wide = class_list_subset_df %>% tidyr::spread(key=class,value = val)
+class_list_subset_df_wide[is.na(class_list_subset_df_wide)] = FALSE
+per_gene_cor_with_class = dplyr::left_join(per_gene_cor,class_list_subset_df_wide,by=c("gene"="gene"))
+per_gene_cor_with_class[is.na(per_gene_cor_with_class)] = FALSE
+data.table::fwrite(per_gene_cor_with_class,paste0(results_path_figure4,"per_gene_correlations_with_class.txt"),sep = "\t")
+
+#per_gene_cor_with_class = data.table::fread(paste0(results_path_figure4,"per_gene_correlations_with_class.txt"),data.table = FALSE)
+                                   
 # get density per class
 n_density = 300
 list_df = lapply(class_list_subset,function(genes,per_gene_cor,subset_genes,min_genes = 10,n_density = n_density){
@@ -348,16 +237,15 @@ density_per_class_df_long = density_per_class_df_long %>% dplyr::left_join(gene_
 
 # reorder based on maximal pearson value, see below solution for one that worked in this case
 density_per_class_df_long = density_per_class_df_long %>% dplyr::group_by(class) %>% dplyr::mutate(max_pearson = steps[density == max(density)])
+# density_per_class_df_long = density_per_class_df_long %>% dplyr::group_by(class) %>% dplyr::mutate(q95_closest = (density - quantile(density,probs = 0.95)) == min(density - quantile(density,probs = 0.95))) #%>% 
+#   dplyr::mutate(max_pearson = steps[q95_closest == density])
 density_per_class_df_long = density_per_class_df_long %>% dplyr::arrange((max_pearson))
 density_per_class_df_long$class_ordered = factor(density_per_class_df_long$class,levels = unique(density_per_class_df_long$class))
 #or:
 #density_per_class_df_long$class = forcats::fct_reorder(.f = density_per_class_df_long$class, .x = density_per_class_df_long$max_pearson, .fun = mean)
 
-# rename classes
-# density_per_class_df_long$class[density_per_class_df_long$class=="markers_both"]="Markers"
-# density_per_class_df_long$class[density_per_class_df_long$class=="markers_sn"]="Unique Nuc-seq"
-# density_per_class_df_long$class[density_per_class_df_long$class=="markers_sc"]="Unique sc-seq"
-# density_per_class_df_long$class[density_per_class_df_long$class=="neuropeptide/hormones"]="neuropeptides/hormones"
+# ormanually
+density_per_class_df_long$class_ordered = factor(density_per_class_df_long$class,levels = rev(c("neuropeptide/hormones" ,"G-protein coupled receptors", "transmembrane receptors","growth factors" ,"ion channels" , "ligand-dependent nuclear receptors","transcription regulators","translation regulators" )))
 
 
 ## make heatmap 
@@ -368,14 +256,15 @@ class_heatmap = ggplot2::ggplot(density_per_class_df_long[density_per_class_df_l
   ggplot2::scale_fill_gradient(low="white",high="#ff1414",na.value = bg_col,
                                limits=c(0,max(density_per_class_df_long$density)), oob=squish) +
   xlab("Gene class")+ylab("Pearson correlation")+ guides(fill=guide_legend(title="Density"))+
-  scale_fill_gradient(low = "white",high = reference_color)+
+  scale_fill_gradient(low = "white",high = reference_sc_color)+
   guides(fill = guide_colorbar()) + # ensure continous colorbar
   geom_hline(yintercept = 0,color="grey60",linetype = "dashed")+
   coord_flip()+facet_grid(group ~ ., scales = "free",space = "free_y",drop=TRUE)  + 
   theme(text = element_text(size=25), axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
         panel.spacing = unit(2, "lines"),
         strip.text.y = element_blank(),
-        panel.background = element_rect(fill = "white"))
+        panel.background = element_rect(fill = "white"))+ 
+  scale_y_continuous(breaks=seq(0,1,0.25))
 # and show
 class_heatmap
 
@@ -386,6 +275,10 @@ ggsave(filename = paste0(results_path_figure4,"geneclass_cor_heatmap.png"),
 ggsave(filename = paste0(results_path_figure4,"geneclass_cor_heatmap.pdf"),
        plot = class_heatmap, "pdf",dpi=600,width=330,height = 200,units="mm")
 
+##source data
+class_heatmap_data = class_heatmap$data
+data.table::fwrite(class_heatmap_data,paste0(results_path_figure4,"source_figure4_b_heatmap_data.txt"),sep="\t")
+# also add the gene correlations ? --> no keep in supplemenatry tables
 
 ### calculate table with stats per class for paper Text
 summary_per_class_list = lapply(class_list_subset,function(genes,per_gene_cor,subset_genes,min_genes = 10,n_density = n_density){
@@ -395,63 +288,12 @@ summary_per_class_list = lapply(class_list_subset,function(genes,per_gene_cor,su
   return(tmp)
 }, per_gene_cor = per_gene_cor,subset_genes = per_gene_cor$gene,n_density=n_density)
 summary_per_class = do.call(rbind,summary_per_class_list)
-
+summary_per_class$class = rownames(summary_per_class)
+data.table::fwrite(summary_per_class,paste0(results_path_figure4,"summary_per_class.txt"),sep="\t")
 # specifically for bimodal:
-vals = per_gene_cor$pearson[per_gene_cor$gene %in% unlist(class_list_subset$`transmembrane receptor`)]
-length(vals[vals<0.6]) / length(vals)
-length(vals[vals>0.6])  / length(vals)
-
-##########
-### gene characteristics -- we excluded this for now
-##########
-# 
-# ## which genes do we want to check ?
-# genes_of_interest = per_gene_cor$gene
-# 
-# ## query biomart to obtain relevant characteristics
-# # I use nov2020.archive.ensembl.org because it is still on 38 mm genome.
-# library(biomaRt)
-# mart <- useMart(dataset="mmusculus_gene_ensembl",biomart='ensembl',host="nov2020.archive.ensembl.org") # ,host="feb2021.archive.ensembl.org"
-# #all_attr = listAttributes(mart)
-# all_attributes = c('ensembl_gene_id', 'external_gene_name',"gene_biotype","start_position","end_position","ensembl_transcript_id","external_transcript_name","transcript_start", "transcript_end","strand","chromosome_name",
-#                    "transcript_biotype","transcript_count","transcript_length","transcription_start_site","transcript_count","percentage_gene_gc_content") # ,"ncoils","tmhmm","transcript_exon_intron"
-# mouse_gene_info = getBM(attributes = all_attributes,filters='external_gene_name',values=genes_of_interest,mart = mart)
-# 
-# # ideas
-# # gene length
-# # shortest transcript
-# # longest transcript
-# # transcript count
-# # protein-coding transcript count
-# # percentage_gene_gc_content
-# # "ncoils","tmhmm"
-# 
-# # define characteristics
-# mouse_gene_info_charac = mouse_gene_info %>% dplyr::mutate(
-#   gene_length = as.numeric(end_position) - as.numeric(start_position),
-# ) %>% dplyr::group_by(ensembl_gene_id) %>% dplyr::mutate(
-#   shortest_transcript = transcript_length[transcript_length == min(transcript_length)][1],
-#   longest_transcript = transcript_length[transcript_length == max(transcript_length)][1],
-# ) %>% dplyr::select(ensembl_gene_id,external_gene_name,gene_biotype,gene_length,transcript_count,shortest_transcript,longest_transcript,percentage_gene_gc_content) %>%
-#   dplyr::distinct(ensembl_gene_id,external_gene_name,.keep_all = TRUE)
-# 
-# ## correlate numeric charac
-# mouse_gene_info_charac_with_cor = dplyr::left_join(mouse_gene_info_charac, per_gene_cor %>% dplyr::select(gene,pearson_cor = pearson),by=c("external_gene_name"="gene"))
-# 
-# # remove some outliers
-# mouse_gene_info_charac_with_cor$gene_length[mouse_gene_info_charac_with_cor$gene_length>1000000] = 1000000
-# mouse_gene_info_charac_with_cor$shortest_transcript[mouse_gene_info_charac_with_cor$shortest_transcript>15000] = 15000
-# mouse_gene_info_charac_with_cor$longest_transcript[mouse_gene_info_charac_with_cor$longest_transcript>15000] = 1500
-# # example plot
-# ggplot(mouse_gene_info_charac_with_cor,aes(pearson_cor,gene_length))+geom_point(size=0.3)
-# # correlate
-# cor(mouse_gene_info_charac_with_cor$pearson_cor,mouse_gene_info_charac_with_cor[,c("gene_length","transcript_count","shortest_transcript","longest_transcript", "percentage_gene_gc_content")],method="pearson",use = "pairwise.complete.obs")
-# ## by biotype classes:
-# table(mouse_gene_info_charac_with_cor$gene_biotype)
-# sort(tapply(mouse_gene_info_charac_with_cor$pearson_cor,INDEX = mouse_gene_info_charac_with_cor$gene_biotype,FUN = mean),decreasing = TRUE)
-# # generally to low
-
-
+# vals = per_gene_cor$pearson[per_gene_cor$gene %in% unlist(class_list_subset$`transmembrane receptor`)]
+# length(vals[vals<0.6]) / length(vals)
+# length(vals[vals>0.6])  / length(vals)
 
 ##########
 ### cluster-centric comparison:
@@ -470,17 +312,18 @@ include_genes = unique(per_gene_cor$gene[per_gene_cor$pearson>0.3])
 # use shared_genes which are the same as all genes in the per_gene_cor df as defined above!!
 
 #### Need to get mean per dataset and cluster
-datasets = unique(neuron_map_seurat@meta.data$Dataset)
+datasets = unique(hypoMap_v2_seurat@meta.data$Dataset)
+datasets = datasets[! datasets %in% c("Affinati10x","Rupp10x")]
 datasets_mean_expression_list =list()
 for(dset in datasets){
   message(dset)
   st=Sys.time()
-  cluster_list_dset = split(neuron_map_seurat@meta.data$Cell_ID[neuron_map_seurat@meta.data$K169_pruned %in% clusters_to_check & neuron_map_seurat@meta.data$Dataset %in% dset],
-                            f =neuron_map_seurat@meta.data$K169_pruned[neuron_map_seurat@meta.data$K169_pruned %in% clusters_to_check & neuron_map_seurat@meta.data$Dataset %in% dset] 
+  cluster_list_dset = split(hypoMap_v2_seurat@meta.data$Cell_ID[hypoMap_v2_seurat@meta.data$C185 %in% clusters_to_check & hypoMap_v2_seurat@meta.data$Dataset %in% dset],
+                            f =hypoMap_v2_seurat@meta.data$C185[hypoMap_v2_seurat@meta.data$C185 %in% clusters_to_check & hypoMap_v2_seurat@meta.data$Dataset %in% dset] 
   )
   # filter n cells
   cluster_list_dset = cluster_list_dset[sapply(cluster_list_dset,length) >= min_cells_with_dataset]
-  mean_expr = suppressMessages(lapply(cluster_list_dset,build_cell,expr_matrix = neuron_map_seurat@assays$RNA@data))#seurat_object_harmonized
+  mean_expr = suppressMessages(lapply(cluster_list_dset,build_cell,expr_matrix = hypoMap_v2_seurat@assays$RNA@data))#seurat_object_harmonized
   message("Time used to summarise expression matrix : ",Sys.time()-st)
   datasets_mean_expression_list[[dset]] = as.matrix(do.call(cbind,mean_expr))
 }
@@ -491,35 +334,40 @@ mean_lm_res = list()
 mean_adj_rsq = numeric()
 per_dataset_cor_res=list()
 global_cor_res =numeric()
+n_markers =numeric()
 # loop over all clusters
 for(i in 1:length(clusters_to_check)){
   current_cluster= clusters_to_check[i]
   #message("  ",current_cluster)
-  # get cluster markers
-  sn_Seq_based_markers = sn_seq_markers_K169$gene[sn_seq_markers_K169$p_val_adj<padj_cut & sn_seq_markers_K169$avg_log2FC>fc_min & sn_seq_markers_K169$cluster==current_cluster & sn_seq_markers_K169$gene %in% per_gene_cor$gene]
-  sc_Seq_based_markers = sc_seq_markers_K169$gene[sc_seq_markers_K169$p_val_adj<padj_cut & sc_seq_markers_K169$avg_logFC>fc_min & sc_seq_markers_K169$cluster==current_cluster & sc_seq_markers_K169$gene %in% per_gene_cor$gene]
-  #union_markers = union(sn_Seq_based_markers,sc_Seq_based_markers)
-  union_markers = sn_Seq_based_markers
   
+  # get cluster markers
+  #sn_Seq_based_markers = sn_seq_markers_C185$gene[sn_seq_markers_C185$p_val_adj<padj_cut & sn_seq_markers_C185$avg_log2FC>fc_min & sn_seq_markers_C185$cluster==current_cluster & sn_seq_markers_C185$gene %in% per_gene_cor$gene]
+  #sc_Seq_based_markers = sc_seq_markers_C185$gene[sc_seq_markers_C185$p_val_adj<padj_cut & sc_seq_markers_C185$avg_logFC>fc_min & sc_seq_markers_C185$cluster==current_cluster & sc_seq_markers_C185$gene %in% per_gene_cor$gene]
+  #union_markers = union(sn_Seq_based_markers,sc_Seq_based_markers)
+  #union_markers = sn_Seq_based_markers
+  union_markers = markers_C185$gene[markers_C185$cluster_id == current_cluster]
+  n_markers = c(n_markers,length(union_markers))
+  names(n_markers)[i] = current_cluster
   ##### RSQ between sn-seq and sc-seq (split up by Dataset)
   # calculate mean expression 
   mean_expressions= do.call(cbind,lapply(datasets_mean_expression_list, function(x,cluster,genes){if(cluster %in% colnames(x)){x[genes,cluster]}},cluster=current_cluster,genes = union_markers))
-  mean_expressions= cbind(sn_seq = snseq_mean_expression[union_markers,current_cluster],mean_expressions)
+  #mean_expressions= cbind(sn_seq = snseq_mean_expression[union_markers,current_cluster],mean_expressions)
+  
   # filter (TODO: do I want to filter here?)
   # mean_expressions_keep = apply(mean_expressions,1,function(x,min_expr){if(length(x[x>min_expr])>1){return(TRUE)}else{return(FALSE)}},min_expr=min_expr)
   # mean_expressions = mean_expressions[mean_expressions_keep,]
   # construct formula:
-  predictors = colnames(mean_expressions)[!colnames(mean_expressions) %in% c("gene","sn_seq")]
+  predictors = colnames(mean_expressions)[!colnames(mean_expressions) %in% c("gene","Dowsett10xnuc")]
   #as.formula(paste0("snseq ~ ",paste0(predictors,collapse=" + ")))
   # fit lm
   if(length(union_markers)>3){
     if(length(predictors)>=1){
-      mean_lm_res[[current_cluster]] = lm(formula = as.formula(paste0("sn_seq ~ ",paste0(predictors,collapse=" + "))),data = as.data.frame(mean_expressions))
+      mean_lm_res[[current_cluster]] = lm(formula = as.formula(paste0("Dowsett10xnuc ~ ",paste0(predictors,collapse=" + "))),data = as.data.frame(mean_expressions))
       mean_adj_rsq[current_cluster] = summary(mean_lm_res[[current_cluster]])$adj.r.squared
       # cor per cluster
-      dataset_cor_vec = cor(mean_expressions[,1],mean_expressions[,2:ncol(mean_expressions)],use = "pairwise.complete.obs",method=cor_method)
+      dataset_cor_vec = cor(mean_expressions[,"Dowsett10xnuc"],mean_expressions[,predictors],use = "pairwise.complete.obs",method=cor_method)
       if(length(dataset_cor_vec)>1){
-        names(dataset_cor_vec)=colnames(mean_expressions[,2:ncol(mean_expressions)])
+        names(dataset_cor_vec)= predictors#colnames(mean_expressions[,2:ncol(mean_expressions)])
         dataset_cor_vec = dataset_cor_vec[match(names(datasets_mean_expression_list),names(dataset_cor_vec))] # include missing datasets with NA
         names(dataset_cor_vec) = names(datasets_mean_expression_list)
       }else{
@@ -531,8 +379,8 @@ for(i in 1:length(clusters_to_check)){
       per_dataset_cor_res[[current_cluster]] =dataset_cor_vec
     }
     ## correlation across all
-    mean_expr_sc = data.frame(mean_expr = neuron_map_mean_expression[,current_cluster],gene = rownames(neuron_map_mean_expression))
-    mean_expr_sn = data.frame(mean_expr = snseq_mean_expression[,current_cluster],gene = rownames(snseq_mean_expression))
+    mean_expr_sc = data.frame(mean_expr = mean_expression_sc[,current_cluster],gene = rownames(mean_expression_sc))
+    mean_expr_sn = data.frame(mean_expr = mean_expression_sn[,current_cluster],gene = rownames(mean_expression_sn))
     compare_mean_between = dplyr::left_join(mean_expr_sc,mean_expr_sn,by="gene",suffix=c("_sc","_sn")) %>% dplyr::filter(gene %in% union_markers)
     global_cor_res[current_cluster] = cor(compare_mean_between$mean_expr_sc,compare_mean_between$mean_expr_sn,use = "pairwise.complete.obs",method=cor_method)
   }
@@ -544,12 +392,17 @@ ndigits = 5
 per_dataset_cor_df =as.data.frame(do.call(rbind, per_dataset_cor_res))  #as.data.frame(do.call(rbind, per_dataset_cor_res_sq))
 #per_dataset_cor_df$mean_adj_rsq = round(mean_adj_rsq,digits = ndigits)
 per_dataset_cor_df$global_cor = round(global_cor_res,digits = ndigits) #round(global_cor_res^2,digits = ndigits)
-per_dataset_cor_df$K169_pruned = rownames(per_dataset_cor_df)
+per_dataset_cor_df$C185 = rownames(per_dataset_cor_df)
+per_dataset_cor_df$n_markers = n_markers
 # add paired anno
-per_dataset_cor_df$K169_named = add_paired_annotation(input_annotation = per_dataset_cor_df$K169_pruned,reference_annotations = neuron_map_seurat@meta.data[,c("K169_pruned","K169_named")])
+#per_dataset_cor_df$C185_named = mapscvi::add_paired_annotation(input_annotation = per_dataset_cor_df$C185,reference_annotations = hypoMap_v2_seurat@meta.data[,c("C185","C185_named")])
+
+# add Rupp and Affinati as all NA columns
+per_dataset_cor_df$Rupp10x = NA
+per_dataset_cor_df$Affinati10x = NA
 
 # save gene cors!
-per_dataset_cor_df_print = per_dataset_cor_df[,c(16,15,14,1:13)]
+per_dataset_cor_df_print = per_dataset_cor_df[,c(18,17,19,21,1:14,20,15,16)]
 data.table::fwrite(per_dataset_cor_df_print,paste0(results_path_figure4,"per_cluster_correlations.txt"),sep = "\t")
 
 #per_dataset_cor_df = data.table::fread(paste0(results_path_figure4,"per_cluster_correlations.txt"),data.table = FALSE)
@@ -560,14 +413,14 @@ data.table::fwrite(per_dataset_cor_df_print,paste0(results_path_figure4,"per_clu
 
 ## heatmap
 # per_dataset_cor_df = per_dataset_cor_df %>% dplyr::select(-mean_adj_rsq )
-# per_dataset_cor_long = per_dataset_cor_df %>% dplyr::arrange(desc(global_cor_res)) %>% tidyr::gather("Dataset","RSQ",-K169_pruned,-K169_named) 
+# per_dataset_cor_long = per_dataset_cor_df %>% dplyr::arrange(desc(global_cor_res)) %>% tidyr::gather("Dataset","RSQ",-C185,-C185_named) 
 # per_dataset_cor_long$Dataset = factor(per_dataset_cor_long$Dataset,levels = c("global_cor","Kim","Campbell","Chen","wenDropSeq","Lee_Idol","Mickelsen","Rossi","Moffit","Flynn","RomanovDev","Mousebrainorg","wen10x","kimDev"))
 # 
-# per_dataset_cor_long$K169_named = factor(per_dataset_cor_long$K169_named , levels = per_dataset_cor_df$K169_named[order(per_dataset_cor_df$global_cor)])
+# per_dataset_cor_long$C185_named = factor(per_dataset_cor_long$C185_named , levels = per_dataset_cor_df$C185_named[order(per_dataset_cor_df$global_cor)])
 # 
 # # make heatmap 
 # require(scales)
-# dff_heatmap = ggplot(per_dataset_cor_long, aes(x = K169_named, y = Dataset , fill = RSQ)) +
+# dff_heatmap = ggplot(per_dataset_cor_long, aes(x = C185_named, y = Dataset , fill = RSQ)) +
 #   geom_tile() +
 #   # facet_grid(sample~., scales="free_y") +
 #   #theme(axis.text.y = element_blank())+ 
@@ -576,39 +429,120 @@ data.table::fwrite(per_dataset_cor_df_print,paste0(results_path_figure4,"per_clu
 # # and show
 # dff_heatmap
 
+##### cell numbers
+
+# sc_seq_cell_numbers = data.frame(cluster_id = names(cluster_list_sc_seq), ncells_scseq = sapply(cluster_list_sc_seq,length))
+# sn_seq_cell_numbers = data.frame(cluster_id = names(cluster_list_sn_seq), ncells_snseq = sapply(cluster_list_sn_seq,length))
+# 
+# cell_numbers = left_join(sc_seq_cell_numbers,sn_seq_cell_numbers,by="cluster_id")
+# cell_numbers$nucseq_ratio = cell_numbers$ncells_snseq /  cell_numbers$ncells_scseq
+# cell_numbers = left_join(cell_numbers,heatmap_data[,c("global_cor","C185","n_markers")],by=c("cluster_id"="C185"))
+# 
+# cor(cell_numbers[,2:ncol(cell_numbers)])
+
 ##########
 ### Make Tree heatmap 
 ##########
 
-# make data for first heatmap with correlations
-datasets = unique(neuron_map_seurat@meta.data$Dataset)
-heatmap_data = per_dataset_cor_df
-heatmap_matrix = as.matrix(heatmap_data[,"global_cor"]) # might want to change order
-colnames(heatmap_matrix) = "Cor"
-rownames(heatmap_matrix) = heatmap_data$K169_pruned
-heatmap_matrix2 = as.matrix(heatmap_data[,datasets]) # might want to change order
-rownames(heatmap_matrix2) = heatmap_data$K169_pruned
+leaf_level_column = "C185"
+leaf_level = 6
 
-circular_tree_cor = plot_cluster_tree(edgelist = neuron_map_seurat@misc$mrtree_edgelist,
-                                      heatmap_matrix=heatmap_matrix,heatmap_matrix2 = heatmap_matrix2,
-                                      leaf_level=6,metadata=neuron_map_seurat@meta.data,
-                                      label_size = 2, show_genes = TRUE, legend_title_1 = "Cor",legend_title_2 = "Cor",
-                                      matrix_offset = 0.2, matrix_width =0.15,matrix_width_2 = 0.5,heatmap_colnames = TRUE,
-                                      manual_off_second = 1.5,legend_text_size = 8,heatmap_text_size = 2,colnames_angle=0,hjust_colnames=0.5,
-                                      heatmap_colors =c("#1a1a82","#ff1414"),na_color=bg_col) + ggplot2::scale_fill_gradient(low="#1a1a82",high="#ff1414",na.value = bg_col,limits=c(0,1), oob=squish)
-#circular_tree_cor
-require(ggtree)
-circular_tree_cor_rotated = rotate_tree(circular_tree_cor, -90)
-circular_tree_cor_rotated
+# make data for first heatmap with correlations
+datasets = unique(hypoMap_v2_seurat@meta.data$Dataset)#[ unique(hypoMap_v2_seurat@meta.data$Dataset) != "Dowsett10xnuc"]
+heatmap_data = per_dataset_cor_df
+
+heatmap_matrix1 = as.matrix(heatmap_data[,"n_markers"]) # might want to change order
+colnames(heatmap_matrix1) = "M"
+rownames(heatmap_matrix1) = heatmap_data$C185
+
+heatmap_matrix2 = as.matrix(heatmap_data[,"global_cor"]) # might want to change order
+colnames(heatmap_matrix2) = "Cor"
+rownames(heatmap_matrix2) = heatmap_data$C185
+
+heatmap_matrix3 = as.matrix(heatmap_data[,datasets]) # might want to change order
+rownames(heatmap_matrix3) = heatmap_data$C185
+
+# numbers
+colnames_overview = data.frame(number = 1:ncol(heatmap_matrix3),Dataset = colnames(heatmap_matrix3))
+data.table::fwrite(colnames_overview,paste0(results_path_figure4,"circular_tree_colnames.txt"),sep="\t")
+colnames(heatmap_matrix3) = colnames_overview$number
+
+## make annotation data frame
+anno_df = hypoMap_v2_seurat@misc$annotation_result %>% dplyr::select(cluster_id,clusterlevel,cluster_name = clean_names)
+anno_df$first_cluster_name = sapply(anno_df$cluster_name,function(x){strsplit(x,"\\.")[[1]][1]})
+
+# plot cluster tree:
+tree_color = "grey70"
+circular_tree = plot_cluster_tree(edgelist = hypoMap_v2_seurat@misc$clustering_edgelist,
+                                  leaf_level=leaf_level,
+                                  anno_df = anno_df ,
+                                  metadata=hypoMap_v2_seurat@meta.data,
+                                  label_size = 2.5, 
+                                  show_genes = TRUE,
+                                  vjust_label = -0.25,
+                                  edge_color = tree_color, 
+                                  node_color = tree_color)
+circular_tree = rotate_tree(circular_tree, -90)
+circular_tree
+
+# plot tree with heatmap 1
+circular_tree_heat_cor = add_heatmap(circular_tree=circular_tree,
+                                 heatmap_matrix = heatmap_matrix1,
+                                 heatmap_colors=c(bg_col,"darkred"),
+                                 scale_limits = c(0,400),
+                                 heatmap_colnames =TRUE, 
+                                 legend_title = "N Markers",
+                                 matrix_offset = 0.2,
+                                 matrix_width =0.05,
+                                 colnames_angle=0,
+                                 legend_text_size = 8,
+                                 hjust_colnames=0.75, 
+                                 na_color = "white",
+                                 heatmap_text_size=4)
+# global cor
+circular_tree_heat_cor = add_heatmap(circular_tree=circular_tree_heat_cor,
+                                 heatmap_matrix = heatmap_matrix2,
+                                 heatmap_colors= c("#1a1a82","#14fa14"),
+                                 scale_limits = c(0,1),
+                                 heatmap_colnames =TRUE, 
+                                 legend_title = "Correlation",
+                                 matrix_offset = 0.5,
+                                 matrix_width =0.05,
+                                 colnames_angle=0,
+                                 legend_text_size = 8,
+                                 hjust_colnames=1, 
+                                 na_color = "white",
+                                 heatmap_text_size=4)
+# per dataset cor
+circular_tree_heat_cor = add_heatmap(circular_tree=circular_tree_heat_cor,
+                                 heatmap_matrix = heatmap_matrix3,
+                                 heatmap_colors= c("#1a1a82","#ff1414"),
+                                 scale_limits = c(0,1),
+                                 heatmap_colnames =TRUE, 
+                                 legend_title = "Cor Dataset",
+                                 matrix_offset = 0.9,
+                                 matrix_width =0.4,
+                                 colnames_angle=0,
+                                 legend_text_size = 8,
+                                 hjust_colnames=2.5, 
+                                 na_color = "white",
+                                 heatmap_text_size=2.5)
+
+circular_tree_heat_cor
 
 #save:
 ggsave(filename = paste0(results_path_figure4,"circular_tree_correlation.png"),
-       plot = circular_tree_cor_rotated, "png",dpi=600,width=400,height = 400,units="mm")
+       plot = circular_tree_heat_cor, "png",dpi=600,width=400,height = 400,units="mm")
 ggsave(filename = paste0(results_path_figure4,"circular_tree_correlation.pdf"),
-       plot = circular_tree_cor_rotated, "pdf",dpi=600,width=400,height = 400,units="mm")
+       plot = circular_tree_heat_cor, "pdf",dpi=600,width=400,height = 400,units="mm")
 
 
+figure4_tree_heatmap_sourcedata = heatmap_data
+data.table::fwrite(figure4_tree_heatmap_sourcedata,paste0(results_path_figure4,"source_figure4_c_tree_heatmap.txt"),sep="\t")
 
+data.table::fwrite(hypoMap_v2_seurat@misc$clustering_edgelist,paste0(results_path_figure4,"source_figure4_c_tree_edgelist.txt"),sep="\t")
+
+data.table::fwrite(anno_df,paste0(results_path_figure4,"source_figure4_c_tree_annotations.txt"),sep="\t")
 
 
 
