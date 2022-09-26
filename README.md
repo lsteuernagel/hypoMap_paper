@@ -18,7 +18,11 @@ Figure creation and final analysis scripts for the HypoMap paper. This code does
 
 Small data input tables are already included in the data_inputs/ folder.
 
-For large data files (like Seurat objects) that are required please see the data at: [Will be ADDED].
+The full hypoMap seurat object used in the figure creation files can be obtained from this [repository](https://www.repository.cam.ac.uk/handle/1810/340518)
+
+The HypoMap scvi model is included in our [mapscvi package](https://github.com/lsteuernagel/mapscvi/tree/master/inst/extdata/models/hypoMap_harmonized_scVI_model)
+
+The nucSeq data are available from GEO at [GSE207736](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE207736) and the bacTRAP data from [GSE208355](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE208355)
 
 Please also see our [interactive cellxgene viewer](https://www.mrl.ims.medschl.cam.ac.uk)
 
